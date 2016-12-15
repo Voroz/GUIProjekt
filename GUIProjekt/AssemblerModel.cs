@@ -59,49 +59,57 @@ namespace GUIProjekt
         public void processCurrentAddr() {
             ushort currAddrVal = _memory[_instructionPtr];
             byte op = (byte)(createMask(5, 8) & currAddrVal);
-            byte val = (byte)(createMask(9, 16) & currAddrVal);
+            byte addr = (byte)(createMask(9, 16) & currAddrVal);
 
             Debug.Assert(op >= 0 && op <= 8);
 
             switch (op) {
                 case (byte)Operations.Load: {
-                    byte valAtAddr = (byte)(createMask(9, 16) & _memory[val]);
+                    byte valAtAddr = (byte)(createMask(9, 16) & _memory[addr]);
                     _workingRegister = valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case (byte)Operations.Store: {
-                    _memory[val] = _workingRegister;
+                    _memory[addr] = _workingRegister;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case (byte)Operations.Add: {
-                    _workingRegister += val;
+                    byte valAtAddr = (byte)(createMask(9, 16) & _memory[addr]);
+                    _workingRegister += valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case (byte)Operations.Sub: {
-
+                    byte valAtAddr = (byte)(createMask(9, 16) & _memory[addr]);
+                    _workingRegister -= valAtAddr;
+                    _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case (byte)Operations.Jump: {
-
+                    _instructionPtr = addr;
                 } break;
 
                 case (byte)Operations.Pjump: {
-
+                    if (_workingRegister > 0) {
+                        _instructionPtr = addr;
+                    }
                 } break;
 
                 case (byte)Operations.In: {
-
+                    _workingRegister = _input;
+                    _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case (byte)Operations.Out: {
-
+                    _output = _workingRegister;
+                    _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case (byte)Operations.Call: {
-
+                    // CALL adr
+                    // RETURN
                 } break;
             }
         }
