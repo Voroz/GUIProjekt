@@ -23,7 +23,7 @@ namespace GUIProjekt
         public MainWindow()
         {
             InitializeComponent();
-            _assemblerModel = new AssemblerModel(256);
+            _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
         }
 
