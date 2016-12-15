@@ -65,6 +65,8 @@ namespace GUIProjekt
             byte op = (byte)(createMask(5, 8) & currAddrVal);
             byte val = (byte)(createMask(9, 16) & currAddrVal);
 
+            Debug.Assert(op >= 0 && op <= 8);
+
             // Switch fungerar ej (C#?)
             /*switch (op) {
                 case: Operations.Load
