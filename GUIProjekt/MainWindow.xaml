@@ -1,10 +1,25 @@
 ﻿<Window x:Class="GUIProjekt.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Ny titel" Height="350" Width="520">
+        Title="Ny titel" Height="768" Width="1024">
     <Grid>
-        <Canvas>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="25px" MaxHeight="45px" /> <!-- Meny -->
+            <RowDefinition Height="10*" />  <!-- Content -->
+        </Grid.RowDefinitions>
+        
+        <Label>Meny</Label>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*" />    <!-- Minne -->
+                <ColumnDefinition Width="10*" />    <!-- Maskinkod -->
+                <ColumnDefinition Width="10*" />    <!-- Assembler -->
+            </Grid.ColumnDefinitions>
             
-        </Canvas>
+            <Label>Minne</Label>
+            <Label Grid.Column="1">Maskinkod</Label>
+            <Label Grid.Column="2">Assembler</Label>
+        </Grid> 
     </Grid>
 </Window>
