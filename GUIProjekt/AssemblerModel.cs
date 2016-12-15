@@ -12,7 +12,7 @@ namespace GUIProjekt
         public AssemblerModel(int size)
         {
             _size = size;
-            _memory = new bool[12, size];
+            _memory = new Int16[_size];
         }
 
         public bool SelfTest()
@@ -20,20 +20,18 @@ namespace GUIProjekt
 
             // Test memory allocation
             bool ok = false;
-            ok = (12 == _memory.GetLength(0)
-                && _size == _memory.GetLength(1));
+            ok = (_size == _memory.GetLength(0));
 
             if (!ok) {
-                Debug.Write("SelfTest failed IN GUIProjekt.AssemblerModel: size of _memory  was ["
-                    + _memory.GetLength(0) + "]["
-                    + _memory.GetLength(1) + "]"
-                    + ", expected [12][" + _size + "]\n");
+                Debug.Write("SelfTest failed IN GUIProjekt.AssemblerModel: size of _memory  was "
+                    + _memory.GetLength(0)
+                    + ", expected " + _size + "\n");
             }
             return ok;
         }
 
 
-        private bool[,] _memory;
+        private Int16[] _memory;
         private int _size;
     }
 }
