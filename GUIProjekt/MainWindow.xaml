@@ -4,22 +4,45 @@
         Title="Modeldatorn Assembler" Height="768" Width="1024">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition MinHeight="25px" MaxHeight="45px" /> <!-- Meny -->
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition MinHeight="25" MaxHeight="45" /> <!-- Meny -->
             <RowDefinition Height="10*" />  <!-- Content -->
         </Grid.RowDefinitions>
         
-        <Label>Meny</Label>
+        <Menu Width="Auto" Height="20">   <!-- Topmeny/Standardmeny -->
+            <MenuItem Header="_File">
+                <MenuItem Header="Open"></MenuItem>
+                <MenuItem Header="Save"></MenuItem>
+                <MenuItem Header="Exit"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <Viewbox Grid.Row="1" HorizontalAlignment="Left">
+            <Label>Menyn för att styra programmet</Label>   <!-- Meny -->
+        </Viewbox>  
         
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*" />    <!-- Minne -->
-                <ColumnDefinition Width="10*" />    <!-- Maskinkod -->
-                <ColumnDefinition Width="10*" />    <!-- Assembler -->
+                <ColumnDefinition Width="10*" /> 
+                <ColumnDefinition Width="10*" /> 
+                <ColumnDefinition Width="10*" /> 
             </Grid.ColumnDefinitions>
             
-            <Label>Minne</Label>
-            <Label Grid.Column="1">Maskinkod</Label>
-            <Label Grid.Column="2">Assembler</Label>
+            <Viewbox>
+                <Label>Minne</Label>    <!-- Minne -->
+            </Viewbox>
+
+            <Viewbox Grid.Column="1">
+                <Label>Maskinkod</Label>    <!-- Maskinkod -->
+            </Viewbox>
+            
+            <Viewbox Grid.Column="2">
+                <Label>Assembler</Label>    <!-- Assembler -->
+            </Viewbox>
+            
         </Grid> 
     </Grid>
 </Window>

@@ -8,6 +8,14 @@ namespace GUIProjekt
 {
     class AssemblerModel
     {
+        AssemblerModel()
+        {
 
+        }
+
+        public bool SelfTest()
+        {
+            return false;
+        }
     }
 }
