@@ -55,10 +55,6 @@ namespace GUIProjekt
             return r;
         }
 
-        private void add(byte val) {
-            _workingRegister += val;
-        }
-
         // Interprets the current address and runs the corresponding function
         public void processCurrentAddr() {
             ushort currAddrVal = _memory[_instructionPtr];
@@ -67,20 +63,47 @@ namespace GUIProjekt
 
             Debug.Assert(op >= 0 && op <= 8);
 
-            // Switch fungerar ej (C#?)
-            /*switch (op) {
-                case: Operations.Load
-            }*/
+            switch (op) {
+                case (byte)Operations.Load: {
+                    byte valAtAddr = (byte)(createMask(9, 16) & _memory[val]);
+                    _workingRegister = valAtAddr;
+                    _instructionPtr = (byte)(++_instructionPtr % _size);
+                } break;
 
-            if (op == (byte)Operations.Add) {
-                add(val);
-                _instructionPtr = (byte)(++_instructionPtr % _size);
+                case (byte)Operations.Store: {
+                    _memory[val] = _workingRegister;
+                    _instructionPtr = (byte)(++_instructionPtr % _size);
+                } break;
+
+                case (byte)Operations.Add: {
+                    _workingRegister += val;
+                    _instructionPtr = (byte)(++_instructionPtr % _size);
+                } break;
+
+                case (byte)Operations.Sub: {
+
+                } break;
+
+                case (byte)Operations.Jump: {
+
+                } break;
+
+                case (byte)Operations.Pjump: {
+
+                } break;
+
+                case (byte)Operations.In: {
+
+                } break;
+
+                case (byte)Operations.Out: {
+
+                } break;
+
+                case (byte)Operations.Call: {
+
+                } break;
             }
-            // else if... etc
-
-
-
-
         }
 
 
