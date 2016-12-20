@@ -8,15 +8,15 @@ using System.Diagnostics;
 namespace GUIProjekt
 {
     enum Operations : byte {
-        Load = 0,
-        Store = 1,
-        Add = 2,
-        Sub = 3,
-        Jump = 4,
-        Pjump = 5,
-        In = 6,
-        Out = 7,
-        Call = 8,
+        LOAD = 0,
+        STORE = 1,
+        ADD = 2,
+        SUB = 3,
+        JUMP = 4,
+        PJUMP = 5,
+        IN = 6,
+        OUT = 7,
+        CALL = 8,
     }
 
     class AssemblerModel
@@ -29,6 +29,11 @@ namespace GUIProjekt
             _workingRegister = 0;
             _input = 0;
             _output = 0;
+
+
+
+            _memory[0] = 1792;
+            processCurrentAddr();
         }
 
         public bool SelfTest()
@@ -55,59 +60,66 @@ namespace GUIProjekt
             return r;
         }
 
+        ushort extractValFromBits(byte a, byte b, ushort bits) {
+            ushort mask = (ushort)(createMask(a, b) & bits);
+            int bitShiftLength = 16 - a;
+            ushort val = (ushort)(mask >> bitShiftLength);
+            return val;
+        }
+
         // Interprets the current address and runs the corresponding function
         public void processCurrentAddr() {
             ushort currAddrVal = _memory[_instructionPtr];
-            Operations op = (Operations)(createMask(5, 8) & currAddrVal);
-            byte addr = (byte)(createMask(9, 16) & currAddrVal);
+            Operations op = (Operations)(extractValFromBits(8, 11, currAddrVal));
+            byte addr = (byte)(extractValFromBits(0, 7, currAddrVal));
 
-            Debug.Assert(op >= Operations.Load && op <= Operations.Call);
+            Debug.Assert(op >= Operations.LOAD && op <= Operations.CALL);
 
             switch (op) {
-                case Operations.Load: {
+                case Operations.LOAD: {
                     byte valAtAddr = (byte)(createMask(9, 16) & _memory[addr]);
                     _workingRegister = valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
-                case Operations.Store: {
+                case Operations.STORE: {
                     _memory[addr] = _workingRegister;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
-                case Operations.Add: {
+                case Operations.ADD: {
                     byte valAtAddr = (byte)(createMask(9, 16) & _memory[addr]);
                     _workingRegister += valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
-                case Operations.Sub: {
+                case Operations.SUB: {
                     byte valAtAddr = (byte)(createMask(9, 16) & _memory[addr]);
                     _workingRegister -= valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
-                case Operations.Jump: {
+                case Operations.JUMP: {
                     _instructionPtr = addr;
                 } break;
 
-                case Operations.Pjump: {
+                case Operations.PJUMP: {
                     if (_workingRegister > 0) {
                         _instructionPtr = addr;
                     }
                 } break;
 
-                case Operations.In: {
+                case Operations.IN: {
                     _workingRegister = _input;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
-                case Operations.Out: {
+                case Operations.OUT: {
                     _output = _workingRegister;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
-                case Operations.Call: {
+                case Operations.CALL: {
                     // CALL adr
                     // RETURN
                 } break;
