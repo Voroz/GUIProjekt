@@ -7,6 +7,13 @@ using System.Diagnostics;
 
 namespace GUIProjekt
 {
+    static class Constants
+    {
+        public const ushort startOprBit = 5; //Defines start position for the Assembler operator in a 16 bit
+        public const ushort endOprBit = 8;   //Defines end position for the Assembler operator in a 16 bit
+        public const ushort startAdrBit = 9; //Defines start position for the Assembler value in a 16 bit
+        public const ushort endAdrBit = 16;  //Defines end position for the Assembler value in a 16 bit
+    }
     enum Operations : byte {
         LOAD = 0,
         STORE = 1,
