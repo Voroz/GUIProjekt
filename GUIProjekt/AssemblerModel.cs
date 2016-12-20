@@ -7,12 +7,12 @@ using System.Diagnostics;
 
 namespace GUIProjekt
 {
-    static class Constants
+    enum Constants : byte
     {
-        public const ushort startOprBit = 5; //Defines start position for the Assembler operator in a 16 bit
-        public const ushort endOprBit = 8;   //Defines end position for the Assembler operator in a 16 bit
-        public const ushort startAdrBit = 9; //Defines start position for the Assembler value in a 16 bit
-        public const ushort endAdrBit = 16;  //Defines end position for the Assembler value in a 16 bit
+        StartOprBit = 8, //Defines start position for the Assembler operator in a 16 bit
+        EndOprBit = 11,   //Defines end position for the Assembler operator in a 16 bit
+        StartAdrBit = 0, //Defines start position for the Assembler value in a 16 bit
+        EndAdrBit = 7,  //Defines end position for the Assembler value in a 16 bit
     }
     enum Operations : byte {
         LOAD = 0,
@@ -36,11 +36,6 @@ namespace GUIProjekt
             _workingRegister = 0;
             _input = 0;
             _output = 0;
-
-
-
-            _memory[0] = 1792;
-            processCurrentAddr();
         }
 
         public bool SelfTest()
@@ -69,16 +64,15 @@ namespace GUIProjekt
 
         ushort extractValFromBits(byte a, byte b, ushort bits) {
             ushort mask = (ushort)(createMask(a, b) & bits);
-            int bitShiftLength = 16 - a;
-            ushort val = (ushort)(mask >> bitShiftLength);
+            ushort val = (ushort)(mask >> a);
             return val;
         }
 
         // Interprets the current address and runs the corresponding function
         public void processCurrentAddr() {
             ushort currAddrVal = _memory[_instructionPtr];
-            Operations op = (Operations)(extractValFromBits(8, 11, currAddrVal));
-            byte addr = (byte)(extractValFromBits(0, 7, currAddrVal));
+            Operations op = (Operations)(extractValFromBits((byte)Constants.StartOprBit, (byte)Constants.EndOprBit, currAddrVal));
+            byte addr = (byte)(extractValFromBits((byte)Constants.StartAdrBit, (byte)Constants.EndAdrBit, currAddrVal));
 
             Debug.Assert(op >= Operations.LOAD && op <= Operations.CALL);
 
