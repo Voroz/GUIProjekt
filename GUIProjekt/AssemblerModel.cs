@@ -7,6 +7,13 @@ using System.Diagnostics;
 
 namespace GUIProjekt
 {
+    static class Constants
+    {
+        public const ushort startOprBit = 5; //Defines start position for the Assembler operator in a 16 bit
+        public const ushort endOprBit = 8;   //Defines end position for the Assembler operator in a 16 bit
+        public const ushort startAdrBit = 9; //Defines start position for the Assembler value in a 16 bit
+        public const ushort endAdrBit = 16;  //Defines end position for the Assembler value in a 16 bit
+    }
     enum Operations : byte {
         Load = 0,
         Store = 1,
@@ -58,7 +65,7 @@ namespace GUIProjekt
         // Interprets the current address and runs the corresponding function
         public void processCurrentAddr() {
             ushort currAddrVal = _memory[_instructionPtr];
-            Operations op = (Operations)(createMask(5, 8) & currAddrVal);
+            Operations op = (Operations)(createMask(Constants.startOprBit, Constants.endOprBit) & currAddrVal);
             byte addr = (byte)(createMask(9, 16) & currAddrVal);
 
             Debug.Assert(op >= Operations.Load && op <= Operations.Call);
