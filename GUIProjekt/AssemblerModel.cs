@@ -92,7 +92,7 @@ namespace GUIProjekt
             }
             ushort addr = ushort.Parse(splitString[1]);
             machineCode = (ushort)op;
-            machineCode = (ushort)(machineCode << 8);
+            machineCode = (ushort)(machineCode << Constants.StartOprBit);
             machineCode += addr;
             return true;
         }
@@ -107,7 +107,7 @@ namespace GUIProjekt
 
             switch (op) {
                 case Operations.LOAD: {
-                    byte valAtAddr = (byte)(createMask(9, 16) & _memory[addr]);
+                    byte valAtAddr = (byte)(createMask(Constants.StartAdrBit, Constants.EndAdrBit) & _memory[addr]);
                     _workingRegister = valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
@@ -118,13 +118,13 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.ADD: {
-                    byte valAtAddr = (byte)(createMask(9, 16) & _memory[addr]);
+                    byte valAtAddr = (byte)(createMask(Constants.StartAdrBit, Constants.EndAdrBit) & _memory[addr]);
                     _workingRegister += valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case Operations.SUB: {
-                    byte valAtAddr = (byte)(createMask(9, 16) & _memory[addr]);
+                    byte valAtAddr = (byte)(createMask(Constants.StartAdrBit, Constants.EndAdrBit) & _memory[addr]);
                     _workingRegister -= valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
