@@ -67,11 +67,41 @@ namespace GUIProjekt
             return val;
         }
 
+        ushort extractOperation(ushort bits) {
+            return extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits);
+        }
+
+        ushort extractVal(ushort bits) {
+            return extractValFromBits(Constants.StartAdrBit, Constants.EndAdrBit, bits);
+        }
+
+        bool machineToAssembly(ushort bits, out string assemblyCode) {
+            // TODO: Handle failed casts?
+            Operations op = (Operations)extractOperation(bits);
+            byte addr = (byte)extractVal(bits);
+            assemblyCode = op.ToString() + " " + addr;
+            return true;
+        }
+
+        bool assemblyToMachine(string assemblyString, out ushort machineCode) {
+            string[] splitString = assemblyString.Split(' ');
+            Operations op;
+            if (!Enum.TryParse(splitString[0], false, out op)) {
+                machineCode = 0;
+                return false;
+            }
+            ushort addr = ushort.Parse(splitString[1]);
+            machineCode = (ushort)op;
+            machineCode = (ushort)(machineCode << 8);
+            machineCode += addr;
+            return true;
+        }
+
         // Interprets the current address and runs the corresponding function
         public void processCurrentAddr() {
             ushort currAddrVal = _memory[_instructionPtr];
-            Operations op = (Operations)(extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, currAddrVal));
-            byte addr = (byte)(extractValFromBits(Constants.StartAdrBit, Constants.EndAdrBit, currAddrVal));
+            Operations op = (Operations)extractOperation(currAddrVal);
+            byte addr = (byte)extractVal(currAddrVal);
 
             Debug.Assert(op >= Operations.LOAD && op <= Operations.CALL);
 
