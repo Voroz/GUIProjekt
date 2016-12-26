@@ -10,8 +10,8 @@ namespace GUIProjekt
     static class Constants {
         public const byte StartOprBit = 8;   // Defines start position for the Assembler operator in a 16 bit
         public const byte EndOprBit = 11;   // Defines end position for the Assembler operator in a 16 bit
-        public const byte StartAdrBit = 0; // Defines start position for the Assembler value in a 16 bit
-        public const byte EndAdrBit = 7;  // Defines end position for the Assembler value in a 16 bit
+        public const byte StartValBit = 0; // Defines start position for the Assembler value in a 16 bit
+        public const byte EndValBit = 7;  // Defines end position for the Assembler value in a 16 bit
     }
     enum Operations : byte {
         LOAD = 0,
@@ -72,10 +72,10 @@ namespace GUIProjekt
         }
 
         ushort extractVal(ushort bits) {
-            return extractValFromBits(Constants.StartAdrBit, Constants.EndAdrBit, bits);
+            return extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
         }
 
-        bool machineToAssembly(ushort bits, out string assemblyCode) {
+        public bool machineToAssembly(ushort bits, out string assemblyCode) {
             // TODO: Handle failed casts?
             Operations op = (Operations)extractOperation(bits);
             byte addr = (byte)extractVal(bits);
@@ -83,7 +83,7 @@ namespace GUIProjekt
             return true;
         }
 
-        bool assemblyToMachine(string assemblyString, out ushort machineCode) {
+        public bool assemblyToMachine(string assemblyString, out ushort machineCode) {
             string[] splitString = assemblyString.Split(' ');
             Operations op;
             if (!Enum.TryParse(splitString[0], false, out op)) {
@@ -97,17 +97,31 @@ namespace GUIProjekt
             return true;
         }
 
+        public ushort currentAddr() {
+            return _memory[_instructionPtr];
+        }
+
+        public ushort getAddr(byte idx) {
+            Debug.Assert(idx >= 0 && idx < _size);
+            return _memory[idx];
+        }
+
+        public void setAddr(byte idx, ushort val) {
+            Debug.Assert(idx >= 0 && idx < _size);
+            _memory[idx] = val;
+        }
+
         // Interprets the current address and runs the corresponding function
         public void processCurrentAddr() {
-            ushort currAddrVal = _memory[_instructionPtr];
-            Operations op = (Operations)extractOperation(currAddrVal);
-            byte addr = (byte)extractVal(currAddrVal);
+            ushort current = _memory[_instructionPtr];
+            Operations op = (Operations)extractOperation(current);
+            byte addr = (byte)extractVal(current);
 
             Debug.Assert(op >= Operations.LOAD && op <= Operations.CALL);
 
             switch (op) {
                 case Operations.LOAD: {
-                    byte valAtAddr = (byte)(createMask(Constants.StartAdrBit, Constants.EndAdrBit) & _memory[addr]);
+                    byte valAtAddr = (byte)(createMask(Constants.StartValBit, Constants.EndValBit) & _memory[addr]);
                     _workingRegister = valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
@@ -118,13 +132,13 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.ADD: {
-                    byte valAtAddr = (byte)(createMask(Constants.StartAdrBit, Constants.EndAdrBit) & _memory[addr]);
+                    byte valAtAddr = (byte)(createMask(Constants.StartValBit, Constants.EndValBit) & _memory[addr]);
                     _workingRegister += valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case Operations.SUB: {
-                    byte valAtAddr = (byte)(createMask(Constants.StartAdrBit, Constants.EndAdrBit) & _memory[addr]);
+                    byte valAtAddr = (byte)(createMask(Constants.StartValBit, Constants.EndValBit) & _memory[addr]);
                     _workingRegister -= valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
