@@ -35,14 +35,33 @@
                 <Label>Minne</Label>    <!-- Minne -->
             </Viewbox>
 
-            <Viewbox Grid.Column="1">
-                <Label>Maskinkod</Label>    <!-- Maskinkod -->
-            </Viewbox>
-            
-            <Viewbox Grid.Column="2">
-                <Label>Assembler</Label>    <!-- Assembler -->
-            </Viewbox>
-            
+            <!-- Maskinkod -->
+            <TextBox
+                Grid.Column="1"
+                Margin="2,0,2,0"
+                FontSize="14"
+                Height="Auto"
+                MinWidth="102"
+                MaxWidth="102"
+                TextWrapping="Wrap"
+                AcceptsReturn="True"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                />
+
+
+            <TextBox 
+                Grid.Column="2"
+                Margin="2,0,2,0"
+                FontSize="14"
+                Height="Auto"
+                MinWidth="150"
+                TextWrapping="Wrap"
+                AcceptsReturn="True"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                />
+
         </Grid> 
     </Grid>
 </Window>
