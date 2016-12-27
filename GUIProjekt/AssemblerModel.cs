@@ -35,6 +35,9 @@ namespace GUIProjekt
             _workingRegister = 0;
             _input = 0;
             _output = 0;
+
+
+            processCurrentAddr();
         }
 
         public bool SelfTest()
@@ -77,8 +80,8 @@ namespace GUIProjekt
             return true;
         }
 
-        ushort extractVal(ushort bits) {
-            return extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
+        byte extractVal(ushort bits) {
+            return (byte)extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
         }
 
         public bool machineToAssembly(ushort bits, out string assemblyCode) {
@@ -87,7 +90,7 @@ namespace GUIProjekt
                 assemblyCode = "";
                 return false;
             }
-            byte addr = (byte)extractVal(bits);
+            byte addr = extractVal(bits);
             assemblyCode = opr.ToString() + " " + addr;
             return true;
         }
@@ -100,8 +103,8 @@ namespace GUIProjekt
                 return false;
             }
 
-            ushort addr = 0;
-            if (!ushort.TryParse(splitString[1], out addr)) {
+            byte addr = 0;
+            if (!byte.TryParse(splitString[1], out addr)) {
                 machineCode = 0;
                 return false;
             }
@@ -141,8 +144,8 @@ namespace GUIProjekt
                 return false;
             }
 
-            ushort addr = 0;
-            if (!ushort.TryParse(splitString[1], out addr)) {
+            byte addr = 0;
+            if (!byte.TryParse(splitString[1], out addr)) {
                 return false;
             }
 
