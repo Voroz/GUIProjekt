@@ -35,9 +35,6 @@ namespace GUIProjekt
             _workingRegister = 0;
             _input = 0;
             _output = 0;
-
-
-            processCurrentAddr();
         }
 
         public bool SelfTest()
