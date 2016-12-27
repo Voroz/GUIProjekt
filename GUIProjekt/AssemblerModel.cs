@@ -155,7 +155,7 @@ namespace GUIProjekt
             Operations opr = Operations.LOAD;            
             byte addr = (byte)extractVal(current);
 
-            Debug.Assert(extractOperation(current, opr));
+            Debug.Assert(extractOperation(current, out opr));
 
             switch (opr) {
                 case Operations.LOAD: {
@@ -206,10 +206,6 @@ namespace GUIProjekt
                     // RETURN
                 } break;
             }
-        }
-
-        private bool extractOperation(ushort current, Operations opr) {
-            throw new NotImplementedException();
         }
 
 
