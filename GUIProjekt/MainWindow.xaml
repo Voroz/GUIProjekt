@@ -36,31 +36,51 @@
             </Viewbox>
 
             <!-- Maskinkod -->
-            <TextBox
-                Grid.Column="1"
-                Margin="2,0,2,0"
-                FontSize="14"
-                Height="Auto"
-                MinWidth="102"
-                MaxWidth="102"
-                TextWrapping="Wrap"
-                AcceptsReturn="True"
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="90*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" FontSize="30">Maskinkod</Label>
+                <TextBox
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    Margin="2,0,2,0"
+                    FontSize="14"
+                    Height="Auto"
+                    MinWidth="102"
+                    MaxWidth="102"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
                 />
+            </Grid>
 
 
-            <TextBox 
-                Grid.Column="2"
-                Margin="2,0,2,0"
-                FontSize="14"
-                Height="Auto"
-                MinWidth="150"
-                TextWrapping="Wrap"
-                AcceptsReturn="True"
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
+            <!-- Assembler -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="90*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" FontSize="30">Assembler</Label>
+                <TextBox
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    Margin="2,0,2,0"
+                    FontSize="14"
+                    Height="Auto"
+                    Width="300"
+                    MinWidth="150"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
                 />
+            </Grid>            
 
         </Grid> 
     </Grid>

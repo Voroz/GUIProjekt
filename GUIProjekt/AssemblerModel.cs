@@ -205,7 +205,11 @@ namespace GUIProjekt
                     // CALL adr
                     // RETURN
                 } break;
-            }
+
+                default: {
+                    Debug.Assert(false);
+                } break;
+            } 
         }
 
 
