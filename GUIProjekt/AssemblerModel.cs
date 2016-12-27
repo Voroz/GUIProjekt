@@ -67,8 +67,14 @@ namespace GUIProjekt
             return val;
         }
 
-        ushort extractOperation(ushort bits) {
-            return extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits);
+        bool extractOperation(ushort bits, out Operations opr) {
+            ushort val = extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits);
+            if (!Enum.IsDefined(typeof(Operations), val)) {
+                opr = Operations.LOAD;
+                return false;
+            }
+            opr = (Operations)val;
+            return true;
         }
 
         ushort extractVal(ushort bits) {
@@ -76,22 +82,31 @@ namespace GUIProjekt
         }
 
         public bool machineToAssembly(ushort bits, out string assemblyCode) {
-            // TODO: Handle failed casts?
-            Operations op = (Operations)extractOperation(bits);
+            Operations opr;
+            if (!extractOperation(bits, out opr)) {
+                assemblyCode = "";
+                return false;
+            }
             byte addr = (byte)extractVal(bits);
-            assemblyCode = op.ToString() + " " + addr;
+            assemblyCode = opr.ToString() + " " + addr;
             return true;
         }
 
         public bool assemblyToMachine(string assemblyString, out ushort machineCode) {
             string[] splitString = assemblyString.Split(' ');
-            Operations op;
-            if (!Enum.TryParse(splitString[0], false, out op)) {
+            Operations opr;
+            if (!Enum.TryParse(splitString[0], false, out opr)) {
                 machineCode = 0;
                 return false;
             }
-            ushort addr = ushort.Parse(splitString[1]);
-            machineCode = (ushort)op;
+
+            ushort addr = 0;
+            if (!ushort.TryParse(splitString[1], out addr)) {
+                machineCode = 0;
+                return false;
+            }
+
+            machineCode = (ushort)opr;
             machineCode = (ushort)(machineCode << Constants.StartOprBit);
             machineCode += addr;
             return true;
@@ -111,15 +126,38 @@ namespace GUIProjekt
             _memory[idx] = val;
         }
 
+        public bool checkSyntax(ushort bits) {
+            ushort current = _memory[_instructionPtr];
+            Operations opr;
+
+            bool ok = extractOperation(current, out opr);
+            return ok;
+        }
+
+        public bool checkSyntax(string assemblyString) {
+            string[] splitString = assemblyString.Split(' ');
+            Operations opr;
+            if (!Enum.TryParse(splitString[0], false, out opr)) {
+                return false;
+            }
+
+            ushort addr = 0;
+            if (!ushort.TryParse(splitString[1], out addr)) {
+                return false;
+            }
+
+            return true;
+        }
+
         // Interprets the current address and runs the corresponding function
         public void processCurrentAddr() {
             ushort current = _memory[_instructionPtr];
-            Operations op = (Operations)extractOperation(current);
+            Operations opr = Operations.LOAD;            
             byte addr = (byte)extractVal(current);
 
-            Debug.Assert(op >= Operations.LOAD && op <= Operations.CALL);
+            Debug.Assert(extractOperation(current, opr));
 
-            switch (op) {
+            switch (opr) {
                 case Operations.LOAD: {
                     byte valAtAddr = (byte)(createMask(Constants.StartValBit, Constants.EndValBit) & _memory[addr]);
                     _workingRegister = valAtAddr;
@@ -168,6 +206,10 @@ namespace GUIProjekt
                     // RETURN
                 } break;
             }
+        }
+
+        private bool extractOperation(ushort current, Operations opr) {
+            throw new NotImplementedException();
         }
 
 
