@@ -159,7 +159,7 @@ namespace GUIProjekt
 
             switch (opr) {
                 case Operations.LOAD: {
-                    byte valAtAddr = (byte)(createMask(Constants.StartValBit, Constants.EndValBit) & _memory[addr]);
+                    byte valAtAddr = extractVal(_memory[addr]);
                     _workingRegister = valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
@@ -170,13 +170,13 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.ADD: {
-                    byte valAtAddr = (byte)(createMask(Constants.StartValBit, Constants.EndValBit) & _memory[addr]);
+                    byte valAtAddr = extractVal(_memory[addr]);
                     _workingRegister += valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case Operations.SUB: {
-                    byte valAtAddr = (byte)(createMask(Constants.StartValBit, Constants.EndValBit) & _memory[addr]);
+                    byte valAtAddr = extractVal(_memory[addr]);
                     _workingRegister -= valAtAddr;
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
