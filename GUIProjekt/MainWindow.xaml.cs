@@ -46,7 +46,6 @@ namespace GUIProjekt
 
         }
 
-        // TODO: Make this a run button clicked event function
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
             TextBox textBox = TextBox_MK;
             if (!checkSyntaxTextBox(textBox)) {
