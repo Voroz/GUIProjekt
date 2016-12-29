@@ -23,7 +23,15 @@
         </Menu>
 
         <Viewbox Grid.Row="1" HorizontalAlignment="Left">
-            <Label>Menyn för att styra programmet</Label>   <!-- Meny -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Menyn för att styra programmet</Label>   <!-- Meny -->
+                <Button Grid.Column="1" Click="Button_Run_Click">Run(test)</Button>
+            </Grid>
         </Viewbox>  
         
         <Grid Grid.Row="2" Margin="0,35,0,10">
@@ -57,6 +65,8 @@
                     AcceptsReturn="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    Name="TextBox_MK"
+                    TextChanged="TextBox_MK_TextChanged"
                 />
             </Grid>
 

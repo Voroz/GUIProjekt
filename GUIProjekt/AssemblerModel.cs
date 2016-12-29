@@ -35,6 +35,7 @@ namespace GUIProjekt
             _workingRegister = 0;
             _input = 0;
             _output = 0;
+            _executionDelay = 200;
         }
 
         public bool SelfTest()
@@ -68,17 +69,46 @@ namespace GUIProjekt
         }
 
         bool extractOperation(ushort bits, out Operations opr) {
-            ushort val = extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits);
-            if (!Enum.IsDefined(typeof(Operations), val)) {
+            byte oprVal = (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits);
+            if (!Enum.IsDefined(typeof(Operations), oprVal)) {
                 opr = Operations.LOAD;
                 return false;
             }
-            opr = (Operations)val;
+            opr = (Operations)oprVal;
             return true;
         }
 
         byte extractVal(ushort bits) {
             return (byte)extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
+        }
+
+        bool isBinary(string str) {
+            bool binary = true;
+            foreach (char ch in str) {
+                if (!(ch == '0' || ch == '1')) {
+                    binary = false;
+                    break;
+                }
+            }
+
+            return binary;
+        }
+
+        public bool stringToMachine(string str, out ushort machineCode) {
+            bool binary = isBinary(str);
+
+            if (binary) {
+                machineCode = Convert.ToUInt16(str, 2);
+                return true;
+            }
+            else {
+                if (!assemblyToMachine(str, out machineCode)) {
+                    machineCode = 0;
+                    return false;
+                }
+
+                return true;
+            }
         }
 
         public bool machineToAssembly(ushort bits, out string assemblyCode) {
@@ -116,6 +146,14 @@ namespace GUIProjekt
             return _memory[_instructionPtr];
         }
 
+        public void resetInstructionPtr() {
+            _instructionPtr = 0;
+        }
+
+        public byte instructionPtr() {
+            return _instructionPtr;
+        }
+
         public ushort getAddr(byte idx) {
             Debug.Assert(idx >= 0 && idx < _size);
             return _memory[idx];
@@ -126,24 +164,44 @@ namespace GUIProjekt
             _memory[idx] = val;
         }
 
-        public bool checkSyntax(ushort bits) {
-            ushort current = _memory[_instructionPtr];
-            Operations opr;
-
-            bool ok = extractOperation(current, out opr);
-            return ok;
+        public int delay() {
+            return _executionDelay;
         }
 
-        public bool checkSyntax(string assemblyString) {
-            string[] splitString = assemblyString.Split(' ');
-            Operations opr;
-            if (!Enum.TryParse(splitString[0], false, out opr)) {
-                return false;
+        // TODO: Add error code as return value instead of boolean
+        public bool checkSyntax(string str) {
+
+            bool binary = isBinary(str);
+
+            if (binary) {
+
+                if (str.Length != 12) {
+                    return false;
+                }
+
+                ushort bits;
+                if (!stringToMachine(str, out bits)) {
+                    return false;
+                }
+
+                Operations opr;
+                if (!extractOperation(bits, out opr)) {
+                    return false;
+                }
             }
 
-            byte addr = 0;
-            if (!byte.TryParse(splitString[1], out addr)) {
-                return false;
+            else if (!binary) {
+                string[] splitString = str.Split(' ');
+
+                Operations opr;
+                if (!Enum.TryParse(splitString[0], false, out opr)) {
+                    return false;
+                }
+
+                byte addr = 0;
+                if (!byte.TryParse(splitString[1], out addr)) {
+                    return false;
+                }
             }
 
             return true;
@@ -221,5 +279,7 @@ namespace GUIProjekt
         private byte _input;
         private byte _output;
         private readonly int _size;
+
+        private int _executionDelay;
     }
 }
