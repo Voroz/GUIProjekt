@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace GUIProjekt
 {
@@ -52,14 +53,12 @@ namespace GUIProjekt
                 return;
             }
 
+            // Adds users text input to the model
             for (byte i = 0; i < textBox.LineCount; i++) {
                 string str = textBox.GetLineText(i);
                 ushort bits;
 
-                if (!_assemblerModel.stringToMachine(str, out bits)) {
-                    continue;
-                }
-
+                Debug.Assert(_assemblerModel.stringToMachine(str, out bits));
                 _assemblerModel.setAddr(i, bits);
             }
                         
