@@ -29,13 +29,28 @@ namespace GUIProjekt
             _assemblerModel.SelfTest();
         }
 
-        private bool checkSyntaxTextBox(TextBox textBox) {
+        private bool checkSyntaxMachineTextBox(TextBox textBox) {
             // TODO: Implement (intellisens) error notification.
 
             for (byte i = 0; i < textBox.LineCount; i++) {
-                string str = textBox.GetLineText(i);
+                char[] trimChars = new char[2] {'\r', '\n'};
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
-                if (!_assemblerModel.checkSyntax(str)) {
+                if (!_assemblerModel.checkSyntaxMachine(str)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool checkSyntaxAssemblyTextBox(TextBox textBox) {
+            // TODO: Implement (intellisens) error notification.
+
+            for (byte i = 0; i < textBox.LineCount; i++) {
+                char[] trimChars = new char[2] { '\r', '\n' };
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
+
+                if (!_assemblerModel.checkSyntaxAssembly(str)) {
                     return false;
                 }
             }
@@ -44,18 +59,19 @@ namespace GUIProjekt
 
         private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
             TextBox textBox = sender as TextBox;
-
+            // TODO: intellisens stuff
         }
 
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
             TextBox textBox = TextBox_MK;
-            if (!checkSyntaxTextBox(textBox)) {
+            if (!checkSyntaxMachineTextBox(textBox)) {
                 return;
             }
 
             // Adds users text input to the model
             for (byte i = 0; i < textBox.LineCount; i++) {
-                string str = textBox.GetLineText(i);
+                char[] trimChars = new char[2] { '\r', '\n' };
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
                 ushort bits;
 
                 Debug.Assert(_assemblerModel.stringToMachine(str, out bits));

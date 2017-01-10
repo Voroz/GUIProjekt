@@ -169,6 +169,50 @@ namespace GUIProjekt
         }
 
         // TODO: Add error code as return value instead of boolean
+        public bool checkSyntaxMachine(string str) {
+            if (!isBinary(str)) {
+                return false;
+            }
+
+            if (str.Length != 12) {
+                return false;
+            }
+
+            ushort bits;
+            if (!stringToMachine(str, out bits)) {
+                return false;
+            }
+
+            Operations opr;
+            if (!extractOperation(bits, out opr)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        // TODO: Add error code as return value instead of boolean
+        public bool checkSyntaxAssembly(string str) {
+            if (isBinary(str)) {
+                return false;
+            }
+
+            string[] splitString = str.Split(' ');
+
+            Operations opr;
+            if (!Enum.TryParse(splitString[0], false, out opr)) {
+                return false;
+            }
+
+            byte addr = 0;
+            if (!byte.TryParse(splitString[1], out addr)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        // TODO: Add error code as return value instead of boolean
         public bool checkSyntax(string str) {
 
             bool binary = isBinary(str);
