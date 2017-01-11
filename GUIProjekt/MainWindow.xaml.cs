@@ -97,10 +97,13 @@ namespace GUIProjekt
 
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
             TextBox textBox = TextBox_MK;
+            TextBox textBoxAssembler = TextBox_Assembler;
             if (!checkSyntaxMachineTextBox(textBox)) {
                 return;
             }
-
+            //Vid körning av programmet vill vi inte att användaren skall kunna ändra i maskinkoden därför görs textBoxen till readOnly, sätt tillbaka när StopButton aktiveras
+            textBox.IsReadOnly = true;
+            textBoxAssembler.IsReadOnly = true;
             // Adds users text input to the model
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
@@ -151,5 +154,13 @@ namespace GUIProjekt
         }
 
         private AssemblerModel _assemblerModel;
+
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = TextBox_MK;
+            TextBox textBoxAssembler = TextBox_Assembler;
+            textBoxAssembler.IsReadOnly = false;
+            textBox.IsReadOnly = false;
+        }
     }
 }

@@ -54,7 +54,7 @@
                     <TextBlock Text="Pause" />
                 </ToolTipService.ToolTip>
             </Button>
-            <Button Style="{StaticResource MenuButton}">
+            <Button Name="StopBtn" Click="StopBtn_Click" Style="{StaticResource MenuButton}">
                 <Image Source="images/media-stop-8x.png" />
                 <ToolTipService.ToolTip>
                     <TextBlock Text="Stop" />
