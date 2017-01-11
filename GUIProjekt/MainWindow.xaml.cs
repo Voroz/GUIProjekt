@@ -60,6 +60,7 @@ namespace GUIProjekt
         private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
             TextBox textBox = sender as TextBox;
             // TODO: intellisens stuff
+
         }
 
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
@@ -85,6 +86,20 @@ namespace GUIProjekt
                 // TODO: Mark current row
                 Thread.Sleep(_assemblerModel.delay());
                 _assemblerModel.processCurrentAddr();
+            }
+        }
+
+        private void TextBox_Assembler_TextChanged(object sender, TextChangedEventArgs e) {
+            TextBox assemblerBox = sender as TextBox;
+            TextBox mkBox = TextBox_MK;
+
+            if (checkSyntaxAssemblyTextBox(assemblerBox)) {
+                mkBox.Clear();
+                for (int i = 0; i < assemblerBox.LineCount; i++) {
+                    ushort bits;
+                    _assemblerModel.assemblyToMachine(assemblerBox.GetLineText(i), out bits);
+                    mkBox.AppendText(Convert.ToString(bits, 2).PadLeft(12, '0') + '\n');
+                }
             }
         }
 

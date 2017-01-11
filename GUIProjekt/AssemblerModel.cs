@@ -199,6 +199,9 @@ namespace GUIProjekt
 
             string[] splitString = str.Split(' ');
 
+            if (splitString.Length != 2)
+                return false;
+
             Operations opr;
             if (!Enum.TryParse(splitString[0], false, out opr)) {
                 return false;

@@ -91,6 +91,8 @@
                     AcceptsReturn="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    Name="TextBox_Assembler"
+                    TextChanged="TextBox_Assembler_TextChanged"
                 />
             </Grid>            
 
