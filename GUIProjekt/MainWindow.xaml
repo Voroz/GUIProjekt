@@ -72,6 +72,23 @@
                     <TextBlock Text="Step back" />
                 </ToolTipService.ToolTip>
             </Button>
+            
+            <Viewbox>
+                <ToggleButton Name="PlayButton" Background="Lavender" BorderBrush="LightBlue">
+                    <Image Source="images/play-button.png" Height="9" Width="9" ToolTip="Play"></Image>
+                </ToggleButton>
+            </Viewbox>
+            <Viewbox>
+                <ToggleButton Name="PauseButton" Background="Lavender" BorderBrush="LightBlue">
+                    <Image Source="images/pause.png" Height="10" Width="10" ToolTip="Pause"></Image>
+                </ToggleButton>
+            </Viewbox>
+            <Viewbox>
+                <ToggleButton Name="StopButton" Background="Lavender" BorderBrush="LightBlue">
+                    <Image Source="images/Stopbtn.png" Height="10" Width="10" ToolTip="Stop"></Image>
+                </ToggleButton>
+            </Viewbox>
+            
         </StackPanel>
         
 
@@ -94,7 +111,8 @@
                 
                 <Viewbox Stretch="Uniform">
                     <Label Grid.Row="0" FontSize="30">Maskinkod</Label>
-                </Viewbox>               
+                </Viewbox>
+               
                 <TextBox
                     Grid.Row="1"
                     HorizontalAlignment="Left"
