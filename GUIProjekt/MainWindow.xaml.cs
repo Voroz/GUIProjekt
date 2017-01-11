@@ -107,6 +107,11 @@ namespace GUIProjekt
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
                 ushort bits;
 
+                // Empty lines to create space are fine
+                if (str == "\r\n" || str == "\r" || str == "\n" || str == "") {
+                    continue;
+                }
+
                 Debug.Assert(_assemblerModel.stringToMachine(str, out bits));
                 _assemblerModel.setAddr(i, bits);
             }
