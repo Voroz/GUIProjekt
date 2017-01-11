@@ -44,18 +44,33 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="#eeeeee">
             <Button Click="Button_Run_Click" Style="{StaticResource MenuButton}">
                 <Image Source="images/media-play-8x.png" />
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Play" />
+                </ToolTipService.ToolTip>
             </Button>
             <Button Style="{StaticResource MenuButton}">
                 <Image Source="images/media-pause-8x.png" />
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Pause" />
+                </ToolTipService.ToolTip>
             </Button>
             <Button Style="{StaticResource MenuButton}">
                 <Image Source="images/media-stop-8x.png" />
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Stop" />
+                </ToolTipService.ToolTip>
             </Button>
             <Button Style="{StaticResource MenuButton}">
                 <Image Source="images/action-undo-8x.png" />
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Step Forward" />
+                </ToolTipService.ToolTip>
             </Button>
             <Button Style="{StaticResource MenuButton}">
                 <Image Source="images/action-redo-8x.png" />
+                <ToolTipService.ToolTip>
+                    <TextBlock Text="Step back" />
+                </ToolTipService.ToolTip>
             </Button>
         </StackPanel>
         
