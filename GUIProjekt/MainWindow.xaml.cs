@@ -64,8 +64,7 @@ namespace GUIProjekt
             if (!mkBox.IsFocused)  // Breaking this event if textbox is updated from assembler textbox
                 return;
 
-            if (string.IsNullOrWhiteSpace(mkBox.Text))
-            {
+            if (string.IsNullOrWhiteSpace(mkBox.Text)) {
                 mkBox.Clear();
                 return;
             }
