@@ -58,9 +58,30 @@ namespace GUIProjekt
         }
 
         private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
-            TextBox textBox = sender as TextBox;
-            // TODO: intellisens stuff
+            TextBox mkBox = sender as TextBox;
+            TextBox assemblerBox = TextBox_Assembler;
 
+            if (!mkBox.IsFocused)  // Breaking this event if textbox is updated from assembler textbox
+                return;
+
+            if (string.IsNullOrWhiteSpace(mkBox.Text))
+            {
+                mkBox.Clear();
+                return;
+            }
+
+            char[] trimChars = new char[2] { '\r', '\n' };
+
+            if (checkSyntaxMachineTextBox(mkBox)) {
+                assemblerBox.Clear();
+                for (int i = 0; i < mkBox.LineCount; i++) {
+                    string assembly;
+                    ushort bits;
+                    _assemblerModel.stringToMachine(mkBox.GetLineText(i).TrimEnd(trimChars), out bits);
+                    _assemblerModel.machineToAssembly(bits, out assembly);
+                    assemblerBox.AppendText(assembly + '\n');
+                }
+            }
         }
 
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
@@ -92,6 +113,14 @@ namespace GUIProjekt
         private void TextBox_Assembler_TextChanged(object sender, TextChangedEventArgs e) {
             TextBox assemblerBox = sender as TextBox;
             TextBox mkBox = TextBox_MK;
+
+            if (!assemblerBox.IsFocused)
+                return;
+
+            if (string.IsNullOrWhiteSpace(assemblerBox.Text)) {
+                mkBox.Clear();
+                return;
+            }
 
             if (checkSyntaxAssemblyTextBox(assemblerBox)) {
                 mkBox.Clear();
