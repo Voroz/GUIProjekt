@@ -33,9 +33,14 @@ namespace GUIProjekt
             // TODO: Implement (intellisens) error notification.
 
             for (byte i = 0; i < textBox.LineCount; i++) {
-                char[] trimChars = new char[2] {'\r', '\n'};
+                char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
+                // Empty lines to create space are fine
+                if (str == "\r\n" || str == "\r" || str == "\n" || str == "") {
+                    continue;
+                }
+                
                 if (!_assemblerModel.checkSyntaxMachine(str)) {
                     return false;
                 }
@@ -50,6 +55,11 @@ namespace GUIProjekt
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
+                // Empty lines to create space are fine
+                if (str == "\r\n" || str == "\r" || str == "\n" || str == "") {
+                    continue;
+                }
+
                 if (!_assemblerModel.checkSyntaxAssembly(str)) {
                     return false;
                 }
@@ -58,6 +68,8 @@ namespace GUIProjekt
         }
 
         private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
+            // TODO: Intellisens stuff
+
             TextBox mkBox = sender as TextBox;
             TextBox assemblerBox = TextBox_Assembler;
 
@@ -70,13 +82,13 @@ namespace GUIProjekt
                 return;
             }
 
-            char[] trimChars = new char[2] { '\r', '\n' };
-
             if (checkSyntaxMachineTextBox(mkBox)) {
                 assemblerBox.Clear();
                 for (int i = 0; i < mkBox.LineCount; i++) {
                     string assembly;
                     ushort bits;
+
+                    char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.stringToMachine(mkBox.GetLineText(i).TrimEnd(trimChars), out bits);
                     _assemblerModel.machineToAssembly(bits, out assembly);
                     assemblerBox.AppendText(assembly + '\n');
@@ -126,7 +138,9 @@ namespace GUIProjekt
                 mkBox.Clear();
                 for (int i = 0; i < assemblerBox.LineCount; i++) {
                     ushort bits;
-                    _assemblerModel.assemblyToMachine(assemblerBox.GetLineText(i), out bits);
+
+                    char[] trimChars = new char[2] { '\r', '\n'};
+                    _assemblerModel.assemblyToMachine(assemblerBox.GetLineText(i).TrimEnd(trimChars), out bits);
                     mkBox.AppendText(Convert.ToString(bits, 2).PadLeft(12, '0') + '\n');
                 }
             }
