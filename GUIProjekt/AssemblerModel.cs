@@ -91,6 +91,9 @@ namespace GUIProjekt
                 }
             }
 
+            if (string.IsNullOrEmpty(str))
+                binary = false;
+
             return binary;
         }
 

@@ -87,9 +87,13 @@ namespace GUIProjekt
                     string assembly;
                     ushort bits;
 
-                    char[] trimChars = new char[2] { '\r', '\n' };
-                    _assemblerModel.stringToMachine(mkBox.GetLineText(i).TrimEnd(trimChars), out bits);
-                    _assemblerModel.machineToAssembly(bits, out assembly);
+                    if (!string.IsNullOrWhiteSpace(mkBox.GetLineText(i))) {
+                        char[] trimChars = new char[2] { '\r', '\n' };
+                        _assemblerModel.stringToMachine(mkBox.GetLineText(i).TrimEnd(trimChars), out bits);
+                        _assemblerModel.machineToAssembly(bits, out assembly);
+                    }
+                    else assembly = "";
+
                     assemblerBox.AppendText(assembly + '\n');
                 }
             }
@@ -97,10 +101,13 @@ namespace GUIProjekt
 
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
             TextBox textBox = TextBox_MK;
+            TextBox textBoxAssembler = TextBox_Assembler;
             if (!checkSyntaxMachineTextBox(textBox)) {
                 return;
             }
-
+            //Vid körning av programmet vill vi inte att användaren skall kunna ändra i maskinkoden därför görs textBoxen till readOnly, sätt tillbaka när StopButton aktiveras
+            textBox.IsReadOnly = true;
+            textBoxAssembler.IsReadOnly = true;
             // Adds users text input to the model
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
@@ -133,6 +140,8 @@ namespace GUIProjekt
             if (!assemblerBox.IsFocused)
                 return;
 
+            updateLineNumber(assemblerBox);
+
             if (string.IsNullOrWhiteSpace(assemblerBox.Text)) {
                 mkBox.Clear();
                 return;
@@ -150,6 +159,25 @@ namespace GUIProjekt
             }
         }
 
+        private void updateLineNumber(TextBox textBox) {
+            if (textBox.LineCount != _numberOfLines) {
+                AssemblerLineNumbers.Items.Clear();
+                for (int i = 0; i < textBox.LineCount; i++) {
+                    AssemblerLineNumbers.Items.Add(i);
+                }
+                _numberOfLines = textBox.LineCount;
+            }
+        }
+
         private AssemblerModel _assemblerModel;
+        private int _numberOfLines;
+
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = TextBox_MK;
+            TextBox textBoxAssembler = TextBox_Assembler;
+            textBoxAssembler.IsReadOnly = false;
+            textBox.IsReadOnly = false;
+        }
     }
 }
