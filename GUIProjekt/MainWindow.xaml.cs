@@ -74,19 +74,20 @@ namespace GUIProjekt
             TextBox mkBox = sender as TextBox;
             TextBox assemblerBox = TextBox_Assembler;
 
-            if (!mkBox.IsFocused)  // Breaking this event if textbox is updated from assembler textbox
+            if (!mkBox.IsFocused) {  // Breaking this event if textbox is updated from assembler textbox
                 return;
+            }
+
+            assemblerBox.Clear();
 
             if (string.IsNullOrWhiteSpace(mkBox.Text)) {
-                mkBox.Clear();
                 return;
             }
 
             if (!checkSyntaxMachineTextBox(mkBox)) {
                 return;
             }
-            
-            assemblerBox.Clear();
+
             for (int i = 0; i < mkBox.LineCount; i++) {
                 string str = mkBox.GetLineText(i);
                 ushort bits;
@@ -108,21 +109,21 @@ namespace GUIProjekt
             TextBox assemblerBox = sender as TextBox;
             TextBox mkBox = TextBox_MK;
 
-            if (!assemblerBox.IsFocused)
+            if (!assemblerBox.IsFocused) {
                 return;
+            }
 
             updateLineNumber(assemblerBox);
+            mkBox.Clear();
 
             if (string.IsNullOrWhiteSpace(assemblerBox.Text)) {
-                mkBox.Clear();
                 return;
             }
 
             if (!checkSyntaxAssemblyTextBox(assemblerBox)) {
                 return;
             }
-
-            mkBox.Clear();
+            
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string str = assemblerBox.GetLineText(i);
                 ushort bits;
@@ -157,6 +158,7 @@ namespace GUIProjekt
 
                 // Empty lines to create space are fine
                 if (str == "\r\n" || str == "\r" || str == "\n" || str == "") {
+                    _assemblerModel.setAddr(i, Constants.UshortMax);
                     continue;
                 }
 
@@ -167,7 +169,7 @@ namespace GUIProjekt
             _assemblerModel.resetInstructionPtr();
             // TODO: Valid address can be 0, since LOAD is 0. How to know when program should stop?
             // TODO: Other solution over while loop, since while loop make user unable to use interface while program is running.
-            while (_assemblerModel.currentAddr() != 0) {                
+            while (_assemblerModel.currentAddr() != Constants.UshortMax) {                
                 // TODO: Mark current row
                 Thread.Sleep(_assemblerModel.delay());
                 _assemblerModel.processCurrentAddr();
@@ -175,7 +177,7 @@ namespace GUIProjekt
 
             textBoxAssembler.IsReadOnly = false;
             textBox.IsReadOnly = false;
-        }        
+        }
 
         private void updateLineNumber(TextBox textBox) {
             if (textBox.LineCount != _numberOfLines) {
@@ -190,8 +192,7 @@ namespace GUIProjekt
         private AssemblerModel _assemblerModel;
         private int _numberOfLines;
 
-        private void Button_Stop_Click(object sender, RoutedEventArgs e)
-        {
+        private void Button_Stop_Click(object sender, RoutedEventArgs e) {
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;
