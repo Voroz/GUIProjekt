@@ -140,6 +140,8 @@ namespace GUIProjekt
             if (!assemblerBox.IsFocused)
                 return;
 
+            updateLineNumber(assemblerBox);
+
             if (string.IsNullOrWhiteSpace(assemblerBox.Text)) {
                 mkBox.Clear();
                 return;
@@ -157,7 +159,18 @@ namespace GUIProjekt
             }
         }
 
+        private void updateLineNumber(TextBox textBox) {
+            if (textBox.LineCount != _numberOfLines) {
+                AssemblerLineNumbers.Items.Clear();
+                for (int i = 0; i < textBox.LineCount; i++) {
+                    AssemblerLineNumbers.Items.Add(i);
+                }
+                _numberOfLines = textBox.LineCount;
+            }
+        }
+
         private AssemblerModel _assemblerModel;
+        private int _numberOfLines;
 
         private void StopBtn_Click(object sender, RoutedEventArgs e)
         {
