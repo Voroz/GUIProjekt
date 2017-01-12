@@ -29,9 +29,9 @@ namespace GUIProjekt
             _assemblerModel.SelfTest();
         }
 
+        // TODO: Add error code as return value instead of boolean
+        // Maybe a struct with error code + line number
         private bool checkSyntaxMachineTextBox(TextBox textBox) {
-            // TODO: Implement (intellisens) error notification.
-
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
@@ -48,9 +48,9 @@ namespace GUIProjekt
             return true;
         }
 
+        // TODO: Add error code as return value instead of boolean
+        // Maybe a struct with error code + line number
         private bool checkSyntaxAssemblyTextBox(TextBox textBox) {
-            // TODO: Implement (intellisens) error notification.
-
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
@@ -69,6 +69,7 @@ namespace GUIProjekt
 
         private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
             // TODO: Intellisens stuff
+            // (use struct from checkSyntax functions with error code and line number to create highlighting and error information for user)
 
             TextBox mkBox = sender as TextBox;
             TextBox assemblerBox = TextBox_Assembler;
