@@ -87,9 +87,13 @@ namespace GUIProjekt
                     string assembly;
                     ushort bits;
 
-                    char[] trimChars = new char[2] { '\r', '\n' };
-                    _assemblerModel.stringToMachine(mkBox.GetLineText(i).TrimEnd(trimChars), out bits);
-                    _assemblerModel.machineToAssembly(bits, out assembly);
+                    if (!string.IsNullOrWhiteSpace(mkBox.GetLineText(i))) {
+                        char[] trimChars = new char[2] { '\r', '\n' };
+                        _assemblerModel.stringToMachine(mkBox.GetLineText(i).TrimEnd(trimChars), out bits);
+                        _assemblerModel.machineToAssembly(bits, out assembly);
+                    }
+                    else assembly = "";
+
                     assemblerBox.AppendText(assembly + '\n');
                 }
             }
