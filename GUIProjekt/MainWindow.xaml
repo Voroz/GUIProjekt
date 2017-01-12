@@ -69,7 +69,7 @@
             <Button Style="{StaticResource MenuButton}">
                 <Image Source="images/action-redo-8x.png" />
                 <ToolTipService.ToolTip>
-                    <TextBlock Text="Step back" />
+                    <TextBlock Text="Step Back" />
                 </ToolTipService.ToolTip>
             </Button>
         </StackPanel>
