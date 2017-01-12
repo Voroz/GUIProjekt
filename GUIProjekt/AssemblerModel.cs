@@ -172,6 +172,7 @@ namespace GUIProjekt
         }
 
         // TODO: Add error code as return value instead of boolean
+        // Maybe a struct with error code + line number
         public bool checkSyntaxMachine(string str) {
             if (!isBinary(str)) {
                 return false;
@@ -195,6 +196,7 @@ namespace GUIProjekt
         }
 
         // TODO: Add error code as return value instead of boolean
+        // Maybe a struct with error code + line number
         public bool checkSyntaxAssembly(string str) {
             if (isBinary(str)) {
                 return false;
