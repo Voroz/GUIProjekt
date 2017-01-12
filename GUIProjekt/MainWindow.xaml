@@ -41,36 +41,21 @@
             </MenuItem>
         </Menu>
         
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="#eeeeee">
-            <Button Click="Button_Run_Click" Style="{StaticResource MenuButton}">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="{StaticResource MenuColor}">
+            <Button Click="Button_Run_Click" Style="{StaticResource MenuButton}" ToolTip="Play">
                 <Image Source="images/media-play-8x.png" />
-                <ToolTipService.ToolTip>
-                    <TextBlock Text="Play" />
-                </ToolTipService.ToolTip>
             </Button>
-            <Button Style="{StaticResource MenuButton}">
+            <Button Style="{StaticResource MenuButton}" ToolTip="Pause">
                 <Image Source="images/media-pause-8x.png" />
-                <ToolTipService.ToolTip>
-                    <TextBlock Text="Pause" />
-                </ToolTipService.ToolTip>
             </Button>
-            <Button Name="StopBtn" Click="StopBtn_Click" Style="{StaticResource MenuButton}">
+            <Button Name="StopBtn" Click="StopBtn_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
                 <Image Source="images/media-stop-8x.png" />
-                <ToolTipService.ToolTip>
-                    <TextBlock Text="Stop" />
-                </ToolTipService.ToolTip>
             </Button>
-            <Button Style="{StaticResource MenuButton}">
+            <Button Style="{StaticResource MenuButton}" ToolTip="Step Forward">
                 <Image Source="images/action-undo-8x.png" />
-                <ToolTipService.ToolTip>
-                    <TextBlock Text="Step Forward" />
-                </ToolTipService.ToolTip>
             </Button>
-            <Button Style="{StaticResource MenuButton}">
+            <Button Style="{StaticResource MenuButton}" ToolTip="Step Back">
                 <Image Source="images/action-redo-8x.png" />
-                <ToolTipService.ToolTip>
-                    <TextBlock Text="Step back" />
-                </ToolTipService.ToolTip>
             </Button>
             
             <Viewbox>
@@ -1398,12 +1383,10 @@
                 </Viewbox>             
                 <TextBox
                     Grid.Row="1"
-                    HorizontalAlignment="Left"
-                    Margin="2,0,2,0"
+                    HorizontalAlignment="Stretch"
+                    Margin="2,0,10,0"
                     FontSize="14"
                     Height="Auto"
-                    MaxWidth="102"
-                    MinWidth="102"
                     TextWrapping="Wrap"
                     AcceptsReturn="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
