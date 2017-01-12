@@ -81,21 +81,61 @@ namespace GUIProjekt
                 return;
             }
 
-            if (checkSyntaxMachineTextBox(mkBox)) {
-                assemblerBox.Clear();
-                for (int i = 0; i < mkBox.LineCount; i++) {
-                    string assembly;
-                    ushort bits;
+            if (!checkSyntaxMachineTextBox(mkBox)) {
+                return;
+            }
+            
+            assemblerBox.Clear();
+            for (int i = 0; i < mkBox.LineCount; i++) {
+                string str = mkBox.GetLineText(i);
+                ushort bits;
 
-                    if (!string.IsNullOrWhiteSpace(mkBox.GetLineText(i))) {
-                        char[] trimChars = new char[2] { '\r', '\n' };
-                        _assemblerModel.stringToMachine(mkBox.GetLineText(i).TrimEnd(trimChars), out bits);
-                        _assemblerModel.machineToAssembly(bits, out assembly);
-                    }
-                    else assembly = "";
-
-                    assemblerBox.AppendText(assembly + '\n');
+                if (!string.IsNullOrWhiteSpace(str)) {
+                    char[] trimChars = new char[2] { '\r', '\n' };
+                    _assemblerModel.stringToMachine(str.TrimEnd(trimChars), out bits);
+                    _assemblerModel.machineToAssembly(bits, out str);
                 }
+                else {
+                    str = "";
+                }
+
+                assemblerBox.AppendText(str + '\n');
+            }
+        }
+
+        private void TextBox_Assembler_TextChanged(object sender, TextChangedEventArgs e) {
+            TextBox assemblerBox = sender as TextBox;
+            TextBox mkBox = TextBox_MK;
+
+            if (!assemblerBox.IsFocused)
+                return;
+
+            updateLineNumber(assemblerBox);
+
+            if (string.IsNullOrWhiteSpace(assemblerBox.Text)) {
+                mkBox.Clear();
+                return;
+            }
+
+            if (!checkSyntaxAssemblyTextBox(assemblerBox)) {
+                return;
+            }
+
+            mkBox.Clear();
+            for (int i = 0; i < assemblerBox.LineCount; i++) {
+                string str = assemblerBox.GetLineText(i);
+                ushort bits;
+
+                if (!string.IsNullOrWhiteSpace(str)) {
+                    char[] trimChars = new char[2] { '\r', '\n' };
+                    _assemblerModel.assemblyToMachine(str.TrimEnd(trimChars), out bits);  
+                    str = Convert.ToString(bits, 2).PadLeft(12, '0') + '\n';
+                }
+                else {
+                    str = "\n";
+                }
+
+                mkBox.AppendText(str);
             }
         }
 
@@ -131,33 +171,10 @@ namespace GUIProjekt
                 Thread.Sleep(_assemblerModel.delay());
                 _assemblerModel.processCurrentAddr();
             }
-        }
 
-        private void TextBox_Assembler_TextChanged(object sender, TextChangedEventArgs e) {
-            TextBox assemblerBox = sender as TextBox;
-            TextBox mkBox = TextBox_MK;
-
-            if (!assemblerBox.IsFocused)
-                return;
-
-            updateLineNumber(assemblerBox);
-
-            if (string.IsNullOrWhiteSpace(assemblerBox.Text)) {
-                mkBox.Clear();
-                return;
-            }
-
-            if (checkSyntaxAssemblyTextBox(assemblerBox)) {
-                mkBox.Clear();
-                for (int i = 0; i < assemblerBox.LineCount; i++) {
-                    ushort bits;
-
-                    char[] trimChars = new char[2] { '\r', '\n'};
-                    _assemblerModel.assemblyToMachine(assemblerBox.GetLineText(i).TrimEnd(trimChars), out bits);
-                    mkBox.AppendText(Convert.ToString(bits, 2).PadLeft(12, '0') + '\n');
-                }
-            }
-        }
+            textBoxAssembler.IsReadOnly = false;
+            textBox.IsReadOnly = false;
+        }        
 
         private void updateLineNumber(TextBox textBox) {
             if (textBox.LineCount != _numberOfLines) {
@@ -172,7 +189,7 @@ namespace GUIProjekt
         private AssemblerModel _assemblerModel;
         private int _numberOfLines;
 
-        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        private void Button_Stop_Click(object sender, RoutedEventArgs e)
         {
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;

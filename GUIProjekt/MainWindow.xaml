@@ -50,7 +50,7 @@
             <Button Style="{StaticResource MenuButton}" ToolTip="Pause">
                 <Image Source="images/media-pause-8x.png" />
             </Button>
-            <Button Name="StopBtn" Click="StopBtn_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
+            <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
                 <Image Source="images/media-stop-8x.png" />
             </Button>
             <Button Style="{StaticResource MenuButton}" ToolTip="Step Forward">
