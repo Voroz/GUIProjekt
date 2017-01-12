@@ -46,7 +46,7 @@ namespace GUIProjekt
             ok = (_size == _memory.GetLength(0));
 
             if (!ok) {
-                Debug.Write("SelfTest failed IN GUIProjekt.AssemblerModel: size of _memory  was "
+                Debug.Write("SelfTest failed IN GUIProjekt.AssemblerModel: size of _memory was "
                     + _memory.GetLength(0)
                     + ", expected " + _size + "\n");
             }
