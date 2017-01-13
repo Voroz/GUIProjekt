@@ -155,6 +155,11 @@ namespace GUIProjekt
             
         }
 
+
+        /******************************************************
+         CALL: When clicking the run button.
+         TASK: Runs through the entered instructions. 
+         *****************************************************/
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
@@ -193,6 +198,11 @@ namespace GUIProjekt
             textBox.IsReadOnly = false;
         }
 
+
+        /******************************************************
+         CALL: updateLineNumber(TextBox);
+         TASK: Updates the line numbers in the assembler section.
+         *****************************************************/
         private void updateLineNumber(TextBox textBox) {
             if (textBox.LineCount != _numberOfLines) {
                 AssemblerLineNumbers.Items.Clear();
@@ -202,9 +212,6 @@ namespace GUIProjekt
                 _numberOfLines = textBox.LineCount;
             }
         }
-
-        private AssemblerModel _assemblerModel;
-        private int _numberOfLines;
 
 
         /******************************************************
@@ -243,5 +250,9 @@ namespace GUIProjekt
                 rad.ClearMemoryAdress();
             }
         }
+
+
+        private AssemblerModel _assemblerModel;
+        private int _numberOfLines;
     }
 }
