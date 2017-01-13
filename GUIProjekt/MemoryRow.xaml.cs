@@ -27,14 +27,18 @@ namespace GUIProjekt
             InitializeComponent();
         }
 
+        /************************************************************************
+         * Anrop: ShowMemoryAdress()
+         * Uppgift: Ritar ut en rad av nollor och ettor i Minnet.
+         ************************************************************************/
         public void ShowMemoryAdress(string str)
         {
-            Brush[] br = new Brush[2] {Brushes.Aqua,Brushes.Orange};
+            Brush[] br = new Brush[2] { Brushes.Aqua, Brushes.Orange };
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
-            for(int ix=0;ix<str.Length;ix++)
+            for (int ix = 0; ix < str.Length; ix++)
             {
-                if(ix<memoryGrid.Children.Count)
+                if (ix < memoryGrid.Children.Count)
                 {
                     Grid cell = memoryGrid.Children[ix] as Grid;
                     Rectangle rect = cell.Children[0] as Rectangle;
@@ -42,7 +46,7 @@ namespace GUIProjekt
 
                     int value;
                     bool ok = int.TryParse(str[ix].ToString(), out value);
-                    if(ok && value >=0 && value <=1)
+                    if (ok && value >= 0 && value <= 1)
                     {
                         lab.Content = value.ToString();
                         rect.Fill = br[value];
@@ -51,6 +55,10 @@ namespace GUIProjekt
             }
         }
 
+        /************************************************************************
+         * Anrop: ClearMemoryAdress()
+         * Uppgift: Rensar en rad i Minnet och färgar dess rutor "vita"
+         ************************************************************************/
         public void ClearMemoryAdress()
         {
             Brush br = Brushes.White;
@@ -70,25 +78,29 @@ namespace GUIProjekt
             }
         }
 
+        /************************************************************************
+         * Anrop: ShowMemoryRowNumber()
+         * Uppgift: Skapar radnumrering för minnet.
+         ************************************************************************/
         public void ShowMemoryRowNumber(int str)
         {
             Brush br = Brushes.DarkGray;
             UniformGrid rowNumbers = this.AdressNumber as UniformGrid;
-            
-                          
-                     Grid cell = rowNumbers.Children[0] as Grid;
-                     Rectangle rect = cell.Children[0] as Rectangle;
-                     Label lab = cell.Children[1] as Label;
 
-                     int value;
-                     bool ok = int.TryParse(str.ToString(), out value);
-                     if (ok && value >= 0 && value <= 255)
-                     {
-                         lab.Content = value.ToString();
-                         rect.Fill = br;
-                     }
-                
-            
+
+            Grid cell = rowNumbers.Children[0] as Grid;
+            Rectangle rect = cell.Children[0] as Rectangle;
+            Label lab = cell.Children[1] as Label;
+
+            int value;
+            bool ok = int.TryParse(str.ToString(), out value);
+            if (ok && value >= 0 && value <= 255)
+            {
+                lab.Content = value.ToString();
+                rect.Fill = br;
+            }
+
+
         }
     }
 }
