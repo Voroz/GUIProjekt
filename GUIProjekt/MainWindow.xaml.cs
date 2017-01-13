@@ -23,6 +23,7 @@ namespace GUIProjekt
     public partial class MainWindow : Window
     {
         int ROWPos = 255;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,6 +31,12 @@ namespace GUIProjekt
             _assemblerModel.SelfTest();
         }
 
+
+        /******************************************************
+         CALL: bool ok = checkSyntaxMachineTextBox(TextBox);
+         TASK: Checks if any line entered in the machine code 
+               section contains unapproved characters.
+         *****************************************************/ 
         // TODO: Add error code as return value instead of boolean
         // Maybe a struct with error code + line number
         private bool checkSyntaxMachineTextBox(TextBox textBox) {
@@ -49,6 +56,12 @@ namespace GUIProjekt
             return true;
         }
 
+
+        /******************************************************
+         CALL: bool ok = checkSyntaxAssemblyTextBox(TextBox);
+         TASK: Checks if any line entered in the assembler
+               section contains unapproved characters.
+         *****************************************************/
         // TODO: Add error code as return value instead of boolean
         // Maybe a struct with error code + line number
         private bool checkSyntaxAssemblyTextBox(TextBox textBox) {
@@ -69,6 +82,7 @@ namespace GUIProjekt
             
             return true;
         }
+
 
         private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
             // TODO: Intellisens stuff
@@ -209,8 +223,7 @@ namespace GUIProjekt
             textBoxAssembler.IsReadOnly = false;
             textBox.IsReadOnly = false;
         }
-        private MemoryRow getMMRowOfPosition(int pos)
-        {
+        private MemoryRow getMMRowOfPosition(int pos) {
             int row = (theMemory.Children.Count)-pos;
             MemoryRow mmRow = theMemory.Children[row] as MemoryRow;
             return mmRow;

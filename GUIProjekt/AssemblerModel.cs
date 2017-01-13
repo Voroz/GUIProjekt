@@ -12,8 +12,9 @@ namespace GUIProjekt
         public const byte EndOprBit = 11;   // Defines end position for the Assembler operator in a 16 bit
         public const byte StartValBit = 0; // Defines start position for the Assembler value in a 16 bit
         public const byte EndValBit = 7;  // Defines end position for the Assembler value in a 16 bit
-        public const ushort UshortMax = 65535;
+        public const ushort UshortMax = 65535;  //Max range of an ushort
     }
+
     enum Operations : byte {
         LOAD = 0,
         STORE = 1,
