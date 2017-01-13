@@ -6,6 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <!-- Todo: Fixa styles för kolumnernas innehåll -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -18,7 +19,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Black" StrokeThickness="2"></Rectangle>
-                <Label Width="auto" Height="auto"></Label>
+                <Label Width="auto" Height="auto" FontWeight="Bold"></Label>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>

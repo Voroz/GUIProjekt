@@ -22,8 +22,6 @@ namespace GUIProjekt
     /// </summary>
     public partial class MainWindow : Window
     {
-        int ROWPos = 255;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -31,12 +29,6 @@ namespace GUIProjekt
             _assemblerModel.SelfTest();
         }
 
-
-        /******************************************************
-         CALL: bool ok = checkSyntaxMachineTextBox(TextBox);
-         TASK: Checks if any line entered in the machine code 
-               section contains unapproved characters.
-         *****************************************************/ 
         // TODO: Add error code as return value instead of boolean
         // Maybe a struct with error code + line number
         private bool checkSyntaxMachineTextBox(TextBox textBox) {
@@ -56,12 +48,6 @@ namespace GUIProjekt
             return true;
         }
 
-
-        /******************************************************
-         CALL: bool ok = checkSyntaxAssemblyTextBox(TextBox);
-         TASK: Checks if any line entered in the assembler
-               section contains unapproved characters.
-         *****************************************************/
         // TODO: Add error code as return value instead of boolean
         // Maybe a struct with error code + line number
         private bool checkSyntaxAssemblyTextBox(TextBox textBox) {
@@ -83,7 +69,6 @@ namespace GUIProjekt
             return true;
         }
 
-
         private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
             // TODO: Intellisens stuff
             // (use struct from checkSyntax functions with error code and line number to create highlighting and error information for user)
@@ -97,11 +82,7 @@ namespace GUIProjekt
 
             assemblerBox.Clear();
 
-            if (string.IsNullOrWhiteSpace(mkBox.Text)) {
-                return;
-            }
-
-            if (!checkSyntaxMachineTextBox(mkBox)) {
+            if (string.IsNullOrWhiteSpace(mkBox.Text) || !checkSyntaxMachineTextBox(mkBox)) {
                 return;
             }
 
@@ -133,15 +114,15 @@ namespace GUIProjekt
 
             updateLineNumber(assemblerBox);
             mkBox.Clear();
+            clearMemoryRows();
 
-            if (string.IsNullOrWhiteSpace(assemblerBox.Text)) {
+            // Todo: lägga allt i en funktion?
+            if (string.IsNullOrWhiteSpace(assemblerBox.Text) || !checkSyntaxAssemblyTextBox(assemblerBox)) {
                 return;
             }
 
-            if (!checkSyntaxAssemblyTextBox(assemblerBox)) {
-                return;
-            }
-           
+            int rowPos = 255;
+
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string str = assemblerBox.GetLineText(i);
                 ushort bits;                
@@ -156,12 +137,8 @@ namespace GUIProjekt
                 }
 
                 mkBox.AppendText(str);
-
-                //TODO Ändra minnet korrekt
-                //Kod för att Ändra i minnet
-                MemoryRow rad = getMMRowOfPosition(ROWPos);
+                MemoryRow rad = getMMRowOfPosition(rowPos - i);
                 rad.ShowMemoryAdress(str);
-                ROWPos--; //Hoppa rader i minnet
             }
             
         }
@@ -223,10 +200,21 @@ namespace GUIProjekt
             textBoxAssembler.IsReadOnly = false;
             textBox.IsReadOnly = false;
         }
-        private MemoryRow getMMRowOfPosition(int pos) {
+
+        private MemoryRow getMMRowOfPosition(int pos)
+        {
             int row = (theMemory.Children.Count)-pos;
             MemoryRow mmRow = theMemory.Children[row] as MemoryRow;
             return mmRow;
+        }
+
+        private void clearMemoryRows(){
+            // TODO optimera. Testar just nu bara att cleara allt i minnet
+            for (int i = 255; i > 0; i--)
+            {
+                MemoryRow rad = getMMRowOfPosition(i);
+                rad.ClearMemoryAdress();
+            }
         }
     }
 }
