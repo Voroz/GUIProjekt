@@ -119,6 +119,7 @@ namespace GUIProjekt
 
             updateLineNumber(assemblerBox);
             mkBox.Clear();
+            clearMemoryRows();
 
             if (string.IsNullOrWhiteSpace(assemblerBox.Text)) {
                 return;
@@ -127,7 +128,9 @@ namespace GUIProjekt
             if (!checkSyntaxAssemblyTextBox(assemblerBox)) {
                 return;
             }
-           
+
+            int rowPos = 255;
+
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string str = assemblerBox.GetLineText(i);
                 ushort bits;                
@@ -142,12 +145,8 @@ namespace GUIProjekt
                 }
 
                 mkBox.AppendText(str);
-
-                //TODO Ändra minnet korrekt
-                //Kod för att Ändra i minnet
-                MemoryRow rad = getMMRowOfPosition(ROWPos);
+                MemoryRow rad = getMMRowOfPosition(rowPos - i);
                 rad.ShowMemoryAdress(str);
-                ROWPos--; //Hoppa rader i minnet
             }
             
         }
@@ -209,11 +208,21 @@ namespace GUIProjekt
             textBoxAssembler.IsReadOnly = false;
             textBox.IsReadOnly = false;
         }
+
         private MemoryRow getMMRowOfPosition(int pos)
         {
             int row = (theMemory.Children.Count)-pos;
             MemoryRow mmRow = theMemory.Children[row] as MemoryRow;
             return mmRow;
+        }
+
+        private void clearMemoryRows(){
+            // TODO optimera. Testar just nu bara att cleara allt i minnet
+            for (int i = 255; i > 0; i--)
+            {
+                MemoryRow rad = getMMRowOfPosition(i);
+                rad.ClearMemoryAdress();
+            }
         }
     }
 }

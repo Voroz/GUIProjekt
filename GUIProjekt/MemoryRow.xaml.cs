@@ -42,11 +42,30 @@ namespace GUIProjekt
 
                     int value;
                     bool ok = int.TryParse(str[ix].ToString(), out value);
-                    if(ok && value >=1 && value <=2)
+                    if(ok && value >=0 && value <=1)
                     {
                         lab.Content = value.ToString();
-                        rect.Fill = br[value - 1];
+                        rect.Fill = br[value];
                     }
+                }
+            }
+        }
+
+        public void ClearMemoryAdress()
+        {
+            Brush br = Brushes.White;
+            UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
+
+            for (int ix = 0; ix < 12; ix++)
+            {
+                if (ix < memoryGrid.Children.Count)
+                {
+                    Grid cell = memoryGrid.Children[ix] as Grid;
+                    Rectangle rect = cell.Children[0] as Rectangle;
+                    Label lab = cell.Children[1] as Label;
+
+                    lab.Content = "";
+                    rect.Fill = br;
                 }
             }
         }
