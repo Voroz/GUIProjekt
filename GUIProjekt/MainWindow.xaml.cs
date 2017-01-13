@@ -22,6 +22,7 @@ namespace GUIProjekt
     /// </summary>
     public partial class MainWindow : Window
     {
+        int ROWPos = 255;
         public MainWindow()
         {
             InitializeComponent();
@@ -58,12 +59,14 @@ namespace GUIProjekt
                 // Empty lines to create space are fine
                 if (str == "\r\n" || str == "\r" || str == "\n" || str == "") {
                     continue;
+                    
                 }
 
                 if (!_assemblerModel.checkSyntaxAssembly(str)) {
                     return false;
-                }
+                }             
             }
+            
             return true;
         }
 
@@ -102,13 +105,14 @@ namespace GUIProjekt
                 }
 
                 assemblerBox.AppendText(str + '\n');
+                
             }
         }
 
         private void TextBox_Assembler_TextChanged(object sender, TextChangedEventArgs e) {
             TextBox assemblerBox = sender as TextBox;
             TextBox mkBox = TextBox_MK;
-
+            
             if (!assemblerBox.IsFocused) {
                 return;
             }
@@ -123,22 +127,29 @@ namespace GUIProjekt
             if (!checkSyntaxAssemblyTextBox(assemblerBox)) {
                 return;
             }
-            
+           
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string str = assemblerBox.GetLineText(i);
-                ushort bits;
+                ushort bits;                
 
                 if (!string.IsNullOrWhiteSpace(str)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(str.TrimEnd(trimChars), out bits);  
-                    str = Convert.ToString(bits, 2).PadLeft(12, '0') + '\n';
+                    str = Convert.ToString(bits, 2).PadLeft(12, '0') + '\n';                                    
                 }
                 else {
-                    str = "\n";
+                    str = "\n";                    
                 }
 
                 mkBox.AppendText(str);
+
+                //TODO Ändra minnet korrekt
+                //Kod för att Ändra i minnet
+                MemoryRow rad = getMMRowOfPosition(ROWPos);
+                rad.ShowMemoryAdress(str);
+                ROWPos--; //Hoppa rader i minnet
             }
+            
         }
 
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
@@ -197,6 +208,12 @@ namespace GUIProjekt
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;
             textBox.IsReadOnly = false;
+        }
+        private MemoryRow getMMRowOfPosition(int pos)
+        {
+            int row = (theMemory.Children.Count)-pos;
+            MemoryRow mmRow = theMemory.Children[row] as MemoryRow;
+            return mmRow;
         }
     }
 }
