@@ -24,6 +24,7 @@ namespace GUIProjekt
         IN = 6,
         OUT = 7,
         CALL = 8,
+        RETURN = 9,
     }
 
     class AssemblerModel
@@ -125,17 +126,47 @@ namespace GUIProjekt
                 assemblyCode = "";
                 return false;
             }
+            assemblyCode = opr.ToString();
+
+            // Special case
+            if (assemblyCode == "IN"
+                || assemblyCode == "OUT"
+                || assemblyCode == "RETURN") {
+                    return true;
+            }
+
+            // Otherwise read the value aswell
             byte addr = extractVal(bits);
-            assemblyCode = opr.ToString() + " " + addr;
+            assemblyCode += " " + addr;
             return true;
         }
 
         public bool assemblyToMachine(string assemblyString, out ushort machineCode) {
-            string[] splitString = assemblyString.Split(' ');
+            string[] splitString = assemblyString.Split(' ');        
+
             Operations opr;
             if (!Enum.TryParse(splitString[0], false, out opr)) {
                 machineCode = 0;
                 return false;
+            }
+
+            // Special case where length is 1
+            if (splitString.Length == 1
+                && (splitString[0] == "IN"
+                || splitString[0] == "OUT"
+                || splitString[0] == "RETURN")
+                ) {
+                    machineCode = (ushort)((ushort)opr << Constants.StartOprBit);
+                    return true;
+            }
+
+            if (splitString.Length != 1
+                && (splitString[0] == "IN"
+                || splitString[0] == "OUT"
+                || splitString[0] == "RETURN")
+                ) {
+                    machineCode = 0;
+                    return false;
             }
 
             byte addr = 0;
@@ -209,56 +240,35 @@ namespace GUIProjekt
 
             string[] splitString = str.Split(' ');
 
-            if (splitString.Length != 2)
+            // Special case where length is 1
+            if (splitString.Length == 1
+                && (splitString[0] == "IN"
+                || splitString[0] == "OUT"
+                || splitString[0] == "RETURN")
+                ) {
+                return true;
+            }
+
+            if (splitString.Length != 1
+                && (splitString[0] == "IN"
+                || splitString[0] == "OUT"
+                || splitString[0] == "RETURN")
+                ) {
                 return false;
+            }
+
+            if (splitString.Length != 2) {
+                return false;
+            }
 
             Operations opr;
             if (!Enum.TryParse(splitString[0], false, out opr)) {
                 return false;
-            }
+            }            
 
             byte addr = 0;
             if (!byte.TryParse(splitString[1], out addr)) {
                 return false;
-            }
-
-            return true;
-        }
-
-        // TODO: Add error code as return value instead of boolean
-        public bool checkSyntax(string str) {
-
-            bool binary = isBinary(str);
-
-            if (binary) {
-
-                if (str.Length != 12) {
-                    return false;
-                }
-
-                ushort bits;
-                if (!stringToMachine(str, out bits)) {
-                    return false;
-                }
-
-                Operations opr;
-                if (!extractOperation(bits, out opr)) {
-                    return false;
-                }
-            }
-
-            else if (!binary) {
-                string[] splitString = str.Split(' ');
-
-                Operations opr;
-                if (!Enum.TryParse(splitString[0], false, out opr)) {
-                    return false;
-                }
-
-                byte addr = 0;
-                if (!byte.TryParse(splitString[1], out addr)) {
-                    return false;
-                }
             }
 
             return true;
@@ -317,7 +327,12 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.CALL: {
-                    // CALL adr
+                    // add return addr to call stack
+                    _instructionPtr = addr;                    
+                } break;
+
+                case Operations.RETURN: {
+                    // return to addr on top of call stack and pop it
                     // RETURN
                 } break;
 
