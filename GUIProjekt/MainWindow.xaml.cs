@@ -29,6 +29,12 @@ namespace GUIProjekt
             _assemblerModel.SelfTest();
         }
 
+
+        /******************************************************
+         CALL: bool ok = checkSyntaxMachineTextBox(TextBox);
+         TASK: Checks if any line entered in the machine code 
+               section contains unapproved characters.
+        *****************************************************/ 
         // TODO: Add error code as return value instead of boolean
         // Maybe a struct with error code + line number
         private bool checkSyntaxMachineTextBox(TextBox textBox) {
@@ -48,6 +54,12 @@ namespace GUIProjekt
             return true;
         }
 
+
+        /******************************************************
+         CALL: bool ok = checkSyntaxAssemblyTextBox(TextBox);
+         TASK: Checks if any line entered in the assembler
+               section contains unapproved characters.
+         *****************************************************/
         // TODO: Add error code as return value instead of boolean
         // Maybe a struct with error code + line number
         private bool checkSyntaxAssemblyTextBox(TextBox textBox) {
