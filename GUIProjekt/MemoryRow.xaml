@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <!-- Todo: Fixa styles för kolumnernas innehåll -->
     <UserControl.Resources>
-        <!-- Mall för menyknapparna -->
+        <!-- Mall för LAYOUT av Minnet -->
         <Style x:Key="label" TargetType="{x:Type Label}">
             <Setter Property="Width" Value="Auto" />
             <Setter Property="Height" Value="Auto" />
@@ -15,22 +15,35 @@
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        
+                        <!--Lägger man viewbox här blir Minnet skalbart-->
                             <ContentPresenter Content="{TemplateBinding Content}" />
                         
                     </DataTemplate>
                 </Setter.Value>
            </Setter>
-        </Style>
-        <!-- Bakgrundsfärg för hela menyområdet -->
-        
+        </Style>             
     </UserControl.Resources>
-    <Grid>
-       
+    
+    <Grid>       
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
+            <ColumnDefinition Width="12*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <UniformGrid Name="BinaryMemoryAdress" Rows="1" Columns="12" Grid.Column="0">
+        
+        <UniformGrid Name="AdressNumber" Rows="1" Columns="1" Grid.Column="0" Margin="0,0,5,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Blue" StrokeThickness="2"></Rectangle>
+                <Label Style="{StaticResource label}"></Label>
+            </Grid>
+        </UniformGrid>
+        
+        <UniformGrid Name="BinaryMemoryAdress" Rows="1" Columns="12" Grid.Column="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -151,7 +164,7 @@
                 <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Black" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
-        </UniformGrid>
+        </UniformGrid>        
     </Grid>
     
 </UserControl>

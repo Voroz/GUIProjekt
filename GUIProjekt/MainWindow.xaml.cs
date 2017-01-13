@@ -27,6 +27,12 @@ namespace GUIProjekt
             InitializeComponent();
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
+            for(int i=0;i<255;i++)
+            {
+                MemoryRow createRowNumbers = getMMRowOfPosition(255 - i);
+                createRowNumbers.ShowMemoryRowNumber(i);
+            }
+            
         }
 
 

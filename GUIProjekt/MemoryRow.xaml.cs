@@ -69,5 +69,26 @@ namespace GUIProjekt
                 }
             }
         }
+
+        public void ShowMemoryRowNumber(int str)
+        {
+            Brush br = Brushes.DarkGray;
+            UniformGrid rowNumbers = this.AdressNumber as UniformGrid;
+            
+                          
+                     Grid cell = rowNumbers.Children[0] as Grid;
+                     Rectangle rect = cell.Children[0] as Rectangle;
+                     Label lab = cell.Children[1] as Label;
+
+                     int value;
+                     bool ok = int.TryParse(str.ToString(), out value);
+                     if (ok && value >= 0 && value <= 255)
+                     {
+                         lab.Content = value.ToString();
+                         rect.Fill = br;
+                     }
+                
+            
+        }
     }
 }
