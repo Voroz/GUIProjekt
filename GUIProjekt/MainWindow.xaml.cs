@@ -22,7 +22,6 @@ namespace GUIProjekt
     /// </summary>
     public partial class MainWindow : Window
     {
-        int ROWPos = 255;
         public MainWindow()
         {
             InitializeComponent();
@@ -83,11 +82,7 @@ namespace GUIProjekt
 
             assemblerBox.Clear();
 
-            if (string.IsNullOrWhiteSpace(mkBox.Text)) {
-                return;
-            }
-
-            if (!checkSyntaxMachineTextBox(mkBox)) {
+            if (string.IsNullOrWhiteSpace(mkBox.Text) || !checkSyntaxMachineTextBox(mkBox)) {
                 return;
             }
 
@@ -121,11 +116,8 @@ namespace GUIProjekt
             mkBox.Clear();
             clearMemoryRows();
 
-            if (string.IsNullOrWhiteSpace(assemblerBox.Text)) {
-                return;
-            }
-
-            if (!checkSyntaxAssemblyTextBox(assemblerBox)) {
+            // Todo: lägga allt i en funktion?
+            if (string.IsNullOrWhiteSpace(assemblerBox.Text) || !checkSyntaxAssemblyTextBox(assemblerBox)) {
                 return;
             }
 
