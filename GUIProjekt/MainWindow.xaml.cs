@@ -206,6 +206,11 @@ namespace GUIProjekt
         private AssemblerModel _assemblerModel;
         private int _numberOfLines;
 
+
+        /******************************************************
+         CALL: When clicking the stop button.
+         TASK: Makes the input fields changeable again.
+         *****************************************************/
         private void Button_Stop_Click(object sender, RoutedEventArgs e) {
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
@@ -213,6 +218,11 @@ namespace GUIProjekt
             textBox.IsReadOnly = false;
         }
 
+
+        /******************************************************
+         CALL: MemoryRow mr = getMMRowOfPosition(int);
+         TASK: Returns the MemoryRow of the position of the paramater.
+         *****************************************************/
         private MemoryRow getMMRowOfPosition(int pos)
         {
             int row = (theMemory.Children.Count)-pos;
@@ -220,6 +230,11 @@ namespace GUIProjekt
             return mmRow;
         }
 
+
+        /******************************************************
+         CALL: clearMemoryRows();
+         TASK: Clears everything in the memory.
+         *****************************************************/
         private void clearMemoryRows(){
             // TODO optimera. Testar just nu bara att cleara allt i minnet
             for (int i = 255; i > 0; i--)
