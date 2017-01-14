@@ -434,10 +434,9 @@
                             <ColumnDefinition Width="30" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <ListBox Grid.Column="0" Name="AssemblerLineNumbers" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Gray" BorderThickness="2" BorderBrush="Orange">
+                        <ListBox Grid.Column="0" Name="AssemblerLineNumbers" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Gray" BorderThickness="2" BorderBrush="Orange">
                             <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="Padding" Value="0, 0.333, 0, 0.333"/>
+                                <Style TargetType="ListBoxItem">                                
                                     <Setter Property="Margin" Value="0" />
                                 </Style>
                             </ListBox.ItemContainerStyle>
