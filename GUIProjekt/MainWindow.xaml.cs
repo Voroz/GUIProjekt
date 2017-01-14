@@ -27,10 +27,7 @@ namespace GUIProjekt
             InitializeComponent();
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
-
             createMemoryRowNumbers();
-            
-            
         }
 
         private void createMemoryRowNumbers()
@@ -100,7 +97,7 @@ namespace GUIProjekt
             TextBox mkBox = sender as TextBox;
             TextBox assemblerBox = TextBox_Assembler;
 
-            if (!mkBox.IsFocused) {  // Breaking this event if textbox is updated from assembler textbox
+            if (!mkBox.IsFocused) { 
                 return;
             }
 
@@ -136,16 +133,18 @@ namespace GUIProjekt
                 return;
             }
 
-            updateLineNumber(assemblerBox);
             mkBox.Clear();
-            clearMemoryRows();
 
-            // Todo: lägga allt i en funktion?
+            if (_numberOfLines != assemblerBox.LineCount) {
+                updateLineNumber(assemblerBox);
+                clearMemoryRows(assemblerBox.LineCount);
+            }
+               
+            _numberOfLines = assemblerBox.LineCount;
+
             if (string.IsNullOrWhiteSpace(assemblerBox.Text) || !checkSyntaxAssemblyTextBox(assemblerBox)) {
                 return;
             }
-
-            int rowPos = 255;
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string str = assemblerBox.GetLineText(i);
@@ -161,10 +160,9 @@ namespace GUIProjekt
                 }
 
                 mkBox.AppendText(str);
-                MemoryRow rad = getMMRowOfPosition(rowPos - i);
+                MemoryRow rad = getMMRowOfPosition(255 - i);
                 rad.ShowMemoryAdress(str);
             }
-            
         }
 
 
@@ -221,7 +219,6 @@ namespace GUIProjekt
                 for (int i = 0; i < textBox.LineCount; i++) {
                     AssemblerLineNumbers.Items.Add(i);
                 }
-                _numberOfLines = textBox.LineCount;
             }
         }
 
@@ -251,15 +248,15 @@ namespace GUIProjekt
 
 
         /******************************************************
-         CALL: clearMemoryRows();
+         CALL: clearMemoryRows(int);
          TASK: Clears everything in the memory.
          *****************************************************/
-        private void clearMemoryRows(){
-            // TODO optimera. Testar just nu bara att cleara allt i minnet
-            for (int i = 255; i > 0; i--)
-            {
-                MemoryRow rad = getMMRowOfPosition(i);
-                rad.ClearMemoryAdress();
+        private void clearMemoryRows(int newLineCount){
+            if (newLineCount > _numberOfLines)
+                return;
+
+            for (int i = newLineCount; i < _numberOfLines; i++) {
+                getMMRowOfPosition(255 - i).ClearMemoryAdress();
             }
         }
 
