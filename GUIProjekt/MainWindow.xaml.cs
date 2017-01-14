@@ -58,7 +58,7 @@ namespace GUIProjekt
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
                 // Empty lines to create space are fine
-                if (str == "\r\n" || str == "\r" || str == "\n" || str == "") {
+                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
                     continue;
                 }
                 
@@ -83,7 +83,7 @@ namespace GUIProjekt
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
                 // Empty lines to create space are fine
-                if (str == "\r\n" || str == "\r" || str == "\n" || str == "") {
+                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
                     continue;
                     
                 }
@@ -202,7 +202,7 @@ namespace GUIProjekt
                 ushort bits;
 
                 // Empty lines to create space are fine
-                if (str == "\r\n" || str == "\r" || str == "\n" || str == "") {
+                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
                     _assemblerModel.setAddr(i, Constants.UshortMax);
                     continue;
                 }
@@ -227,9 +227,10 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: When clicking the stop button.
-         TASK: Makes the input fields changeable again.
+         TASK: Stops execution and makes the input fields changeable again.
          *****************************************************/
         private void Button_Stop_Click(object sender, RoutedEventArgs e) {
+            // TODO: Stop execution
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;

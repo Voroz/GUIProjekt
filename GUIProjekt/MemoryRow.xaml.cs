@@ -79,28 +79,24 @@ namespace GUIProjekt
         }
 
         /************************************************************************
-         * Anrop: ShowMemoryRowNumber()
-         * Uppgift: Skapar radnumrering för minnet.
+         * Anrop: ShowMemoryRowNumber(int val)
+         * Uppgift: Skapar denna radens numreringsvärde.
          ************************************************************************/
-        public void ShowMemoryRowNumber(int str)
+        public void ShowMemoryRowNumber(int val)
         {
+            if (!(val >= 0 && val <= 255)) {
+                return;
+            }
+
             Brush br = Brushes.DarkGray;
             UniformGrid rowNumbers = this.AdressNumber as UniformGrid;
-
 
             Grid cell = rowNumbers.Children[0] as Grid;
             Rectangle rect = cell.Children[0] as Rectangle;
             Label lab = cell.Children[1] as Label;
-
-            int value;
-            bool ok = int.TryParse(str.ToString(), out value);
-            if (ok && value >= 0 && value <= 255)
-            {
-                lab.Content = value.ToString();
-                rect.Fill = br;
-            }
-
-
+            
+            lab.Content = val.ToString();
+            rect.Fill = br;
         }
     }
 }
