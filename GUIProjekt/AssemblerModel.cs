@@ -182,23 +182,51 @@ namespace GUIProjekt
             return true;
         }
 
+
+        /******************************************************
+         CALL: ushort currentValue = currentAddr();
+         TASK: Returns the value of the adress in the memory
+               where the instruction pointer is currently at.
+        *****************************************************/ 
         public ushort currentAddr() {
             return _memory[_instructionPtr];
         }
 
+
+        /******************************************************
+         CALL: resetInstructionPtr();
+         TASK: Rolls the instruction pointer back to the beginning (0).
+        *****************************************************/ 
         public void resetInstructionPtr() {
             _instructionPtr = 0;
         }
 
+
+        /******************************************************
+         CALL: byte current = instructionPtr();
+         TASK: Returns the instruction pointer (which adress
+               it's currently pointing at).
+        *****************************************************/ 
         public byte instructionPtr() {
             return _instructionPtr;
         }
 
+
+        /******************************************************
+         CALL: ushort addr = getAddr(byte);
+         TASK: Returns the adress in the memory of the parameter 
+               value.
+        *****************************************************/ 
         public ushort getAddr(byte idx) {
             Debug.Assert(idx >= 0 && idx < _size);
             return _memory[idx];
         }
 
+
+        /******************************************************
+         CALL: setAddr(byte, ushort);
+         TASK: Sets position "byte" in memory to value "ushort".
+        *****************************************************/ 
         public void setAddr(byte idx, ushort val) {
             Debug.Assert(idx >= 0 && idx < _size);
             _memory[idx] = val;
@@ -208,9 +236,14 @@ namespace GUIProjekt
             return _executionDelay;
         }
 
-        // TODO: Add error code as return value instead of boolean
-        // Maybe a struct with error code + line number
+
+        /******************************************************
+         CALL: bool ok = checkSyntaxMachine(string);
+         TASK: Checks if parameter is approved machine code.
+        *****************************************************/ 
         public bool checkSyntaxMachine(string str) {
+            // TODO: Add error code as return value instead of boolean
+            // Maybe a struct with error code + line number
             if (!isBinary(str)) {
                 return false;
             }
@@ -275,7 +308,12 @@ namespace GUIProjekt
             return true;
         }
 
-        // Interprets the current address and runs the corresponding function
+
+        /******************************************************
+         CALL: processCurrentAddr();
+         TASK: Interprets the current address and runs the 
+               corresponding function.
+        *****************************************************/
         public void processCurrentAddr() {
             ushort current = _memory[_instructionPtr];
             Operations opr = Operations.LOAD;            
@@ -352,7 +390,6 @@ namespace GUIProjekt
         private byte _input;
         private byte _output;
         private readonly int _size;
-
         private int _executionDelay;
     }
 }
