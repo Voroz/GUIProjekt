@@ -44,9 +44,9 @@ namespace GUIProjekt
          TASK: Checks if any line entered in the machine code 
                section contains unapproved characters.
         *****************************************************/ 
-        // TODO: Add error code as return value instead of boolean
-        // Maybe a struct with error code + line number
         private bool checkSyntaxMachineTextBox(TextBox textBox) {
+            // TODO: Add error code as return value instead of boolean
+            // Maybe a struct with error code + line number
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
@@ -69,9 +69,9 @@ namespace GUIProjekt
          TASK: Checks if any line entered in the assembler
                section contains unapproved characters.
          *****************************************************/
-        // TODO: Add error code as return value instead of boolean
-        // Maybe a struct with error code + line number
         private bool checkSyntaxAssemblyTextBox(TextBox textBox) {
+            // TODO: Add error code as return value instead of boolean
+            // Maybe a struct with error code + line number
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
@@ -136,7 +136,7 @@ namespace GUIProjekt
             mkBox.Clear();
 
             if (_numberOfLines != assemblerBox.LineCount) {
-                updateLineNumber(assemblerBox);
+                updateLineNumber(assemblerBox.LineCount);
                 clearMemoryRows(assemblerBox.LineCount);
             }
                
@@ -210,20 +210,6 @@ namespace GUIProjekt
 
 
         /******************************************************
-         CALL: updateLineNumber(TextBox);
-         TASK: Updates the line numbers in the assembler section.
-         *****************************************************/
-        private void updateLineNumber(TextBox textBox) {
-            if (textBox.LineCount != _numberOfLines) {
-                AssemblerLineNumbers.Items.Clear();
-                for (int i = 0; i < textBox.LineCount; i++) {
-                    AssemblerLineNumbers.Items.Add(i);
-                }
-            }
-        }
-
-
-        /******************************************************
          CALL: When clicking the stop button.
          TASK: Makes the input fields changeable again.
          *****************************************************/
@@ -236,24 +222,36 @@ namespace GUIProjekt
 
 
         /******************************************************
+         CALL: updateLineNumber(TextBox);
+         TASK: Updates the line numbers in the assembler section.
+         *****************************************************/
+        private void updateLineNumber(int newLineCount)
+        {
+            // Todo: Optimera så att den bara tar bort och lägger till så många rader som behövs.
+            AssemblerLineNumbers.Items.Clear();
+            for (int i = 0; i < newLineCount; i++) {
+                AssemblerLineNumbers.Items.Add(i);
+            }
+        }
+
+
+        /******************************************************
          CALL: MemoryRow mr = getMMRowOfPosition(int);
          TASK: Returns the MemoryRow of the position of the paramater.
          *****************************************************/
-        private MemoryRow getMMRowOfPosition(int pos)
-        {
-            int row = (theMemory.Children.Count)-pos;
-            MemoryRow mmRow = theMemory.Children[row] as MemoryRow;
-            return mmRow;
+        private MemoryRow getMMRowOfPosition(int pos) {
+            return theMemory.Children[(theMemory.Children.Count)-pos] as MemoryRow;
         }
 
 
         /******************************************************
          CALL: clearMemoryRows(int);
-         TASK: Clears everything in the memory.
+         TASK: Clears the rows of memory that has been removed.
          *****************************************************/
         private void clearMemoryRows(int newLineCount){
-            if (newLineCount > _numberOfLines)
+            if (newLineCount > _numberOfLines) {
                 return;
+            }
 
             for (int i = newLineCount; i < _numberOfLines; i++) {
                 getMMRowOfPosition(255 - i).ClearMemoryAdress();
