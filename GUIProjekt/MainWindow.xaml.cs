@@ -30,6 +30,11 @@ namespace GUIProjekt
             createMemoryRowNumbers();
         }
 
+
+        /******************************************************
+         CALL: createMemoryRowNumbers();
+         TASK: Displays row numbers for the memory.
+        *****************************************************/ 
         private void createMemoryRowNumbers()
         {
             for (int i = 0; i < 255; i++)
@@ -38,6 +43,7 @@ namespace GUIProjekt
                 createRowNumbers.ShowMemoryRowNumber(i);
             }
         }
+
 
         /******************************************************
          CALL: bool ok = checkSyntaxMachineTextBox(TextBox);
@@ -90,6 +96,11 @@ namespace GUIProjekt
             return true;
         }
 
+
+        /******************************************************
+         CALL: When writing in the machine code section.
+         TASK: Updates the assembler section.
+        *****************************************************/ 
         private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
             // TODO: Intellisens stuff
             // (use struct from checkSyntax functions with error code and line number to create highlighting and error information for user)
@@ -125,6 +136,11 @@ namespace GUIProjekt
             }
         }
 
+
+        /******************************************************
+         CALL: When writing in the assembler section.
+         TASK: Updates the machine code section and the memory.
+        *****************************************************/ 
         private void TextBox_Assembler_TextChanged(object sender, TextChangedEventArgs e) {
             TextBox assemblerBox = sender as TextBox;
             TextBox mkBox = TextBox_MK;

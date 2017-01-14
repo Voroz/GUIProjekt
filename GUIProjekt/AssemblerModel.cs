@@ -45,6 +45,13 @@ namespace GUIProjekt
             }
         }
 
+
+        /******************************************************
+         CALL: bool ok = SelfTest();
+         TASK: Used at debugging. The method calls every (testable) 
+               method in the class and returns true if no bug could 
+               be found. 
+        *****************************************************/ 
         public bool SelfTest()
         {
 
@@ -195,7 +202,8 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: resetInstructionPtr();
-         TASK: Rolls the instruction pointer back to the beginning (0).
+         TASK: Rolls the instruction pointer back to the beginning 
+               (adress 0).
         *****************************************************/ 
         public void resetInstructionPtr() {
             _instructionPtr = 0;
