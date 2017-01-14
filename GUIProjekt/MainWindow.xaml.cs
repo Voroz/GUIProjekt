@@ -26,7 +26,7 @@ namespace GUIProjekt
         {
             InitializeComponent();
             _assemblerModel = new AssemblerModel();
-            _assemblerModel.SelfTest();
+            _assemblerModel.SelfTest();           
             createMemoryRowNumbers();
         }
 

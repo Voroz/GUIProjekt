@@ -32,6 +32,7 @@
         </Style>
         <!-- Bakgrundsfärg för hela menyområdet -->
         <Brush x:Key="MenuColor">#FFA500</Brush>
+        <local:FontSizeConverter x:Key="fontSizeCon"/>
     </Window.Resources>
     
     <Grid>
@@ -406,7 +407,7 @@
                     Grid.Row="1"
                     HorizontalAlignment="Stretch"
                     Margin="2,0,2,0"
-                    FontSize="16"
+                    FontSize="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource fontSizeCon}}"
                     Height="Auto"
                     TextWrapping="Wrap"
                     AcceptsReturn="True"
@@ -434,10 +435,10 @@
                 <ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <ListBox Grid.Column="0" Name="AssemblerLineNumbers" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="DarkGray" BorderThickness="2" BorderBrush="Orange">
+                        <ListBox Grid.Column="0" Name="AssemblerLineNumbers" FontSize="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource fontSizeCon}}" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="DarkGray" BorderThickness="2" BorderBrush="Orange">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">                                                                       
                                     <Setter Property="Background" Value="Orange"/>
@@ -451,7 +452,7 @@
                         <TextBox
                             Grid.Column="1"
                             HorizontalAlignment="Stretch"
-                            FontSize="16"
+                            FontSize="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource fontSizeCon}}"
                             Height="Auto"
                             TextWrapping="Wrap"
                             AcceptsReturn="True"
