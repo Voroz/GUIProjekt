@@ -115,7 +115,7 @@ namespace GUIProjekt
             bool binary = isBinary(str);
 
             if (binary) {
-                machineCode = Convert.ToUInt16(str, 2);
+                machineCode = Convert.ToUInt16(str, 2);                
                 return true;
             }
             else {

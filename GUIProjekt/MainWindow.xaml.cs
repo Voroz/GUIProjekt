@@ -120,19 +120,19 @@ namespace GUIProjekt
             }
 
             for (int i = 0; i < mkBox.LineCount; i++) {
-                string str = mkBox.GetLineText(i);
-                ushort bits;
+                string mkStr = mkBox.GetLineText(i);                
+                ushort bits = 0;
+                string assemblyStr = "";
 
-                if (!string.IsNullOrWhiteSpace(str)) {
+                if (!string.IsNullOrWhiteSpace(mkStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
-                    _assemblerModel.stringToMachine(str.TrimEnd(trimChars), out bits);
-                    _assemblerModel.machineToAssembly(bits, out str);
-                }
-                else {
-                    str = "";
+                    _assemblerModel.stringToMachine(mkStr.TrimEnd(trimChars), out bits);
+                    _assemblerModel.machineToAssembly(bits, out assemblyStr);
+                    MemoryRow rad = getMMRowOfPosition(255 - i);
+                    rad.ShowMemoryAdress(mkStr);
                 }
 
-                assemblerBox.AppendText(str + '\n');                
+                assemblerBox.AppendText(assemblyStr + '\n');                
             }
 
             _previousLineCount = (byte)assemblerBox.LineCount;
@@ -160,23 +160,19 @@ namespace GUIProjekt
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string str = assemblerBox.GetLineText(i);
-                ushort bits;
-                MemoryRow rad = getMMRowOfPosition(255 - i);
-
-                rad.ClearMemoryAdress();
+                ushort bits = 0;
+                string mkStr = "\n";
 
                 if (!string.IsNullOrWhiteSpace(str)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
-                    _assemblerModel.assemblyToMachine(str.TrimEnd(trimChars), out bits);  
-                    str = Convert.ToString(bits, 2).PadLeft(12, '0') + '\n';                           
-                }
-                else {
-                    str = "\n";
+                    _assemblerModel.assemblyToMachine(str.TrimEnd(trimChars), out bits);
+                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0') + '\n';
+
+                    MemoryRow rad = getMMRowOfPosition(255 - i);
+                    rad.ShowMemoryAdress(mkStr);
                 }
 
-                mkBox.AppendText(str);
-
-                rad.ShowMemoryAdress(str);
+                mkBox.AppendText(mkStr);            
             }
 
             _previousLineCount = (byte)assemblerBox.LineCount;
