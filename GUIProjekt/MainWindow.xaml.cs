@@ -279,6 +279,10 @@ namespace GUIProjekt
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
 
+        /******************************************************
+         CALL: When clicking the Open button in the Menu
+         TASK: Open a txt file from the directory.
+         *****************************************************/
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -288,6 +292,21 @@ namespace GUIProjekt
             {
                 string filename = ofd.FileName;               
                 TextBox_Assembler.Text = File.ReadAllText(filename);
+            }
+        }
+
+        /******************************************************
+         CALL: When clicking the Save button in the Menu
+         TASK: Saves the assembler code as a txt.
+         *****************************************************/
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.DefaultExt = ".txt";
+            sfd.AddExtension = true;           
+            if(sfd.ShowDialog() == true)
+            {
+                File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
     }
