@@ -159,13 +159,13 @@ namespace GUIProjekt
             }
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
-                string str = assemblerBox.GetLineText(i);
+                string assemblyStr = assemblerBox.GetLineText(i);
                 ushort bits = 0;
                 string mkStr = "\n";
 
-                if (!string.IsNullOrWhiteSpace(str)) {
+                if (!string.IsNullOrWhiteSpace(assemblyStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
-                    _assemblerModel.assemblyToMachine(str.TrimEnd(trimChars), out bits);
+                    _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
                     mkStr = Convert.ToString(bits, 2).PadLeft(12, '0') + '\n';
 
                     MemoryRow rad = getMMRowOfPosition(255 - i);
