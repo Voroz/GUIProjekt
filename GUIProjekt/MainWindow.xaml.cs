@@ -28,6 +28,7 @@ namespace GUIProjekt
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
             showMemoryRowNumbers();
+            updateLineNumber(1);
         }
 
 
