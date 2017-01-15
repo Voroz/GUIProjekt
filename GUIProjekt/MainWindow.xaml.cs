@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using Microsoft.Win32;
+using System.IO;
 
 namespace GUIProjekt
 {
@@ -276,5 +278,17 @@ namespace GUIProjekt
 
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.DefaultExt = ".txt";
+            ofd.Filter = "Text Document (.txt)|*.txt";
+            if(ofd.ShowDialog() == true)
+            {
+                string filename = ofd.FileName;               
+                TextBox_Assembler.Text = File.ReadAllText(filename);
+            }
+        }
     }
 }
