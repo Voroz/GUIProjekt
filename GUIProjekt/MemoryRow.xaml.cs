@@ -33,7 +33,7 @@ namespace GUIProjekt
          ************************************************************************/
         public void ShowMemoryAdress(string str)
         {
-            Brush[] br = new Brush[2] { Brushes.Aqua, Brushes.Orange };
+            Brush[] br = new Brush[2] { Brushes.Red, Brushes.LightGreen };
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
             for (int ix = 0; ix < str.Length; ix++)
@@ -61,7 +61,7 @@ namespace GUIProjekt
          ************************************************************************/
         public void ClearMemoryAdress()
         {
-            Brush br = Brushes.White;
+            Brush br = Brushes.Azure;
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
             for (int ix = 0; ix < 12; ix++)
@@ -84,7 +84,6 @@ namespace GUIProjekt
          ************************************************************************/
         public void ShowMemoryRowNumber(byte val)
         {
-            Brush br = Brushes.DarkGray;
             UniformGrid rowNumbers = this.AdressNumber as UniformGrid;
 
             Grid cell = rowNumbers.Children[0] as Grid;
@@ -92,7 +91,6 @@ namespace GUIProjekt
             Label lab = cell.Children[1] as Label;
             
             lab.Content = val.ToString();
-            rect.Fill = br;
         }
     }
 }

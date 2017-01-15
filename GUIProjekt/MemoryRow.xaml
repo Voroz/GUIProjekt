@@ -40,7 +40,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Blue" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="1"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
         </UniformGrid>
@@ -54,7 +54,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -64,7 +64,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -74,7 +74,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid Margin="0,0,2,0">
@@ -84,7 +84,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -94,7 +94,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -104,7 +104,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -114,7 +114,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -124,7 +124,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -134,7 +134,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -144,7 +144,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -154,7 +154,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
             <Grid>
@@ -164,7 +164,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Stroke="Gray" StrokeThickness="2"></Rectangle>
+                <Rectangle Grid.Column="0" Grid.Row="0" Height="auto" Width="auto" Fill="Azure" Stroke="Gray" StrokeThickness="2"></Rectangle>
                 <Label Style="{StaticResource label}"></Label>
             </Grid>
         </UniformGrid>        

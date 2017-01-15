@@ -31,7 +31,7 @@
             </Setter>
         </Style>
         <!-- Bakgrundsfärg för hela menyområdet -->
-        <Brush x:Key="MenuColor">#FFA500</Brush>
+        <Brush x:Key="MenuColor">#DDDDE4</Brush>
         <local:FontSizeConverter x:Key="fontSizeCon"/>
     </Window.Resources>
     
@@ -414,9 +414,8 @@
                     AcceptsReturn="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    Background="LightGray"
+                    Background="Azure"
                     BorderThickness="2"
-                    BorderBrush="Orange"
                     Name="TextBox_MK"
                     TextChanged="TextBox_MK_TextChanged"
                 />
@@ -439,11 +438,11 @@
                             <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <ListBox Grid.Column="0" Name="AssemblerLineNumbers" FontSize="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource fontSizeCon}}" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="DarkGray" BorderThickness="2" BorderBrush="Orange">
+                        <ListBox Grid.Column="0" Name="AssemblerLineNumbers" FontSize="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource fontSizeCon}}" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Azure" BorderThickness="1">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">                                                                       
-                                    <Setter Property="Background" Value="Orange"/>
-                                    <Setter Property="FontWeight" Value="ExtraBlack"/>
+                                    <Setter Property="Background" Value="Azure"/>
+                                    <Setter Property="Foreground" Value="#0030B0"/>
                                     <Setter Property="Margin" Value="0" />
                                 </Style>
                             </ListBox.ItemContainerStyle>
@@ -459,9 +458,8 @@
                             AcceptsReturn="True"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            Background="LightGray"
+                            Background="Azure"
                             BorderThickness="2"
-                            BorderBrush="Orange"
                             Name="TextBox_Assembler"
                             TextChanged="TextBox_Assembler_TextChanged"
                         />
