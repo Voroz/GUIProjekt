@@ -26,21 +26,21 @@ namespace GUIProjekt
         {
             InitializeComponent();
             _assemblerModel = new AssemblerModel();
-            _assemblerModel.SelfTest();           
-            createMemoryRowNumbers();
+            _assemblerModel.SelfTest();
+            showMemoryRowNumbers();
         }
 
 
         /******************************************************
          CALL: createMemoryRowNumbers();
          TASK: Displays row numbers for the memory.
-        *****************************************************/ 
-        private void createMemoryRowNumbers()
+        *****************************************************/
+        private void showMemoryRowNumbers()
         {
-            for (byte i = 0; i < 255; i++)
+            for (int i = 0; i <= 255; i++)
             {
-                MemoryRow createRowNumbers = getMMRowOfPosition(255 - i);
-                createRowNumbers.ShowMemoryRowNumber(i);
+                MemoryRow row = getMMRowOfPosition(255 - i);
+                row.ShowMemoryRowNumber((byte)i);
             }
         }
 
@@ -113,6 +113,7 @@ namespace GUIProjekt
             }
 
             assemblerBox.Clear();
+            clearMemoryRows(0, _previousLineCount);
 
             if (string.IsNullOrWhiteSpace(mkBox.Text) || !checkSyntaxMachineTextBox(mkBox)) {
                 return;
@@ -131,9 +132,10 @@ namespace GUIProjekt
                     str = "";
                 }
 
-                assemblerBox.AppendText(str + '\n');
-                
+                assemblerBox.AppendText(str + '\n');                
             }
+
+            _previousLineCount = (byte)assemblerBox.LineCount;
         }
 
 
@@ -150,13 +152,7 @@ namespace GUIProjekt
             }
 
             mkBox.Clear();
-
-            if (_numberOfLines != assemblerBox.LineCount) {
-                updateLineNumber(assemblerBox.LineCount);
-                clearMemoryRows(assemblerBox.LineCount);
-            }
-               
-            _numberOfLines = assemblerBox.LineCount;
+            clearMemoryRows(0, _previousLineCount);          
 
             if (string.IsNullOrWhiteSpace(assemblerBox.Text) || !checkSyntaxAssemblyTextBox(assemblerBox)) {
                 return;
@@ -166,6 +162,8 @@ namespace GUIProjekt
                 string str = assemblerBox.GetLineText(i);
                 ushort bits;
                 MemoryRow rad = getMMRowOfPosition(255 - i);
+
+                rad.ClearMemoryAdress();
 
                 if (!string.IsNullOrWhiteSpace(str)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
@@ -177,9 +175,11 @@ namespace GUIProjekt
                 }
 
                 mkBox.AppendText(str);
-                
+
                 rad.ShowMemoryAdress(str);
             }
+
+            _previousLineCount = (byte)assemblerBox.LineCount;
         }
 
 
@@ -193,9 +193,11 @@ namespace GUIProjekt
             if (!checkSyntaxMachineTextBox(textBox)) {
                 return;
             }
-            //Vid körning av programmet vill vi inte att användaren skall kunna ändra i maskinkoden därför görs textBoxen till readOnly, sätt tillbaka när StopButton aktiveras
+
+            // Vid körning av programmet vill vi inte att användaren skall kunna ändra i maskinkoden därför görs textBoxen till readOnly
             textBox.IsReadOnly = true;
             textBoxAssembler.IsReadOnly = true;
+
             // Adds users text input to the model
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
@@ -258,26 +260,21 @@ namespace GUIProjekt
          TASK: Returns the MemoryRow of the position of the paramater.
          *****************************************************/
         private MemoryRow getMMRowOfPosition(int pos) {
-            return theMemory.Children[(theMemory.Children.Count)-pos] as MemoryRow;
+            return theMemory.Children[(theMemory.Children.Count-1)-pos] as MemoryRow;
         }
-
 
         /******************************************************
          CALL: clearMemoryRows(int);
          TASK: Clears the rows of memory that has been removed.
          *****************************************************/
-        private void clearMemoryRows(int newLineCount){
-            if (newLineCount > _numberOfLines) {
-                return;
-            }
-
-            for (int i = newLineCount; i < _numberOfLines; i++) {
+        private void clearMemoryRows(byte from, byte to) {
+            // Debug.Assert(from < memLineCount && to < memLineCount);
+            for (int i = from; i <= to; i++) {
                 getMMRowOfPosition(255 - i).ClearMemoryAdress();
             }
         }
 
-
         private AssemblerModel _assemblerModel;
-        private int _numberOfLines;
+        private byte _previousLineCount;
     }
 }
