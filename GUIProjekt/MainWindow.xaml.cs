@@ -114,8 +114,9 @@ namespace GUIProjekt
 
             assemblerBox.Clear();
             clearMemoryRows(0, _previousLineCount);
+            updateLineNumber(mkBox.LineCount);
 
-            if (string.IsNullOrWhiteSpace(mkBox.Text) || !checkSyntaxMachineTextBox(mkBox)) {
+            if (!checkSyntaxMachineTextBox(mkBox)) {
                 return;
             }
 
@@ -132,9 +133,12 @@ namespace GUIProjekt
                     rad.ShowMemoryAdress(mkStr);
                 }
 
-                assemblerBox.AppendText(assemblyStr + '\n');                
+                if (mkStr.Length > 0 && mkStr[mkStr.Length - 1] == '\n') {
+                    assemblyStr += '\n';
+                }
+                assemblerBox.AppendText(assemblyStr);
             }
-
+            
             _previousLineCount = (byte)assemblerBox.LineCount;
         }
 
@@ -152,27 +156,31 @@ namespace GUIProjekt
             }
 
             mkBox.Clear();
-            clearMemoryRows(0, _previousLineCount);          
+            clearMemoryRows(0, _previousLineCount);
+            updateLineNumber(assemblerBox.LineCount);
 
-            if (string.IsNullOrWhiteSpace(assemblerBox.Text) || !checkSyntaxAssemblyTextBox(assemblerBox)) {
+            if (!checkSyntaxAssemblyTextBox(assemblerBox)) {
                 return;
             }
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
                 ushort bits = 0;
-                string mkStr = "\n";
+                string mkStr = "";
 
                 if (!string.IsNullOrWhiteSpace(assemblyStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
-                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0') + '\n';
+                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');                    
 
                     MemoryRow rad = getMMRowOfPosition(255 - i);
                     rad.ShowMemoryAdress(mkStr);
                 }
 
-                mkBox.AppendText(mkStr);            
+                if (assemblyStr.Length > 0 && assemblyStr[assemblyStr.Length - 1] == '\n') {
+                    mkStr += '\n';
+                }
+                mkBox.AppendText(mkStr);                
             }
 
             _previousLineCount = (byte)assemblerBox.LineCount;
@@ -198,7 +206,7 @@ namespace GUIProjekt
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
-                ushort bits;
+                ushort bits = 0;
 
                 // Empty lines to create space are fine
                 if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
