@@ -37,7 +37,7 @@ namespace GUIProjekt
         *****************************************************/ 
         private void createMemoryRowNumbers()
         {
-            for (int i = 0; i < 255; i++)
+            for (byte i = 0; i < 255; i++)
             {
                 MemoryRow createRowNumbers = getMMRowOfPosition(255 - i);
                 createRowNumbers.ShowMemoryRowNumber(i);
@@ -164,19 +164,20 @@ namespace GUIProjekt
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string str = assemblerBox.GetLineText(i);
-                ushort bits;                
+                ushort bits;
+                MemoryRow rad = getMMRowOfPosition(255 - i);
 
                 if (!string.IsNullOrWhiteSpace(str)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(str.TrimEnd(trimChars), out bits);  
-                    str = Convert.ToString(bits, 2).PadLeft(12, '0') + '\n';                                    
+                    str = Convert.ToString(bits, 2).PadLeft(12, '0') + '\n';                           
                 }
                 else {
-                    str = "\n";                    
+                    str = "\n";
                 }
 
                 mkBox.AppendText(str);
-                MemoryRow rad = getMMRowOfPosition(255 - i);
+                
                 rad.ShowMemoryAdress(str);
             }
         }

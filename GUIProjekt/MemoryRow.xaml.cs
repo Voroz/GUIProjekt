@@ -82,12 +82,8 @@ namespace GUIProjekt
          * Anrop: ShowMemoryRowNumber(int val)
          * Uppgift: Skapar denna radens numreringsvärde.
          ************************************************************************/
-        public void ShowMemoryRowNumber(int val)
+        public void ShowMemoryRowNumber(byte val)
         {
-            if (!(val >= 0 && val <= 255)) {
-                return;
-            }
-
             Brush br = Brushes.DarkGray;
             UniformGrid rowNumbers = this.AdressNumber as UniformGrid;
 
