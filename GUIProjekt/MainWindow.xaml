@@ -74,17 +74,17 @@
             </Button>
             
             <Viewbox>
-                <ToggleButton Name="PlayButton" Background="#FFA500" BorderBrush="#FFA500">
+                <ToggleButton Name="PlayButton" Background="#DDDDE4" BorderBrush="#DDDDE4">
                     <Image Source="images/play-button.png" Height="9" Width="9" ToolTip="Play"></Image>
                 </ToggleButton>
             </Viewbox>
             <Viewbox>
-                <ToggleButton Name="PauseButton" Background="#FFA500" BorderBrush="#FFA500">
+                <ToggleButton Name="PauseButton" Background="#DDDDE4" BorderBrush="#DDDDE4">
                     <Image Source="images/pause.png" Height="10" Width="10" ToolTip="Pause"></Image>
                 </ToggleButton>
             </Viewbox>
             <Viewbox>
-                <ToggleButton Name="StopButton" Background="#FFA500" BorderBrush="#FFA500">
+                <ToggleButton Name="StopButton" Background="#DDDDE4" BorderBrush="#DDDDE4">
                     <Image Source="images/Stopbtn.png" Height="10" Width="10" ToolTip="Stop"></Image>
                 </ToggleButton>
             </Viewbox>
