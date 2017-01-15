@@ -252,6 +252,15 @@ namespace GUIProjekt
         public bool checkSyntaxMachine(string str) {
             // TODO: Add error code as return value instead of boolean
             // Maybe a struct with error code + line number
+            
+            // Empty lines to create space are fine
+            if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
+                return true;
+            }
+
+            char[] trimChars = new char[2] { '\r', '\n' };
+            str = str.TrimEnd(trimChars);
+
             if (!isBinary(str)) {
                 return false;
             }
@@ -279,6 +288,14 @@ namespace GUIProjekt
             if (isBinary(str)) {
                 return false;
             }
+
+            // Empty lines to create space are fine
+            if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
+                return true;
+            }
+
+            char[] trimChars = new char[2] { '\r', '\n' };
+            str = str.TrimEnd(trimChars);
 
             string[] splitString = str.Split(' ');
 

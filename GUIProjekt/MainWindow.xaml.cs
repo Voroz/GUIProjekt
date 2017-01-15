@@ -56,11 +56,6 @@ namespace GUIProjekt
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
-
-                // Empty lines to create space are fine
-                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
-                    continue;
-                }
                 
                 if (!_assemblerModel.checkSyntaxMachine(str)) {
                     return false;
@@ -81,12 +76,6 @@ namespace GUIProjekt
             for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
-
-                // Empty lines to create space are fine
-                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
-                    continue;
-                    
-                }
 
                 if (!_assemblerModel.checkSyntaxAssembly(str)) {
                     return false;
@@ -116,14 +105,17 @@ namespace GUIProjekt
             clearMemoryRows(0, _previousLineCount);
             updateLineNumber(mkBox.LineCount);
 
-            if (!checkSyntaxMachineTextBox(mkBox)) {
-                return;
-            }
-
             for (int i = 0; i < mkBox.LineCount; i++) {
                 string mkStr = mkBox.GetLineText(i);                
                 ushort bits = 0;
                 string assemblyStr = "";
+
+                if (!_assemblerModel.checkSyntaxMachine(mkStr)) {
+                    if (i != mkBox.LineCount - 1) {
+                        assemblerBox.AppendText("\n");
+                    }
+                    continue;
+                }
 
                 if (!string.IsNullOrWhiteSpace(mkStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
@@ -159,14 +151,17 @@ namespace GUIProjekt
             clearMemoryRows(0, _previousLineCount);
             updateLineNumber(assemblerBox.LineCount);
 
-            if (!checkSyntaxAssemblyTextBox(assemblerBox)) {
-                return;
-            }
-
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
                 ushort bits = 0;
                 string mkStr = "";
+
+                if (!_assemblerModel.checkSyntaxAssembly(assemblyStr)) {
+                    if (i != assemblerBox.LineCount-1) {
+                        mkBox.AppendText("\n");
+                    }
+                    continue;
+                }
 
                 if (!string.IsNullOrWhiteSpace(assemblyStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
