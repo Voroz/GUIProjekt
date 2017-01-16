@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
+using System.Timers;
 
 namespace GUIProjekt
 {
@@ -31,6 +32,11 @@ namespace GUIProjekt
             _assemblerModel.SelfTest();
             showMemoryRowNumbers();
             updateLineNumber(1);
+
+            _inputTimerAssembly.Interval = new TimeSpan(0, 0, 1);
+            _inputTimerMK.Interval = new TimeSpan(0, 0, 1);
+            _inputTimerAssembly.Tick += OnInputTimerAssemblyElapsed;
+            _inputTimerMK.Tick += OnInputTimerMKElapsed;
         }
 
 
@@ -100,18 +106,27 @@ namespace GUIProjekt
             TextBox mkBox = sender as TextBox;
             TextBox assemblerBox = TextBox_Assembler;
 
-            if (!mkBox.IsFocused) { 
+            if (!mkBox.IsFocused || mkBox.IsReadOnly) { 
                 return;
             }
 
-            assemblerBox.Clear();
             updateLineNumber(mkBox.LineCount);
-            if (_previousLineCount >= mkBox.LineCount) {
-                clearMemoryRows(0, _previousLineCount);
-            }
+
+            _inputTimerMK.Stop();
+            _inputTimerMK.Start();
+            assemblerBox.IsReadOnly = true;           
+        }
+
+        private void OnInputTimerMKElapsed(object source, EventArgs e) {
+            TextBox assemblerBox = TextBox_Assembler;
+            TextBox mkBox = TextBox_MK;
+
+            _inputTimerMK.Stop();
+            assemblerBox.Clear();
+            clearMemoryRows(0, _previousLineCount);
 
             for (int i = 0; i < mkBox.LineCount; i++) {
-                string mkStr = mkBox.GetLineText(i);                
+                string mkStr = mkBox.GetLineText(i);
                 ushort bits = 0;
                 string assemblyStr = "";
 
@@ -135,8 +150,9 @@ namespace GUIProjekt
                 }
                 assemblerBox.AppendText(assemblyStr);
             }
-            
+
             _previousLineCount = (byte)assemblerBox.LineCount;
+            assemblerBox.IsReadOnly = false;
         }
 
 
@@ -148,15 +164,24 @@ namespace GUIProjekt
             TextBox assemblerBox = sender as TextBox;
             TextBox mkBox = TextBox_MK;
             
-            if (!assemblerBox.IsFocused) {
+            if (!assemblerBox.IsFocused || assemblerBox.IsReadOnly) {
                 return;
             }
-
-            mkBox.Clear();
+            
             updateLineNumber(assemblerBox.LineCount);
-            if (_previousLineCount >= assemblerBox.LineCount)  { // Kollar om man har tagit bort en rad. Annars är det onödigt att cleara.
-                clearMemoryRows(0, _previousLineCount);
-            }
+            
+            _inputTimerAssembly.Stop();
+            _inputTimerAssembly.Start();
+            mkBox.IsReadOnly = true;
+        }
+
+        private void OnInputTimerAssemblyElapsed(object source, EventArgs e) {
+            TextBox assemblerBox = TextBox_Assembler;
+            TextBox mkBox = TextBox_MK;
+            
+            _inputTimerAssembly.Stop();
+            mkBox.Clear();
+            clearMemoryRows(0, _previousLineCount);
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
@@ -164,7 +189,7 @@ namespace GUIProjekt
                 string mkStr = "";
 
                 if (!_assemblerModel.checkSyntaxAssembly(assemblyStr)) {
-                    if (i != assemblerBox.LineCount-1) {
+                    if (i != assemblerBox.LineCount - 1) {
                         mkBox.AppendText("\n");
                     }
                     continue;
@@ -173,7 +198,7 @@ namespace GUIProjekt
                 if (!string.IsNullOrWhiteSpace(assemblyStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
-                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');                    
+                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');
 
                     MemoryRow rad = getMMRowOfPosition(255 - i);
                     rad.ShowMemoryAdress(mkStr);
@@ -182,10 +207,11 @@ namespace GUIProjekt
                 if (assemblyStr.Length > 0 && assemblyStr[assemblyStr.Length - 1] == '\n') {
                     mkStr += '\n';
                 }
-                mkBox.AppendText(mkStr);                
+                mkBox.AppendText(mkStr);
             }
 
             _previousLineCount = (byte)assemblerBox.LineCount;
+            mkBox.IsReadOnly = false;
         }
 
 
@@ -194,20 +220,20 @@ namespace GUIProjekt
          TASK: Runs through the entered instructions. 
          *****************************************************/
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
-            TextBox textBox = TextBox_MK;
+            TextBox textBoxMK = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
-            if (!checkSyntaxMachineTextBox(textBox)) {
+            if (!checkSyntaxMachineTextBox(textBoxMK) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
                 return;
             }
 
             // Vid körning av programmet vill vi inte att användaren skall kunna ändra i maskinkoden därför görs textBoxen till readOnly
-            textBox.IsReadOnly = true;
+            textBoxMK.IsReadOnly = true;
             textBoxAssembler.IsReadOnly = true;
 
             // Adds users text input to the model
-            for (byte i = 0; i < textBox.LineCount; i++) {
+            for (byte i = 0; i < textBoxMK.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
-                string str = textBox.GetLineText(i).TrimEnd(trimChars);
+                string str = textBoxMK.GetLineText(i).TrimEnd(trimChars);
                 ushort bits = 0;
 
                 // Empty lines to create space are fine
@@ -230,7 +256,7 @@ namespace GUIProjekt
             }
 
             textBoxAssembler.IsReadOnly = false;
-            textBox.IsReadOnly = false;
+            textBoxMK.IsReadOnly = false;
         }
 
 
@@ -313,5 +339,8 @@ namespace GUIProjekt
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
+
+        private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
+        private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
     }
 }
