@@ -33,7 +33,12 @@ namespace GUIProjekt
          ************************************************************************/
         public void ShowMemoryAdress(string str)
         {
-            Brush[] br = new Brush[2] { Brushes.Aquamarine, Brushes.LightGreen };
+            SolidColorBrush[] br = new SolidColorBrush[2];
+            br[0] = new SolidColorBrush();
+            br[1] = new SolidColorBrush();
+            br[0].Color = Color.FromArgb(255, 2, 132, 130);
+            br[1].Color = Color.FromArgb(255, 128, 255, 0);
+
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
             for (int ix = 0; ix < str.Length; ix++)
