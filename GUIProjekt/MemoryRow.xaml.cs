@@ -33,7 +33,7 @@ namespace GUIProjekt
          ************************************************************************/
         public void ShowMemoryAdress(string str)
         {
-            Brush[] br = new Brush[2] { Brushes.Red, Brushes.LightGreen };
+            Brush[] br = new Brush[2] { Brushes.Aquamarine, Brushes.LightGreen };
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
             for (int ix = 0; ix < str.Length; ix++)
