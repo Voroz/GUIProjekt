@@ -105,8 +105,10 @@ namespace GUIProjekt
             }
 
             assemblerBox.Clear();
-            clearMemoryRows(0, _previousLineCount);
             updateLineNumber(mkBox.LineCount);
+            if (_previousLineCount >= mkBox.LineCount) {
+                clearMemoryRows(0, _previousLineCount);
+            }
 
             for (int i = 0; i < mkBox.LineCount; i++) {
                 string mkStr = mkBox.GetLineText(i);                
@@ -151,8 +153,10 @@ namespace GUIProjekt
             }
 
             mkBox.Clear();
-            clearMemoryRows(0, _previousLineCount);
             updateLineNumber(assemblerBox.LineCount);
+            if (_previousLineCount >= assemblerBox.LineCount)  { // Kollar om man har tagit bort en rad. Annars är det onödigt att cleara.
+                clearMemoryRows(0, _previousLineCount);
+            }
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
