@@ -342,5 +342,12 @@ namespace GUIProjekt
 
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+
+        //Lånade denna knapp för att testa SkinManager så användaren kan byta layout på programmet
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            //AppSkin orange = AppSkin.Default;
+            //SkinManager.SetSkin(orange);
+        }
     }
 }
