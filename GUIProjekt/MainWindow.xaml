@@ -82,7 +82,7 @@
         </StackPanel>
         
 
-        <Grid Grid.Row="2" Margin="10,35,10,10">
+        <Grid Grid.Row="2" Margin="10,10,10,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" /> 
                 <ColumnDefinition Width="1*" /> 
@@ -96,13 +96,13 @@
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10*"/>
-                    <RowDefinition Height="90*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="95*"/>
                     <RowDefinition Height="0*"/>
                 </Grid.RowDefinitions>
                 
-                <Viewbox Grid.Column="2" Grid.Row="0" Stretch="Uniform">
-                    <Label FontSize="30">Minnet</Label>
+                <Viewbox Grid.Column="2" Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Left">
+                    <Label FontSize="30">Minne</Label>
                 </Viewbox>
                 
 
@@ -385,12 +385,12 @@
             <!-- Maskinkod -->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10*"></RowDefinition>
-                    <RowDefinition Height="90*"></RowDefinition>
+                    <RowDefinition Height="5*"></RowDefinition>
+                    <RowDefinition Height="95*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Viewbox Stretch="Uniform">
-                <Label Grid.Row="0" FontSize="30">Maskinkod</Label>
+                <Viewbox Stretch="Uniform" HorizontalAlignment="Left">
+                    <Label Grid.Row="0" FontSize="30">Maskinkod</Label>
                 </Viewbox>
                
                 
@@ -415,12 +415,12 @@
             <!-- Assembler -->
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10*"></RowDefinition>
-                    <RowDefinition Height="90*"></RowDefinition>
+                    <RowDefinition Height="5*"></RowDefinition>
+                    <RowDefinition Height="95*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Viewbox Stretch="Uniform">
-                <Label Grid.Row="0" FontSize="30">Assembler</Label>
+                <Viewbox Stretch="Uniform" HorizontalAlignment="Left" Margin="50, 0, 0, 0">
+                    <Label Grid.Row="0" FontSize="30">Assembler</Label>
                 </Viewbox>             
                 <ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch">
                     <Grid>
