@@ -40,9 +40,7 @@ namespace GUIProjekt
             _output = 0;
             _executionDelay = 200;
 
-            for (int i = 0; i < _size; i++) {
-                _memory[i] = (ushort)Constants.UshortMax;
-            }
+            resetMemory();
         }
 
 
@@ -188,7 +186,9 @@ namespace GUIProjekt
             machineCode += addr;
             return true;
         }
-
+        public ushort workingRegister() {
+            return _workingRegister;
+        }
 
         /******************************************************
          CALL: ushort currentValue = currentAddr();
@@ -197,6 +197,22 @@ namespace GUIProjekt
         *****************************************************/ 
         public ushort currentAddr() {
             return _memory[_instructionPtr];
+        }
+
+        public void reset()
+        {
+            _input = 0;
+            _output = 0;
+            _instructionPtr = 0;
+            _workingRegister = 0;
+        }
+
+        public void resetMemory()
+        {
+            for (int i = 0; i < _size; i++)
+            {
+                _memory[i] = (ushort)Constants.UshortMax;
+            }
         }
 
 
@@ -406,14 +422,14 @@ namespace GUIProjekt
             } 
         }
 
-
+        
 
 
         private UInt16[] _memory;
         private byte _instructionPtr;
-        private byte _workingRegister;
-        private byte _input;
-        private byte _output;
+        private ushort _workingRegister;
+        private ushort _input;
+        private ushort _output;
         private readonly int _size;
         private int _executionDelay;
     }

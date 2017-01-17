@@ -33,10 +33,12 @@ namespace GUIProjekt
             showMemoryRowNumbers();
             updateLineNumber(1);
 
-            _inputTimerAssembly.Interval = new TimeSpan(0, 0, 1);
-            _inputTimerMK.Interval = new TimeSpan(0, 0, 1);
+            _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            _inputTimerMK.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerAssembly.Tick += OnInputTimerAssemblyElapsed;
             _inputTimerMK.Tick += OnInputTimerMKElapsed;
+            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, _assemblerModel.delay());
+            _runTimer.Tick += OnInputTimerRunElapsed;
         }
 
 
@@ -220,6 +222,7 @@ namespace GUIProjekt
          TASK: Runs through the entered instructions. 
          *****************************************************/
         private void Button_Run_Click(object sender, RoutedEventArgs e) {
+            
             TextBox textBoxMK = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             if (!checkSyntaxMachineTextBox(textBoxMK) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
@@ -245,20 +248,29 @@ namespace GUIProjekt
                 Debug.Assert(_assemblerModel.stringToMachine(str, out bits));
                 _assemblerModel.setAddr(i, bits);
             }
-                        
-            _assemblerModel.resetInstructionPtr();
+            _runTimer.Start();
+            
             // TODO: Valid address can be 0, since LOAD is 0. How to know when program should stop?
             // TODO: Other solution over while loop, since while loop make user unable to use interface while program is running.
-            while (_assemblerModel.currentAddr() != Constants.UshortMax) {                
-                // TODO: Mark current row
-                Thread.Sleep(_assemblerModel.delay());
-                _assemblerModel.processCurrentAddr();
-            }
-
-            textBoxAssembler.IsReadOnly = false;
-            textBoxMK.IsReadOnly = false;
+            
         }
+        private void OnInputTimerRunElapsed(object source, EventArgs e)
+        {
+            if (_assemblerModel.currentAddr() == Constants.UshortMax)
+            {
+                TextBox textBoxMK = TextBox_MK;
+                TextBox textBoxAssembler = TextBox_Assembler;
+                _runTimer.Stop();
+                _assemblerModel.reset();
+                textBoxAssembler.IsReadOnly = false;
+                textBoxMK.IsReadOnly = false;
+                return;
+            }
+            // TODO: Mark current row
 
+            _assemblerModel.processCurrentAddr();
+            
+        }
 
         /******************************************************
          CALL: When clicking the stop button.
@@ -266,6 +278,9 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Stop_Click(object sender, RoutedEventArgs e) {
             // TODO: Stop execution
+            _runTimer.Stop();
+            _assemblerModel.reset();
+            
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;
@@ -340,7 +355,7 @@ namespace GUIProjekt
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
-
+        private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
 
@@ -349,6 +364,15 @@ namespace GUIProjekt
         {
             //AppSkin orange = AppSkin.Default;
             //SkinManager.SetSkin(orange);
+        }
+
+        private void Button_Pause_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox textBoxMK = TextBox_MK;
+            TextBox textBoxAssembler = TextBox_Assembler;
+            _runTimer.Stop();
+            textBoxMK.IsReadOnly = false;
+            textBoxAssembler.IsReadOnly = false;
         }
     }
 }

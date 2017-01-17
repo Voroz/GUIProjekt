@@ -47,7 +47,7 @@
             <Button Click="Button_Run_Click" Style="{StaticResource MenuButton}" ToolTip="Play">
                 <Image Source="images/media-play-8x.png" />
             </Button>
-            <Button Style="{StaticResource MenuButton}" ToolTip="Pause">
+            <Button Click="Button_Pause_Click" Style="{StaticResource MenuButton}" ToolTip="Pause">
                 <Image Source="images/media-pause-8x.png" />
             </Button>
             <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
