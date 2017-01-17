@@ -320,7 +320,8 @@ namespace GUIProjekt
             ofd.Filter = "Text Document (.txt)|*.txt";
             if(ofd.ShowDialog() == true)
             {
-                string filename = ofd.FileName;               
+                string filename = ofd.FileName;
+                TextBox_Assembler.Focus();
                 TextBox_Assembler.Text = File.ReadAllText(filename);
             }
         }
