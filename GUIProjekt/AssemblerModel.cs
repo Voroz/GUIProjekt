@@ -186,9 +186,16 @@ namespace GUIProjekt
             machineCode += addr;
             return true;
         }
+
+
+        /******************************************************
+         CALL: ushort workingReg = workingRegister();
+         TASK: Returns the working register.
+        *****************************************************/ 
         public ushort workingRegister() {
             return _workingRegister;
         }
+
 
         /******************************************************
          CALL: ushort currentValue = currentAddr();
@@ -199,6 +206,11 @@ namespace GUIProjekt
             return _memory[_instructionPtr];
         }
 
+
+        /******************************************************
+         CALL: reset();
+         TASK: Sets the member variables to their initiated value.
+        *****************************************************/ 
         public void reset()
         {
             _input = 0;
@@ -208,6 +220,11 @@ namespace GUIProjekt
             resetMemory();
         }
 
+
+        /******************************************************
+         CALL: resetMemory();
+         TASK: Resets the memory.
+        *****************************************************/ 
         public void resetMemory()
         {
             for (int i = 0; i < _size; i++)
@@ -424,8 +441,6 @@ namespace GUIProjekt
         }
 
         
-
-
         private UInt16[] _memory;
         private byte _instructionPtr;
         private ushort _workingRegister;

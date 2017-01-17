@@ -321,9 +321,7 @@ namespace GUIProjekt
             }
         }
 
-        private AssemblerModel _assemblerModel;
-        private byte _previousLineCount;
-
+        
         /******************************************************
          CALL: When clicking the Open button in the Menu
          TASK: Open a txt file from the directory.
@@ -355,9 +353,7 @@ namespace GUIProjekt
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
-        private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
-        private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
-        private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+        
 
         //Lånade denna knapp för att testa SkinManager så användaren kan byta layout på programmet
         private void PauseButton_Click(object sender, RoutedEventArgs e)
@@ -366,6 +362,12 @@ namespace GUIProjekt
             //SkinManager.SetSkin(orange);
         }
 
+
+        /******************************************************
+         CALL: When clicking the pause button in the menu.
+         TASK: Pauses the run through of the program and enables 
+               input in the textboxes again.
+         *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e)
         {
             TextBox textBoxMK = TextBox_MK;
@@ -374,5 +376,13 @@ namespace GUIProjekt
             textBoxMK.IsReadOnly = false;
             textBoxAssembler.IsReadOnly = false;
         }
+
+
+        private AssemblerModel _assemblerModel;
+        private byte _previousLineCount;
+
+        private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
+        private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
+        private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
     }
 }
