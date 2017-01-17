@@ -205,6 +205,7 @@ namespace GUIProjekt
             _output = 0;
             _instructionPtr = 0;
             _workingRegister = 0;
+            resetMemory();
         }
 
         public void resetMemory()
