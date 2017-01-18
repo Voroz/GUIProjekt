@@ -294,8 +294,7 @@ namespace GUIProjekt
 
             if (opr == Operations.CALL)
             {
-                byte index = (byte)(256 - _assemblerModel.stack().size);
-                _assemblerModel.stack().size += 1;
+                byte index = (byte)(256 - _assemblerModel.stack().size());
                 MemoryRow row = getMMRowOfPosition(255 - index);
 
                 row.ShowMemoryAdress(Convert.ToString(_assemblerModel.stack().top(), 2).PadLeft(12, '0'));

@@ -232,7 +232,7 @@ namespace GUIProjekt
             {
                 _memory[i] = (ushort)Constants.UshortMax;
             }
-            while (_memoryStack.size > 0) {
+            while (_memoryStack.size() > 0) {
                 _memoryStack.pop();
             }
         }

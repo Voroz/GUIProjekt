@@ -24,8 +24,8 @@ namespace GUIProjekt
          *****************************************************/
         public void push(T val) {
             Debug.Assert(_usedSize != _arr.Length);
-            size++;
-            _arr[_arr.Length - size] = val;
+            _usedSize++;
+            _arr[_arr.Length - _usedSize] = val;
         }
 
         /******************************************************
@@ -34,7 +34,7 @@ namespace GUIProjekt
          *****************************************************/
         public void pop() {
             Debug.Assert(_usedSize != 0);
-            size -= 1;
+            _usedSize--;
         }
 
         /******************************************************
@@ -43,17 +43,15 @@ namespace GUIProjekt
          *****************************************************/
         public T top() {
             Debug.Assert(_usedSize != 0);
-            size -= 1;
-            return _arr[_arr.Length - size];
+            return _arr[_arr.Length - _usedSize];
         }
 
         /******************************************************
          CALL: .size to Return _usedSize OR .size = 1 to Set _usedSize
          TASK: Returns OR Sets the number of elements on the stack.
          *****************************************************/
-        public int size {
-           get { return _usedSize; }
-            set { _usedSize = value; }
+        public int size() {
+            return _usedSize;
         }
 
         
