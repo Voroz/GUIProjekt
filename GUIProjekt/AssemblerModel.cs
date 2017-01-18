@@ -382,8 +382,7 @@ namespace GUIProjekt
 
             switch (opr) {
                 case Operations.LOAD: {
-                    byte valAtAddr = extractVal(_memory[addr]);
-                    _workingRegister = valAtAddr;
+                    _workingRegister = _memory[addr];
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
@@ -393,14 +392,12 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.ADD: {
-                    byte valAtAddr = extractVal(_memory[addr]);
-                    _workingRegister += valAtAddr;
+                    _workingRegister += _memory[addr];
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
                 case Operations.SUB: {
-                    byte valAtAddr = extractVal(_memory[addr]);
-                    _workingRegister -= valAtAddr;
+                    _workingRegister -= _memory[addr];
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
