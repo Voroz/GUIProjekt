@@ -268,7 +268,22 @@ namespace GUIProjekt
             }
             // TODO: Mark current row
 
+            ushort currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
+            Operations opr;
+            byte val = (byte)_assemblerModel.extractVal(currentAddr);
+            _assemblerModel.extractOperation(currentAddr, out opr);
+            //Ta reda på vart i minnet vi ska uppdatera grafiskt
+            
             _assemblerModel.processCurrentAddr();
+
+            if (opr == Operations.CALL)
+            {
+                byte index = (byte)(256 - _assemblerModel.stack().size());
+                MemoryRow row = getMMRowOfPosition(255 - index);
+
+                row.ShowMemoryAdress(Convert.ToString(_assemblerModel.stack().top(), 2).PadLeft(12, '0'));
+
+            }
             
         }
 

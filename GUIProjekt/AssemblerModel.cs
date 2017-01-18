@@ -81,7 +81,7 @@ namespace GUIProjekt
             return val;
         }
 
-        bool extractOperation(ushort bits, out Operations opr) {
+        public bool extractOperation(ushort bits, out Operations opr) {
             byte oprVal = (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits);
             if (!Enum.IsDefined(typeof(Operations), oprVal)) {
                 opr = Operations.LOAD;
@@ -91,7 +91,7 @@ namespace GUIProjekt
             return true;
         }
 
-        byte extractVal(ushort bits) {
+        public byte extractVal(ushort bits) {
             return (byte)extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
         }
 
@@ -262,6 +262,10 @@ namespace GUIProjekt
             return _output;
         }
 
+        public MyStack<ushort> stack()
+        {
+            return _memoryStack;
+        }
 
         /******************************************************
          CALL: ushort addr = getAddr(byte);
