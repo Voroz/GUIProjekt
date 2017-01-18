@@ -11,9 +11,10 @@ namespace GUIProjekt
     {
         /******************************************************
          CALL: MyStack<T> myStack;
-         TASK: Creates an array of a certain datatype.
+         TASK: Uses an array of a certain datatype.
          *****************************************************/
         public MyStack(T[] arr) {
+            _usedSize = 0;
 		    _arr = arr;
 	    }
 

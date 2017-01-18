@@ -232,6 +232,9 @@ namespace GUIProjekt
             {
                 _memory[i] = (ushort)Constants.UshortMax;
             }
+            while (_memoryStack.size() > 0) {
+                _memoryStack.pop();
+            }
         }
 
 
@@ -450,6 +453,7 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.CALL: {
+                    _instructionPtr++;
                     _memoryStack.push(_instructionPtr);
                     _instructionPtr = addr;                    
                 } break;
