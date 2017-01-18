@@ -54,6 +54,25 @@ namespace GUIProjekt
             }
         }
 
+        private void updateGUIMemory() {
+            TextBox mkBox = TextBox_MK;
+
+            clearMemoryRows(0, 255);
+
+            for (int i = 0; i < mkBox.LineCount; i++) {
+                string mkStr = mkBox.GetLineText(i);
+
+                if (!_assemblerModel.checkSyntaxMachine(mkStr)) {
+                    continue;
+                }
+
+                if (!string.IsNullOrWhiteSpace(mkStr)) {
+                    MemoryRow rad = getMMRowOfPosition(255 - i);
+                    rad.ShowMemoryAdress(mkStr);
+                }
+            }
+        }
+
 
         /******************************************************
          CALL: bool ok = checkSyntaxMachineTextBox(TextBox);
@@ -257,6 +276,8 @@ namespace GUIProjekt
                 TextBox textBoxAssembler = TextBox_Assembler;
                 _runTimer.Stop();
                 _assemblerModel.reset();
+                updateGUIMemory();
+                
                 textBoxAssembler.IsReadOnly = false;
                 textBoxMK.IsReadOnly = false;
                 return;
@@ -290,6 +311,7 @@ namespace GUIProjekt
             // TODO: Stop execution
             _runTimer.Stop();
             _assemblerModel.reset();
+            updateGUIMemory();
             
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;

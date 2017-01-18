@@ -450,6 +450,7 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.CALL: {
+                    _instructionPtr++;
                     _memoryStack.push(_instructionPtr);
                     _instructionPtr = addr;                    
                 } break;
