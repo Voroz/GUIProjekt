@@ -292,13 +292,36 @@ namespace GUIProjekt
             
             _assemblerModel.processCurrentAddr();
 
-            if (opr == Operations.CALL)
-            {
-                byte index = (byte)(256 - _assemblerModel.stack().size());
-                MemoryRow row = getMMRowOfPosition(255 - index);
+            switch (opr) {
+                case Operations.IN: {
+                        // TODO: Update missing GUI workingRegister;
+                        // TODO: Update missing GUI instructionPtr;
+                    } break;
 
-                row.ShowMemoryAdress(Convert.ToString(_assemblerModel.stack().top(), 2).PadLeft(12, '0'));
+                case Operations.OUT: {
+                        // TODO: Update missing GUI output
+                        // TODO: Update missing GUI instructionPtr;
+                    } break;
 
+                case Operations.CALL: {
+                        // TODO: Update missing GUI instructionPtr;
+                        byte index = (byte)(256 - _assemblerModel.stack().size());
+                        MemoryRow row = getMMRowOfPosition(255 - index);
+
+                        row.ShowMemoryAdress(Convert.ToString(_assemblerModel.stack().top(), 2).PadLeft(12, '0'));                        
+                    } break;
+
+                case Operations.RETURN: {
+                        // TODO: Update missing GUI instructionPtr;
+                        byte index = (byte)(256 - _assemblerModel.stack().size() - 1);
+                        MemoryRow row = getMMRowOfPosition(255 - index);
+
+                        row.ClearMemoryAdress(); 
+                    } break;
+
+                default: {
+                        // TODO: Update missing GUI instructionPtr;
+                    } break;
             }
             
         }
