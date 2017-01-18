@@ -48,8 +48,8 @@ namespace GUIProjekt
         }
 
         /******************************************************
-         CALL: int stackSize = size();
-         TASK: Returns the number of elements on the stack.
+         CALL: .size to Return _usedSize OR .size = 1 to Set _usedSize
+         TASK: Returns OR Sets the number of elements on the stack.
          *****************************************************/
         public int size {
            get { return _usedSize; }
