@@ -269,7 +269,7 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: ushort addr = getAddr(byte);
-         TASK: Returns the adress in the memory of the parameter 
+         TASK: Returns the value in the memory of the parameter 
                value.
         *****************************************************/ 
         public ushort getAddr(byte idx) {
@@ -287,10 +287,21 @@ namespace GUIProjekt
             _memory[idx] = val;
         }
 
+
+        /******************************************************
+         CALL: setInput(ushort);
+         TASK: Sets input.
+         *****************************************************/
         void setInput(ushort input) {
             _input = input;
         }
 
+
+        /******************************************************
+         CALL: int execDelay = delay();
+         TASK: Return execution delay variable. Used to improve
+               smoothness of running program.
+         *****************************************************/
         public int delay() {
             return _executionDelay;
         }
