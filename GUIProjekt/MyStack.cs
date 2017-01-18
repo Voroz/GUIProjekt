@@ -14,6 +14,7 @@ namespace GUIProjekt
          TASK: Uses an array of a certain datatype.
          *****************************************************/
         public MyStack(T[] arr) {
+            _usedSize = 0;
 		    _arr = arr;
 	    }
 
