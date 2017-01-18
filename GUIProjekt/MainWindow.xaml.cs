@@ -264,9 +264,6 @@ namespace GUIProjekt
             }
             _runTimer.Start();
             
-            // TODO: Valid address can be 0, since LOAD is 0. How to know when program should stop?
-            // TODO: Other solution over while loop, since while loop make user unable to use interface while program is running.
-            
         }
         private void OnInputTimerRunElapsed(object source, EventArgs e)
         {
@@ -331,7 +328,6 @@ namespace GUIProjekt
          TASK: Stops execution and makes the input fields changeable again.
          *****************************************************/
         private void Button_Stop_Click(object sender, RoutedEventArgs e) {
-            // TODO: Stop execution
             _runTimer.Stop();
             _assemblerModel.reset();
             updateGUIMemory(0, 255);
