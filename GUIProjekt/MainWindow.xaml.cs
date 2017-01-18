@@ -38,6 +38,9 @@ namespace GUIProjekt
             _inputTimerMK.Tick += OnInputTimerMKElapsed;
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, _assemblerModel.delay());
             _runTimer.Tick += OnInputTimerRunElapsed;
+
+            // Mark current row
+            markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
         }
 
 
@@ -230,6 +233,22 @@ namespace GUIProjekt
             mkBox.IsReadOnly = false;
         }
 
+        // TODO: Enkel tillfällig funktion för att markera rader
+        void markRow(MemoryRow row) {
+            if (_previousInstructionPtr != -1) {
+                MemoryRow previousRow_ = getMMRowOfPosition((byte)(255 - _previousInstructionPtr));
+                previousRow_.BorderThickness = new Thickness(0, 0, 0, 0);
+                previousRow_.Margin = new Thickness(0, 0, 0, 0);
+                Grid.SetZIndex(previousRow_, 999);
+            }
+
+            row.BorderThickness = new Thickness(4, 4, 4, 4);
+            row.Margin = new Thickness(-4, -4, -4, -4);
+            Grid.SetZIndex(row, 1000);
+
+            _previousInstructionPtr = _assemblerModel.instructionPtr();
+        }
+
         void programTick() {
             if (_assemblerModel.currentAddr() == Constants.UshortMax) {
                 TextBox textBoxMK = TextBox_MK;
@@ -240,18 +259,24 @@ namespace GUIProjekt
 
                 textBoxAssembler.IsReadOnly = false;
                 textBoxMK.IsReadOnly = false;
+
+                // Mark current row
+                markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
+
                 return;
             }
-            // TODO: Mark current row
 
             ushort currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
             Operations opr;
             byte val = (byte)_assemblerModel.extractVal(currentAddr);
             _assemblerModel.extractOperation(currentAddr, out opr);
-            //Ta reda på vart i minnet vi ska uppdatera grafiskt
 
             _assemblerModel.processCurrentAddr();
 
+            // Mark current row
+            markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
+
+            // Ta reda på vart i minnet vi ska uppdatera grafiskt
             switch (opr) {
                 case Operations.STORE: {
                         byte index = (byte)(val);
@@ -347,6 +372,9 @@ namespace GUIProjekt
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;
             textBox.IsReadOnly = false;
+
+            // Mark current row
+            markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
         }
 
 
@@ -465,6 +493,7 @@ namespace GUIProjekt
 
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
+        private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
 
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
