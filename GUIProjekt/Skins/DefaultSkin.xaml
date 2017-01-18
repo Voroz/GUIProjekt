@@ -54,6 +54,6 @@
         <Setter Property="Height" Value="Auto" />
         <Setter Property="Fill" Value="Azure" />
         <Setter Property="Stroke" Value="Gray"/>
-        <Setter Property="StrokeThickness" Value="2"/>
+        <Setter Property="StrokeThickness" Value="0.5"/>
     </Style>
 </ResourceDictionary>
