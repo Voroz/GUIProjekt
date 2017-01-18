@@ -34,6 +34,7 @@ namespace GUIProjekt
         {
             _size = 256; // Leave this at 256 (many of our attributes are 8 bit)
             _memory = new ushort[_size];
+            _memoryStack = new MyStack<ushort>(_memory);
             _instructionPtr = 0;
             _workingRegister = 0;
             _input = 0;
@@ -253,6 +254,14 @@ namespace GUIProjekt
             return _instructionPtr;
         }
 
+        ushort input(){
+            return _input;
+        }
+
+        ushort output() {
+            return _output;
+        }
+
 
         /******************************************************
          CALL: ushort addr = getAddr(byte);
@@ -272,6 +281,10 @@ namespace GUIProjekt
         public void setAddr(byte idx, ushort val) {
             Debug.Assert(idx >= 0 && idx < _size);
             _memory[idx] = val;
+        }
+
+        void setInput(ushort input) {
+            _input = input;
         }
 
         public int delay() {
@@ -422,13 +435,13 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.CALL: {
-                    // add return addr to call stack
+                    _memoryStack.push(_instructionPtr);
                     _instructionPtr = addr;                    
                 } break;
 
                 case Operations.RETURN: {
-                    // return to addr on top of call stack and pop it
-                    // RETURN
+                    _instructionPtr = (byte)_memoryStack.top();
+                    _memoryStack.pop();
                 } break;
 
                 default: {
@@ -439,6 +452,7 @@ namespace GUIProjekt
 
         
         private UInt16[] _memory;
+        private MyStack<ushort> _memoryStack;
         private byte _instructionPtr;
         private ushort _workingRegister;
         private ushort _input;
