@@ -230,6 +230,68 @@ namespace GUIProjekt
             mkBox.IsReadOnly = false;
         }
 
+        void programTick() {
+            if (_assemblerModel.currentAddr() == Constants.UshortMax) {
+                TextBox textBoxMK = TextBox_MK;
+                TextBox textBoxAssembler = TextBox_Assembler;
+                _runTimer.Stop();
+                _assemblerModel.reset();
+                updateGUIMemory(0, 255);
+
+                textBoxAssembler.IsReadOnly = false;
+                textBoxMK.IsReadOnly = false;
+                return;
+            }
+            // TODO: Mark current row
+
+            ushort currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
+            Operations opr;
+            byte val = (byte)_assemblerModel.extractVal(currentAddr);
+            _assemblerModel.extractOperation(currentAddr, out opr);
+            //Ta reda på vart i minnet vi ska uppdatera grafiskt
+
+            _assemblerModel.processCurrentAddr();
+
+            switch (opr) {
+                case Operations.STORE: {
+                        byte index = (byte)(val);
+                        MemoryRow row = getMMRowOfPosition(255 - index);
+
+                        row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                        // TODO: Update missing GUI instructionPtr;
+                    } break;
+
+                case Operations.IN: {
+                        // TODO: Update missing GUI workingRegister;
+                        // TODO: Update missing GUI instructionPtr;
+                    } break;
+
+                case Operations.OUT: {
+                        // TODO: Update missing GUI output
+                        // TODO: Update missing GUI instructionPtr;
+                    } break;
+
+                case Operations.CALL: {
+                        // TODO: Update missing GUI instructionPtr;
+                        byte index = (byte)(256 - _assemblerModel.stack().size());
+                        MemoryRow row = getMMRowOfPosition(255 - index);
+
+                        row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                    } break;
+
+                case Operations.RETURN: {
+                        // TODO: Update missing GUI instructionPtr;
+                        byte index = (byte)(256 - _assemblerModel.stack().size() - 1);
+                        MemoryRow row = getMMRowOfPosition(255 - index);
+
+                        row.ClearMemoryAdress();
+                    } break;
+
+                default: {
+                        // TODO: Update missing GUI instructionPtr;
+                    } break;
+            }
+        }
 
         /******************************************************
          CALL: When clicking the run button.
@@ -265,61 +327,10 @@ namespace GUIProjekt
             _runTimer.Start();
             
         }
+
         private void OnInputTimerRunElapsed(object source, EventArgs e)
         {
-            if (_assemblerModel.currentAddr() == Constants.UshortMax)
-            {
-                TextBox textBoxMK = TextBox_MK;
-                TextBox textBoxAssembler = TextBox_Assembler;
-                _runTimer.Stop();
-                _assemblerModel.reset();
-                updateGUIMemory(0, 255);
-                
-                textBoxAssembler.IsReadOnly = false;
-                textBoxMK.IsReadOnly = false;
-                return;
-            }
-            // TODO: Mark current row
-
-            ushort currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
-            Operations opr;
-            byte val = (byte)_assemblerModel.extractVal(currentAddr);
-            _assemblerModel.extractOperation(currentAddr, out opr);
-            //Ta reda på vart i minnet vi ska uppdatera grafiskt
-            
-            _assemblerModel.processCurrentAddr();
-
-            switch (opr) {
-                case Operations.IN: {
-                        // TODO: Update missing GUI workingRegister;
-                        // TODO: Update missing GUI instructionPtr;
-                    } break;
-
-                case Operations.OUT: {
-                        // TODO: Update missing GUI output
-                        // TODO: Update missing GUI instructionPtr;
-                    } break;
-
-                case Operations.CALL: {
-                        // TODO: Update missing GUI instructionPtr;
-                        byte index = (byte)(256 - _assemblerModel.stack().size());
-                        MemoryRow row = getMMRowOfPosition(255 - index);
-
-                        row.ShowMemoryAdress(Convert.ToString(_assemblerModel.stack().top(), 2).PadLeft(12, '0'));                        
-                    } break;
-
-                case Operations.RETURN: {
-                        // TODO: Update missing GUI instructionPtr;
-                        byte index = (byte)(256 - _assemblerModel.stack().size() - 1);
-                        MemoryRow row = getMMRowOfPosition(255 - index);
-
-                        row.ClearMemoryAdress(); 
-                    } break;
-
-                default: {
-                        // TODO: Update missing GUI instructionPtr;
-                    } break;
-            }
+            programTick();
             
         }
 
@@ -410,6 +421,43 @@ namespace GUIProjekt
             TextBox textBoxMK = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             _runTimer.Stop();
+            textBoxMK.IsReadOnly = false;
+            textBoxAssembler.IsReadOnly = false;
+        }
+
+        private void Button_StepBack_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void Button_StepForward_Click(object sender, RoutedEventArgs e) {
+            // TODO: I stort sett samma kod som i Button_Run_Click. Kanske ska dags att göra en funktion?
+
+            TextBox textBoxMK = TextBox_MK;
+            TextBox textBoxAssembler = TextBox_Assembler;
+            if (!checkSyntaxMachineTextBox(textBoxMK) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
+                return;
+            }
+
+            // Vid körning av programmet vill vi inte att användaren skall kunna ändra i maskinkoden därför görs textBoxen till readOnly
+            textBoxMK.IsReadOnly = true;
+            textBoxAssembler.IsReadOnly = true;
+
+            // Adds users text input to the model
+            for (byte i = 0; i < textBoxMK.LineCount; i++) {
+                char[] trimChars = new char[2] { '\r', '\n' };
+                string str = textBoxMK.GetLineText(i).TrimEnd(trimChars);
+                ushort bits = 0;
+
+                // Empty lines to create space are fine
+                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
+                    _assemblerModel.setAddr(i, Constants.UshortMax);
+                    continue;
+                }
+
+                Debug.Assert(_assemblerModel.stringToMachine(str, out bits));
+                _assemblerModel.setAddr(i, bits);
+            }
+            programTick();
             textBoxMK.IsReadOnly = false;
             textBoxAssembler.IsReadOnly = false;
         }

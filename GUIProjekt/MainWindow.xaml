@@ -51,16 +51,18 @@
             <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
                 <Image Source="images/media-stop-8x.png" />
             </Button>
-            <Button Style="{StaticResource MenuButton}" ToolTip="Step Forward">
+            
+            <Button Name="Button_StepBack" Click="Button_StepBack_Click" Style="{StaticResource MenuButton}" ToolTip="Step Back">
                 <Image Source="images/action-undo-8x.png" />
-            </Button>
-            <Button Style="{StaticResource MenuButton}" ToolTip="Step Back">
-                <Image Source="images/action-redo-8x.png" />
                 <ToolTipService.ToolTip>
                     <TextBlock Text="Step Back" />
                 </ToolTipService.ToolTip>
             </Button>
-            
+
+            <Button Name="Button_StepForward" Click="Button_StepForward_Click" Style="{StaticResource MenuButton}" ToolTip="Step Forward">
+                <Image Source="images/action-redo-8x.png" />
+            </Button>
+
             <Viewbox>
                 <ToggleButton Name="PlayButton" Background="#DDDDE4" BorderBrush="#DDDDE4">
                     <Image Source="images/play-button.png" Height="9" Width="9" ToolTip="Play"></Image>
