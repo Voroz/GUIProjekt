@@ -31,7 +31,6 @@ namespace GUIProjekt
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
             showMemoryRowNumbers();
-            updateLineNumber(1);
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerMK.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -112,8 +111,6 @@ namespace GUIProjekt
                 return;
             }
 
-            updateLineNumber(mkBox.LineCount);
-
             _inputTimerMK.Stop();
             _inputTimerMK.Start();
             assemblerBox.IsReadOnly = true;           
@@ -169,8 +166,6 @@ namespace GUIProjekt
             if (!assemblerBox.IsFocused || assemblerBox.IsReadOnly) {
                 return;
             }
-            
-            updateLineNumber(assemblerBox.LineCount);
             
             _inputTimerAssembly.Stop();
             _inputTimerAssembly.Start();
@@ -285,20 +280,6 @@ namespace GUIProjekt
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;
             textBox.IsReadOnly = false;
-        }
-
-
-        /******************************************************
-         CALL: updateLineNumber(TextBox);
-         TASK: Updates the line numbers in the assembler section.
-         *****************************************************/
-        private void updateLineNumber(int newLineCount)
-        {
-            // Todo: Optimera så att den bara tar bort och lägger till så många rader som behövs.
-            AssemblerLineNumbers.Items.Clear();
-            for (int i = 0; i < newLineCount; i++) {
-                AssemblerLineNumbers.Items.Add(i);
-            }
         }
 
 

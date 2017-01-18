@@ -371,16 +371,6 @@
                         TextChanged="TextBox_MK_TextChanged"
                             MinWidth="200"/>
 
-                        <ListBox Grid.Column="0" Name="AssemblerLineNumbers" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Azure" BorderThickness="1" Visibility="Hidden">
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="Background" Value="Azure"/>
-                                    <Setter Property="Foreground" Value="#0030B0"/>
-                                    <Setter Property="Margin" Value="0" />
-                                </Style>
-                            </ListBox.ItemContainerStyle>
-                        </ListBox>
-
                         <TextBox
                             Grid.Column="2"
                             Padding="0"
