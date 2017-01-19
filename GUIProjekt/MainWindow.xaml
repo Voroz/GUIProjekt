@@ -26,8 +26,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition MinHeight="25" MaxHeight="35" /> <!-- Meny -->
-            <RowDefinition Height="19*" />  <!-- Content -->
+            <RowDefinition Height="3*" /> <!-- Meny -->
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="50*" />  <!-- Content -->
         </Grid.RowDefinitions>
         
         <Menu Grid.Row="0" Width="Auto" Height="30" Background="{StaticResource MenuColor}" FontSize="16">   <!-- Topmeny/Standardmeny -->
@@ -81,9 +82,23 @@
             
         </StackPanel>
         
-        
-        
-        <Grid Grid.Row="2" Margin="10,0,10,10">
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="42*" />
+                <ColumnDefinition Width="33*" />
+                <ColumnDefinition Width="50*" />
+            </Grid.ColumnDefinitions>
+            <Label Background="{StaticResource MenuColor}"></Label>
+            <!-- TODO: Visa vad som är Operationer / Värde i minnet -->
+            <Label Background="{StaticResource MenuColor}" Grid.Column="1" FontSize="14">#</Label>
+            <UniformGrid Columns="3" Grid.Column="2" >
+                <RadioButton Style="{StaticResource EditorTabs}" Content="Machine Code" Name="MKTab" Click="TabsToggle_event" />
+                <RadioButton Style="{StaticResource EditorTabs}" Content="Split View" Name="SplitTab" Click="TabsToggle_event" IsChecked="True" />
+                <RadioButton Style="{StaticResource EditorTabs}" Content="Assembly" Name="AssemblyTab" Click="TabsToggle_event"/>
+            </UniformGrid>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="10,0,10,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" /> 
                 <ColumnDefinition Width="2*" /> 
@@ -100,12 +115,8 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="5*" />
-                            <RowDefinition Height="95*" />
-                        </Grid.RowDefinitions>
                         
-                        <Viewbox Grid.Column="0" Grid.Row="1">
+                        <Viewbox Grid.Column="0">
                             <UniformGrid Name="theMemory" Rows="256" Columns="1" MinWidth="280" MinHeight="5000" HorizontalAlignment="Right">
                                 <local:MemoryRow></local:MemoryRow>
                                 <local:MemoryRow></local:MemoryRow>
@@ -366,14 +377,9 @@
                             </UniformGrid>
                         </Viewbox>
                         
-                        <UniformGrid Columns="3" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
-                            <RadioButton Style="{StaticResource EditorTabs}" Content="Machine Code" Name="MKTab" Click="TabsToggle_event" />
-                            <RadioButton Style="{StaticResource EditorTabs}" Content="Split View" Name="SplitTab" Click="TabsToggle_event" IsChecked="True" />
-                            <RadioButton Style="{StaticResource EditorTabs}" Content="Assembly" Name="AssemblyTab" Click="TabsToggle_event"/>
-                        </UniformGrid>
+                        
                         
                         <TextBox
-                            Grid.Row="1"
                             Grid.Column="1"
                             Padding="0"
                             HorizontalAlignment="Stretch"
@@ -390,7 +396,6 @@
                             MinWidth="200"/>
 
                         <TextBox
-                            Grid.Row="1"
                             Grid.Column="2"
                             Padding="0"
                             HorizontalAlignment="Stretch"
