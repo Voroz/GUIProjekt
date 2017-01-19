@@ -490,6 +490,21 @@ namespace GUIProjekt
             textBoxAssembler.IsReadOnly = false;
         }
 
+        private void TabsToggle_event(object sender, RoutedEventArgs e) {
+            if (Convert.ToBoolean(AssemblyTab.IsChecked)) {
+                TextBox_Assembler.Visibility = Visibility.Visible;
+                TextBox_MK.Visibility = Visibility.Hidden;
+            }
+            if(Convert.ToBoolean(MKTab.IsChecked)) {
+                TextBox_Assembler.Visibility = Visibility.Hidden;
+                TextBox_MK.Visibility = Visibility.Visible;
+            }
+            if (Convert.ToBoolean(SplitTab.IsChecked)) {
+                TextBox_Assembler.Visibility = Visibility.Visible;
+                TextBox_MK.Visibility = Visibility.Visible;
+            }
+        }
+
 
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
