@@ -12,7 +12,7 @@ namespace GUIProjekt
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             double actualHeight = System.Convert.ToDouble(value);
-            int fontSize = (int)(actualHeight * .024);
+            int fontSize = (int)(actualHeight * .074);
             return fontSize;
         }
         

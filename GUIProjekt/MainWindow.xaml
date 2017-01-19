@@ -16,7 +16,7 @@
         <!-- Mall för layouten av programmet hittar ni under skins, Skapa egna skins för att ändra färger etc -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/OrangeSkin.xaml"/>
+                <ResourceDictionary Source="Skins/DefaultSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         <!--Resources som inte ska tillhöra layout förändring läggs här-->    
             <local:FontSizeConverter x:Key="fontSizeCon"/>
@@ -29,7 +29,7 @@
             <RowDefinition Height="3*" /> <!-- Meny -->
             <RowDefinition Height="2*" />
             <RowDefinition Height="50*" />  <!-- Content -->
-            <RowDefinition Height="20*" />
+            <RowDefinition Height="20*" />  <!--Stack-->
         </Grid.RowDefinitions>
         
         <Menu Grid.Row="0" Width="Auto" Height="30" Background="{StaticResource MenuColor}" FontSize="16">   <!-- Topmeny/Standardmeny -->
@@ -44,26 +44,37 @@
         </Menu>
         
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="{StaticResource MenuColor}">
-            <Button Click="Button_Run_Click" Style="{StaticResource MenuButton}" ToolTip="Play">
-                <Image Source="images/media-play-8x.png" />
-            </Button>
-            <Button Click="Button_Pause_Click" Style="{StaticResource MenuButton}" ToolTip="Pause">
-                <Image Source="images/media-pause-8x.png" />
-            </Button>
-            <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
-                <Image Source="images/media-stop-8x.png" />
-            </Button>
+            <Viewbox>
+                <Button Click="Button_Run_Click" Style="{StaticResource MenuButton}" ToolTip="Play">
+                    <Image Source="images/media-play-8x.png" />
+                </Button>
+            </Viewbox>
+            <Viewbox>
+                <Button Click="Button_Pause_Click" Style="{StaticResource MenuButton}" ToolTip="Pause">
+                    <Image Source="images/media-pause-8x.png" />
+                </Button>
+            </Viewbox>
+            <Viewbox>
+                <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
+                    <Image Source="images/media-stop-8x.png" />
+                </Button>
+            </Viewbox>
             
-            <Button Name="Button_StepBack" Click="Button_StepBack_Click" Style="{StaticResource MenuButton}" ToolTip="Step Back">
-                <Image Source="images/action-undo-8x.png" />
-                <ToolTipService.ToolTip>
-                    <TextBlock Text="Step Back" />
-                </ToolTipService.ToolTip>
-            </Button>
+            <Viewbox>
+                <Button Name="Button_StepBack" Click="Button_StepBack_Click" Style="{StaticResource MenuButton}" ToolTip="Step Back">
+                    <Image Source="images/action-undo-8x.png" />
+                    <ToolTipService.ToolTip>
+                        <TextBlock Text="Step Back" />
+                    </ToolTipService.ToolTip>
+                </Button>
+            </Viewbox>
 
-            <Button Name="Button_StepForward" Click="Button_StepForward_Click" Style="{StaticResource MenuButton}" ToolTip="Step Forward">
-                <Image Source="images/action-redo-8x.png" />
-            </Button>
+            <Viewbox>
+                <Button Name="Button_StepForward" Click="Button_StepForward_Click" Style="{StaticResource MenuButton}" ToolTip="Step Forward">
+                    <Image Source="images/action-redo-8x.png" />
+                </Button>
+            </Viewbox>
+            
 
             <Viewbox>
                 <ToggleButton Name="PlayButton" Background="#DDDDE4" BorderBrush="#DDDDE4">
@@ -86,19 +97,34 @@
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="47*" />
-                <ColumnDefinition Width="38*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="10.6*" />
+                <ColumnDefinition Width="22*" />           
                 <ColumnDefinition Width="51*" />
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
-            <Label Background="{StaticResource MenuColor}"></Label>
+            <Label Background="{StaticResource MenuColor}" Grid.Column="0"></Label>
+            <Label Background="{StaticResource MenuColor}" Grid.Column="1"></Label>
+            <Label Background="{StaticResource MenuColor}" Grid.Column="2"></Label>
+            <Label Background="{StaticResource MenuColor}" Grid.Column="3"></Label>
             <!-- TODO: Visa vad som är Operationer / Värde i minnet -->
-            <Label Background="{StaticResource MenuColor}" Grid.Column="1" FontSize="14">#</Label>
-            <UniformGrid Columns="3" Grid.Column="2" >
+            <Viewbox Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Center">
+                <Label Background="{StaticResource MenuColor}" FontSize="25">Row</Label>
+            </Viewbox>
+            <Viewbox Grid.Column="2" Stretch="Uniform" HorizontalAlignment="Center">
+                <Label Background="{StaticResource MenuColor}" Grid.Column="2" FontSize="25">Operation</Label>
+            </Viewbox>
+            <Viewbox Grid.Column="3" Stretch="Uniform" HorizontalAlignment="Center">
+                <Label Background="{StaticResource MenuColor}" Grid.Column="3" FontSize="25">Value</Label>
+            </Viewbox>
+            
+                 
+            <UniformGrid Columns="3" Grid.Column="4" >
                 <RadioButton Style="{StaticResource EditorTabs}" Content="Machine Code" Name="MKTab" Click="TabsToggle_event" />
                 <RadioButton Style="{StaticResource EditorTabs}" Content="Split View" Name="SplitTab" Click="TabsToggle_event" IsChecked="True" />
                 <RadioButton Style="{StaticResource EditorTabs}" Content="Assembly" Name="AssemblyTab" Click="TabsToggle_event"/>
             </UniformGrid>
-            <Label Background="{StaticResource MenuColor}" Grid.Column="4" /> <!-- För att fylla ut tomrummet -->
+            <Label Background="{StaticResource MenuColor}" Grid.Column="6" /> <!-- För att fylla ut tomrummet -->
         </Grid>
 
         <Grid Grid.Row="3" Margin="10,2,10,10">
