@@ -491,20 +491,29 @@ namespace GUIProjekt
         }
 
         // Togglar MK-textbox och Assembler-textbox visibility
+        // Ganska ful kod, men vågar inte röra XAML-filen så att den inte förstör text alignment
         private void TabsToggle_event(object sender, RoutedEventArgs e) {
-            // Todo: Ordna så att en ensam textbox fyller ut tomrummet.
-
             if (Convert.ToBoolean(AssemblyTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Visible;
                 TextBox_MK.Visibility = Visibility.Hidden;
+                Grid.SetColumn(TextBox_Assembler, 1);
+                Grid.SetColumnSpan(TextBox_Assembler, 2);
+                TextBox_Assembler.MinWidth = 400;
             }
             else if(Convert.ToBoolean(MKTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Hidden;
                 TextBox_MK.Visibility = Visibility.Visible;
+                Grid.SetColumnSpan(TextBox_MK, 2);
+                TextBox_MK.MinWidth = 400;
             }
             else if (Convert.ToBoolean(SplitTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Visible;
                 TextBox_MK.Visibility = Visibility.Visible;
+                Grid.SetColumnSpan(TextBox_MK, 1);
+                Grid.SetColumn(TextBox_Assembler, 2);
+                Grid.SetColumnSpan(TextBox_Assembler, 1);
+                TextBox_MK.MinWidth = 200;
+                TextBox_Assembler.MinWidth = 200;
             }
         }
 
