@@ -276,7 +276,7 @@ namespace GUIProjekt
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
 
-            // Ta reda på vart i minnet vi ska uppdatera grafiskt
+            // Uppdatera grafiskt minnet som ändrats
             switch (opr) {
                 case Operations.STORE: {
                         byte index = (byte)(val);
