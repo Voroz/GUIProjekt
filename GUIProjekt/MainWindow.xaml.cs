@@ -410,8 +410,19 @@ namespace GUIProjekt
             if(ofd.ShowDialog() == true)
             {
                 string filename = ofd.FileName;
+                string txt = File.ReadAllText(filename);
+
+                if (txt[0] == '1' || txt[0] == '0')
+                {
+                    TextBox_MK.Focus();
+                    //TextBox_MK.Text = File.ReadAllText(filename);
+                    TextBox_MK.Text = txt;
+                    return;
+                }
+
                 TextBox_Assembler.Focus();
-                TextBox_Assembler.Text = File.ReadAllText(filename);
+                //TextBox_Assembler.Text = File.ReadAllText(filename);
+                TextBox_Assembler.Text = txt;
             }
         }
 
