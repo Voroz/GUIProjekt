@@ -490,16 +490,19 @@ namespace GUIProjekt
             textBoxAssembler.IsReadOnly = false;
         }
 
+        // Togglar MK-textbox och Assembler-textbox visibility
         private void TabsToggle_event(object sender, RoutedEventArgs e) {
+            // Todo: Ordna så att en ensam textbox fyller ut tomrummet.
+
             if (Convert.ToBoolean(AssemblyTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Visible;
                 TextBox_MK.Visibility = Visibility.Hidden;
             }
-            if(Convert.ToBoolean(MKTab.IsChecked)) {
+            else if(Convert.ToBoolean(MKTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Hidden;
                 TextBox_MK.Visibility = Visibility.Visible;
             }
-            if (Convert.ToBoolean(SplitTab.IsChecked)) {
+            else if (Convert.ToBoolean(SplitTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Visible;
                 TextBox_MK.Visibility = Visibility.Visible;
             }
