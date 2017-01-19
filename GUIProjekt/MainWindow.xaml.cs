@@ -412,7 +412,14 @@ namespace GUIProjekt
                 string filename = ofd.FileName;
                 string txt = File.ReadAllText(filename);
 
-                if (txt[0] == '1' || txt[0] == '0')
+                int i = 0;
+
+                while (txt[i] == '\r' || txt[i] == '\n' || txt[i] == ' ' || txt[i] == '\t')
+                {
+                    i++;
+                }
+
+                if (txt[i] == '1' || txt[i] == '0')
                 {
                     TextBox_MK.Focus();
                     //TextBox_MK.Text = File.ReadAllText(filename);
