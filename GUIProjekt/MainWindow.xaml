@@ -16,7 +16,7 @@
         <!-- Mall för layouten av programmet hittar ni under skins, Skapa egna skins för att ändra färger etc -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/DefaultSkin.xaml"/>
+                <ResourceDictionary Source="Skins/OrangeSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         <!--Resources som inte ska tillhöra layout förändring läggs här-->    
             <local:FontSizeConverter x:Key="fontSizeCon"/>
@@ -29,6 +29,7 @@
             <RowDefinition Height="3*" /> <!-- Meny -->
             <RowDefinition Height="2*" />
             <RowDefinition Height="50*" />  <!-- Content -->
+            <RowDefinition Height="20*" />
         </Grid.RowDefinitions>
         
         <Menu Grid.Row="0" Width="Auto" Height="30" Background="{StaticResource MenuColor}" FontSize="16">   <!-- Topmeny/Standardmeny -->
@@ -414,5 +415,55 @@
                 </Viewbox>
             </ScrollViewer>
         </Grid>
+                <!-- Stacken-->
+        <Grid Grid.Row="4" Margin="10,2,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+
+            </Grid.ColumnDefinitions>
+
+            
+
+
+            <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1">
+                <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Viewbox Grid.Column="0">
+                            <UniformGrid Name="theMemory2" Rows="256" Columns="1" MinWidth="280" MinHeight="5000" HorizontalAlignment="Right">
+                                <local:MemoryRow></local:MemoryRow>
+                                <local:MemoryRow></local:MemoryRow>
+                                <local:MemoryRow></local:MemoryRow>
+                                <local:MemoryRow></local:MemoryRow>
+                                <local:MemoryRow></local:MemoryRow>
+                                <local:MemoryRow></local:MemoryRow>
+                                <local:MemoryRow></local:MemoryRow>
+                                <local:MemoryRow></local:MemoryRow>
+                                <local:MemoryRow></local:MemoryRow>
+                                
+
+
+                            </UniformGrid>
+
+                        </Viewbox>
+                        <Viewbox Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="200">
+
+                        </Viewbox>
+                        <Viewbox Grid.Column="2" HorizontalAlignment="Stretch" MinWidth="200">
+
+                        </Viewbox>
+
+
+                    </Grid>
+                </Viewbox>
+            </ScrollViewer>
+        </Grid>
+        <!-- Stacken-->
     </Grid>
 </Window>
