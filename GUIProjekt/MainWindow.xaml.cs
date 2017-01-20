@@ -526,74 +526,30 @@ namespace GUIProjekt
             }
         }
 
-        // Todo: Denna kod får gärna läggas in i SkinManager classen om någon kan
-        private Skins _currentSkin = Skins.Default;
-        public enum Skins
-        {
-            Default,
-            Orange,
-            Blue
-        }
-        void AddResourceDictionary(string source)
-        {
-            ResourceDictionary resourceDictionary = Application.LoadComponent(new Uri(source, UriKind.Relative)) as ResourceDictionary;
-            this.Resources.MergedDictionaries.Add(resourceDictionary);
-        }
-        public void ChangeSkin(Skins skin)
-        {
-            if (skin != _currentSkin)
+
+        // Ändrar Skin Color / Tema.
+        private void changeSkinEvent(object sender, RoutedEventArgs e) {
+            ComboBoxItem item = sender as ComboBoxItem;
+            Skins selected;
+            Enum.TryParse(item.Content.ToString(), out selected);
+            if (_currentSkin != selected)
             {
-                _currentSkin = skin;
-                switch (skin)
-                {
-                    default:
-                    case Skins.Default:
-                        this.Resources.MergedDictionaries.Clear();
-
-                        AddResourceDictionary("Skins/DefaultSkin.xaml");
-                        break;
-                    case Skins.Orange:
-                        this.Resources.MergedDictionaries.Clear();
-
-                        AddResourceDictionary("Skins/OrangeSkin.xaml");
-                        break;
-                    case Skins.Blue:
-                        this.Resources.MergedDictionaries.Clear();
-
-                        AddResourceDictionary("Skins/BlueSkin.xaml");
-                        break;
-                }
+                this.Resources.MergedDictionaries.Clear();
+                this.Resources.MergedDictionaries.Add(SkinManager.GetSkin(selected));
+                _currentSkin = selected;
             }
         }
-        // Todo: Denna kod får gärna läggas in i SkinManager classen om någon kan
-        private void combBoxDefault_MouseMove(object sender, MouseEventArgs e)
-        {
-            Skins defaultSkin = Skins.Default;
-            ChangeSkin(defaultSkin);
-        }
 
-        private void combBoxOrange_MouseMove(object sender, MouseEventArgs e)
-        {
-            Skins orange = Skins.Orange;
-            ChangeSkin(orange);
-        }
-
-        private void combBoxBlue_MouseMove(object sender, MouseEventArgs e)
-        {
-            Skins blue = Skins.Blue;
-            ChangeSkin(blue);
-        }
         
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
         private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
+        private Skins _currentSkin = Skins.Default;
 
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+ 
 
-        
-
-        
     }
 }

@@ -93,9 +93,9 @@
             </Viewbox>-->
             <Viewbox>
                 <ComboBox Text="Is not open" Background="{DynamicResource MenuColor}">
-                    <ComboBoxItem MouseMove="combBoxDefault_MouseMove" Name="combBoxDefault">Default</ComboBoxItem>
-                    <ComboBoxItem MouseMove="combBoxOrange_MouseMove"  Name="combBoxOrange">Orange</ComboBoxItem>
-                    <ComboBoxItem MouseMove="combBoxBlue_MouseMove" Name="combBoxBlue">Blue</ComboBoxItem>
+                    <ComboBoxItem Name="combBoxDefault" Selected="changeSkinEvent">Default</ComboBoxItem>
+                    <ComboBoxItem Name="combBoxOrange" Selected="changeSkinEvent">Orange</ComboBoxItem>
+                    <ComboBoxItem Name="combBoxBlue" Selected="changeSkinEvent">Blue</ComboBoxItem>
                 </ComboBox>
             </Viewbox>
             
