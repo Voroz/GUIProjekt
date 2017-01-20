@@ -76,7 +76,7 @@
             </Viewbox>
             
 
-            <Viewbox>
+            <!--<Viewbox>
                 <ToggleButton Name="PlayButton" Background="#DDDDE4" BorderBrush="#DDDDE4">
                     <Image Source="images/play-button.png" Height="9" Width="9" ToolTip="Play"></Image>
                 </ToggleButton>
@@ -90,12 +90,12 @@
                 <ToggleButton Name="StopButton" Background="#DDDDE4" BorderBrush="#DDDDE4">
                     <Image Source="images/Stopbtn.png" Height="10" Width="10" ToolTip="Stop"></Image>
                 </ToggleButton>
-            </Viewbox>
+            </Viewbox>-->
             <Viewbox>
                 <ComboBox Text="Is not open" Background="{DynamicResource MenuColor}">
                     <ComboBoxItem MouseMove="combBoxDefault_MouseMove" Name="combBoxDefault">Default</ComboBoxItem>
                     <ComboBoxItem MouseMove="combBoxOrange_MouseMove"  Name="combBoxOrange">Orange</ComboBoxItem>
-                    <ComboBoxItem  Name="cbi3">Item3</ComboBoxItem>
+                    <ComboBoxItem MouseMove="combBoxBlue_MouseMove" Name="combBoxBlue">Blue</ComboBoxItem>
                 </ComboBox>
             </Viewbox>
             

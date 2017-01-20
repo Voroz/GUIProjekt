@@ -447,16 +447,7 @@ namespace GUIProjekt
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
-
-        
-
-        //Lånade denna knapp för att testa SkinManager så användaren kan byta layout på programmet
-        private void PauseButton_Click(object sender, RoutedEventArgs e)
-        {
-                                                         
-        }
-
-
+       
         /******************************************************
          CALL: When clicking the pause button in the menu.
          TASK: Pauses the run through of the program and enables 
@@ -540,7 +531,8 @@ namespace GUIProjekt
         public enum Skins
         {
             Default,
-            Orange
+            Orange,
+            Blue
         }
         void AddResourceDictionary(string source)
         {
@@ -565,6 +557,11 @@ namespace GUIProjekt
 
                         AddResourceDictionary("Skins/OrangeSkin.xaml");
                         break;
+                    case Skins.Blue:
+                        this.Resources.MergedDictionaries.Clear();
+
+                        AddResourceDictionary("Skins/BlueSkin.xaml");
+                        break;
                 }
             }
         }
@@ -580,6 +577,12 @@ namespace GUIProjekt
             Skins orange = Skins.Orange;
             ChangeSkin(orange);
         }
+
+        private void combBoxBlue_MouseMove(object sender, MouseEventArgs e)
+        {
+            Skins blue = Skins.Blue;
+            ChangeSkin(blue);
+        }
         
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
@@ -588,6 +591,8 @@ namespace GUIProjekt
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+
+        
 
         
     }
