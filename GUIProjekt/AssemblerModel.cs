@@ -377,7 +377,7 @@ namespace GUIProjekt
                 && (splitString[0] == "IN"
                 || splitString[0] == "OUT"
                 || splitString[0] == "RETURN")
-                || ushort.TryParse(splitString[0], out constant)
+                || (ushort.TryParse(splitString[0], out constant) && constant < 4096)
                 ) {
                 return true;
             }
