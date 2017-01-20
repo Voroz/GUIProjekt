@@ -104,9 +104,6 @@ namespace GUIProjekt
                 }
             }
 
-            if (str.Length != 12)
-                binary = false;
-
             return binary;
         }
 
@@ -357,7 +354,7 @@ namespace GUIProjekt
         // TODO: Add error code as return value instead of boolean
         // Maybe a struct with error code + line number
         public bool checkSyntaxAssembly(string str) {
-            if (isBinary(str)) {
+            if (isBinary(str) && str.Length == 12) {
                 return false;
             }
 
