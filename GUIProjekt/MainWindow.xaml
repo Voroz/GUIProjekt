@@ -92,7 +92,7 @@
                 </ToggleButton>
             </Viewbox>-->
             <Viewbox>
-                <ComboBox Text="Is not open" SelectedIndex="0" Background="{DynamicResource MenuColor}">
+                <ComboBox Text="Is not open" SelectedIndex="0" ToolTip="Skin" Background="{DynamicResource MenuColor}">
                     <ComboBoxItem Name="combBoxDefault" Selected="changeSkinEvent">Default</ComboBoxItem>
                     <ComboBoxItem Name="combBoxOrange" Selected="changeSkinEvent">Orange</ComboBoxItem>
                     <ComboBoxItem Name="combBoxBlue" Selected="changeSkinEvent">Blue</ComboBoxItem>
@@ -127,9 +127,9 @@
             
                  
             <UniformGrid Columns="3" Grid.Column="4" >
-                <RadioButton Style="{DynamicResource EditorTabs}" Content="Machine Code" Name="MKTab" Click="TabsToggle_event" />
-                <RadioButton Style="{DynamicResource EditorTabs}" Content="Split View" Name="SplitTab" Click="TabsToggle_event" IsChecked="True" />
-                <RadioButton Style="{DynamicResource EditorTabs}" Content="Assembly" Name="AssemblyTab" Click="TabsToggle_event"/>
+                <RadioButton Style="{DynamicResource EditorTabs}" Content="Machine Code" Name="MKTab" Click="TabsToggle_event" Cursor="Hand" />
+                <RadioButton Style="{DynamicResource EditorTabs}" Content="Split View" Name="SplitTab" Click="TabsToggle_event" IsChecked="True" Cursor="Hand" />
+                <RadioButton Style="{DynamicResource EditorTabs}" Content="Assembly" Name="AssemblyTab" Click="TabsToggle_event" Cursor="Hand" />
             </UniformGrid>
             <Label Background="{DynamicResource MenuColor}" Grid.Column="6" /> <!-- För att fylla ut tomrummet -->
         </Grid>
