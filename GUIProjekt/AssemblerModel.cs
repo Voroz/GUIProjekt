@@ -149,7 +149,14 @@ namespace GUIProjekt
         }
 
         public bool assemblyToMachine(string assemblyString, out ushort machineCode) {
-            string[] splitString = assemblyString.Split(' ');        
+            string[] splitString = assemblyString.Split(' ');
+
+            // Special case where length is 1 and is a constant(number)
+            if (splitString.Length == 1
+                && ushort.TryParse(splitString[0], out machineCode)
+                ) {
+                return true;
+            }
 
             Operations opr;
             if (!Enum.TryParse(splitString[0], false, out opr)) {
@@ -365,10 +372,12 @@ namespace GUIProjekt
             string[] splitString = str.Split(' ');
 
             // Special case where length is 1
+            ushort constant;
             if (splitString.Length == 1
                 && (splitString[0] == "IN"
                 || splitString[0] == "OUT"
                 || splitString[0] == "RETURN")
+                || ushort.TryParse(splitString[0], out constant)
                 ) {
                 return true;
             }
