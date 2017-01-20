@@ -104,7 +104,7 @@ namespace GUIProjekt
                 }
             }
 
-            if (string.IsNullOrEmpty(str))
+            if (str.Length != 12)
                 binary = false;
 
             return binary;
