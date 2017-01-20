@@ -134,6 +134,7 @@
             </Grid.ColumnDefinitions>
             
             
+            <!-- Göra snyggare user controls för Arbetsregister etc. / Bara tillälliga för att något ska synas. -->
             <Grid Grid.Column="0" Grid.Row="2" Margin="25, 0, 25, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
