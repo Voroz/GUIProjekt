@@ -437,6 +437,10 @@ namespace GUIProjekt
         }
 
         private void Button_StepBack_Click(object sender, RoutedEventArgs e) {
+            if (_runTimer.IsEnabled) {
+                return;
+            }
+
             if (_assemblerModel.undoStack().Count == 0){
                 return;
             }
@@ -465,6 +469,9 @@ namespace GUIProjekt
 
         private void Button_StepForward_Click(object sender, RoutedEventArgs e) {
             // TODO: I stort sett samma kod som i Button_Run_Click. Kanske ska dags att göra en funktion?
+            if (_runTimer.IsEnabled) {
+                return;
+            }
 
             TextBox textBoxMK = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
