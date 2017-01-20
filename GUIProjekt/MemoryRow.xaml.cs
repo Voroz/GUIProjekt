@@ -66,7 +66,7 @@ namespace GUIProjekt
          ************************************************************************/
         public void ClearMemoryAdress()
         {
-            Brush br = Brushes.Azure;
+            Brush br = Brushes.White;
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
             for (int ix = 0; ix < 12; ix++)

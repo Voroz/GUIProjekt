@@ -24,7 +24,7 @@
     <Brush x:Key="MenuColor">#DDDDE4</Brush>
     
     <Style x:Key="TextBoxBackground" TargetType="TextBox">
-        <Setter Property="Background" Value="Azure"/>
+        <Setter Property="Background" Value="White"/>
     </Style>
 
     <Style BasedOn="{StaticResource {x:Type ToggleButton}}" x:Key="EditorTabs" TargetType="RadioButton">
@@ -45,7 +45,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="Azure" />
+                <Setter Property="Background" Value="White" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -68,7 +68,7 @@
     <Style x:Key="MemoryRowLayout" TargetType="Rectangle">
         <Setter Property="Width" Value="Auto" />
         <Setter Property="Height" Value="Auto" />
-        <Setter Property="Fill" Value="Azure" />
+        <Setter Property="Fill" Value="White" />
         <Setter Property="Stroke" Value="Gray"/>
         <Setter Property="StrokeThickness" Value="1"/>
     </Style>
@@ -76,7 +76,7 @@
     <Style x:Key="MemoryGridLayout" TargetType="Rectangle">
         <Setter Property="Width" Value="Auto" />
         <Setter Property="Height" Value="Auto" />
-        <Setter Property="Fill" Value="Azure" />
+        <Setter Property="Fill" Value="White" />
         <Setter Property="Stroke" Value="Gray"/>
         <Setter Property="StrokeThickness" Value="0.5"/>
     </Style>

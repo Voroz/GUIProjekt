@@ -24,7 +24,7 @@
     <Brush x:Key="MenuColor">#FFFFA500</Brush>
 
     <Style x:Key="TextBoxBackground" TargetType="TextBox">
-        <Setter Property="Background" Value="Azure"/>
+        <Setter Property="Background" Value="White"/>
     </Style>
 
     <Style BasedOn="{StaticResource {x:Type ToggleButton}}" x:Key="EditorTabs" TargetType="RadioButton">
@@ -45,7 +45,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="Azure" />
+                <Setter Property="Background" Value="White" />
             </Trigger>
         </Style.Triggers>
     </Style>
