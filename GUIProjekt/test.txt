@@ -23,5 +23,5 @@ RETURN
 
 
 
-LOAD 1
-LOAD 5
+1
+5
