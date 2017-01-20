@@ -134,28 +134,6 @@
             </Grid.ColumnDefinitions>
             
             
-            <!-- Göra snyggare user controls för Arbetsregister etc. / Bara tillälliga för att något ska synas. -->
-            <Grid Grid.Column="0" Grid.Row="2" Margin="25, 0, 25, 0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Viewbox>
-                    <local:MemoryRow x:Name="InstructionPointer"></local:MemoryRow>
-                </Viewbox>
-                <Viewbox Grid.Row="1">
-                    <local:MemoryRow x:Name="WorkingRegister"></local:MemoryRow>
-                </Viewbox>
-                <Viewbox Grid.Row="2">
-                    <local:MemoryRow x:Name="Input"></local:MemoryRow>
-                </Viewbox>
-                <Viewbox Grid.Row="3">
-                    <local:MemoryRow x:Name="Output"></local:MemoryRow>
-                </Viewbox>
-            </Grid>
-            
             <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1">
                 <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid>
