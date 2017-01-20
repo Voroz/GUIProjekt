@@ -441,7 +441,8 @@ namespace GUIProjekt
         public bool addrIdxToUpdate(ushort command, out byte idx) {
             byte val = (byte)extractVal(command);
             Operations opr = Operations.LOAD;
-            Debug.Assert(extractOperation(command, out opr));
+            bool success = extractOperation(command, out opr);
+            Debug.Assert(success);
 
             switch (opr) {
                 case Operations.STORE: {
@@ -477,7 +478,8 @@ namespace GUIProjekt
             Operations opr = Operations.LOAD;            
             byte addr = (byte)extractVal(current);
 
-            Debug.Assert(extractOperation(current, out opr));
+            bool success = extractOperation(current, out opr);
+            Debug.Assert(success);
 
             _undoStack.Push(new UndoStorage(_memory, _memoryStack, _instructionPtr, _workingRegister, _input, _output));
 

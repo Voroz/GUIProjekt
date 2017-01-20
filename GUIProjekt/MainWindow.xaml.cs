@@ -320,7 +320,8 @@ namespace GUIProjekt
                     continue;
                 }
 
-                Debug.Assert(_assemblerModel.stringToMachine(str, out bits));
+                bool success = _assemblerModel.stringToMachine(str, out bits);
+                Debug.Assert(success);
                 _assemblerModel.setAddr(i, bits);
             }
             _runTimer.Start();
@@ -495,7 +496,9 @@ namespace GUIProjekt
                     continue;
                 }
 
-                Debug.Assert(_assemblerModel.stringToMachine(str, out bits));
+                bool success = _assemblerModel.stringToMachine(str, out bits);
+                Debug.Assert(success);
+
                 _assemblerModel.setAddr(i, bits);
             }
             programTick();
