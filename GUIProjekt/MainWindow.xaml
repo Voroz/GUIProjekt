@@ -142,16 +142,16 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Viewbox>
-                    <local:MemoryRow Name="InstructionPointer"></local:MemoryRow>
+                    <local:MemoryRow x:Name="InstructionPointer"></local:MemoryRow>
                 </Viewbox>
                 <Viewbox Grid.Row="1">
-                    <local:MemoryRow Name="WorkingRegister"></local:MemoryRow>
+                    <local:MemoryRow x:Name="WorkingRegister"></local:MemoryRow>
                 </Viewbox>
                 <Viewbox Grid.Row="2">
-                    <local:MemoryRow Name="Input"></local:MemoryRow>
+                    <local:MemoryRow x:Name="Input"></local:MemoryRow>
                 </Viewbox>
                 <Viewbox Grid.Row="3">
-                    <local:MemoryRow Name="Output"></local:MemoryRow>
+                    <local:MemoryRow x:Name="Output"></local:MemoryRow>
                 </Viewbox>
             </Grid>
             
