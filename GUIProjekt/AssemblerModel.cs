@@ -263,6 +263,9 @@ namespace GUIProjekt
             while (_memoryStack.size() > 0) {
                 _memoryStack.pop();
             }
+            while (_undoStack.Count > 0) {
+                _undoStack.Pop();
+            }
         }
 
 
