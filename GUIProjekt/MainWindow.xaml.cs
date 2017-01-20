@@ -30,7 +30,7 @@ namespace GUIProjekt
             InitializeComponent();
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
-            showMemoryRowNumbers();
+            showMemoryRowNumbers();          
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerMK.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -421,16 +421,7 @@ namespace GUIProjekt
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
-        
-
-        //Lånade denna knapp för att testa SkinManager så användaren kan byta layout på programmet
-        private void PauseButton_Click(object sender, RoutedEventArgs e)
-        {
-            //AppSkin orange = AppSkin.Default;
-            //SkinManager.SetSkin(orange);
-        }
-
-
+       
         /******************************************************
          CALL: When clicking the pause button in the menu.
          TASK: Pauses the run through of the program and enables 
@@ -533,12 +524,29 @@ namespace GUIProjekt
         }
 
 
+        // Ändrar Skin Color / Tema.
+        private void changeSkinEvent(object sender, RoutedEventArgs e) {
+            ComboBoxItem item = sender as ComboBoxItem;
+            Skins selected;
+            Enum.TryParse(item.Content.ToString(), out selected);
+            if (_currentSkin != selected)
+            {
+                this.Resources.MergedDictionaries.Clear();
+                this.Resources.MergedDictionaries.Add(SkinManager.GetSkin(selected));
+                _currentSkin = selected;
+            }
+        }
+
+        
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
         private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
+        private Skins _currentSkin = Skins.Default;
 
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+ 
+
     }
 }
