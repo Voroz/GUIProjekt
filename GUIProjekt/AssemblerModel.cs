@@ -440,7 +440,7 @@ namespace GUIProjekt
 
         public bool addrIdxToUpdate(ushort command, out byte idx) {
             byte val = (byte)extractVal(command);
-            Operations opr;
+            Operations opr = Operations.LOAD;
             Debug.Assert(extractOperation(command, out opr));
 
             switch (opr) {
