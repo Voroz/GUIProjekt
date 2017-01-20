@@ -30,7 +30,7 @@ namespace GUIProjekt
             InitializeComponent();
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
-            showMemoryRowNumbers();
+            showMemoryRowNumbers();          
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerMK.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -447,13 +447,13 @@ namespace GUIProjekt
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
+
         
 
         //Lånade denna knapp för att testa SkinManager så användaren kan byta layout på programmet
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-            //AppSkin orange = AppSkin.Default;
-            //SkinManager.SetSkin(orange);
+                                                         
         }
 
 
@@ -535,7 +535,52 @@ namespace GUIProjekt
             }
         }
 
+        // Todo: Denna kod får gärna läggas in i SkinManager classen om någon kan
+        private Skins _currentSkin = Skins.Default;
+        public enum Skins
+        {
+            Default,
+            Orange
+        }
+        void AddResourceDictionary(string source)
+        {
+            ResourceDictionary resourceDictionary = Application.LoadComponent(new Uri(source, UriKind.Relative)) as ResourceDictionary;
+            this.Resources.MergedDictionaries.Add(resourceDictionary);
+        }
+        public void ChangeSkin(Skins skin)
+        {
+            if (skin != _currentSkin)
+            {
+                _currentSkin = skin;
+                switch (skin)
+                {
+                    default:
+                    case Skins.Default:
+                        this.Resources.MergedDictionaries.Clear();
 
+                        AddResourceDictionary("Skins/DefaultSkin.xaml");
+                        break;
+                    case Skins.Orange:
+                        this.Resources.MergedDictionaries.Clear();
+
+                        AddResourceDictionary("Skins/OrangeSkin.xaml");
+                        break;
+                }
+            }
+        }
+        // Todo: Denna kod får gärna läggas in i SkinManager classen om någon kan
+        private void combBoxDefault_MouseMove(object sender, MouseEventArgs e)
+        {
+            Skins defaultSkin = Skins.Default;
+            ChangeSkin(defaultSkin);
+        }
+
+        private void combBoxOrange_MouseMove(object sender, MouseEventArgs e)
+        {
+            Skins orange = Skins.Orange;
+            ChangeSkin(orange);
+        }
+        
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
         private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
@@ -543,5 +588,7 @@ namespace GUIProjekt
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+
+        
     }
 }

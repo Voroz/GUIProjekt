@@ -32,7 +32,7 @@
             <RowDefinition Height="20*" />  <!--Stack-->
         </Grid.RowDefinitions>
         
-        <Menu Grid.Row="0" Width="Auto" Height="30" Background="{StaticResource MenuColor}" FontSize="16">   <!-- Topmeny/Standardmeny -->
+        <Menu Grid.Row="0" Width="Auto" Height="30" Background="{DynamicResource MenuColor}" FontSize="16">   <!-- Topmeny/Standardmeny -->
             <MenuItem Header="_File">
                 <MenuItem Name="Open" Header="Open" Click="Open_Click"></MenuItem>
                 <MenuItem Name="Save" Header="Save" Click="Save_Click"></MenuItem>
@@ -43,25 +43,25 @@
             </MenuItem>
         </Menu>
         
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="{StaticResource MenuColor}">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="{DynamicResource MenuColor}">
             <Viewbox>
-                <Button Click="Button_Run_Click" Style="{StaticResource MenuButton}" ToolTip="Play">
+                <Button Click="Button_Run_Click" Style="{DynamicResource MenuButton}" ToolTip="Play">
                     <Image Source="images/media-play-8x.png" />
                 </Button>
             </Viewbox>
             <Viewbox>
-                <Button Click="Button_Pause_Click" Style="{StaticResource MenuButton}" ToolTip="Pause">
+                <Button Click="Button_Pause_Click" Style="{DynamicResource MenuButton}" ToolTip="Pause">
                     <Image Source="images/media-pause-8x.png" />
                 </Button>
             </Viewbox>
             <Viewbox>
-                <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
+                <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{DynamicResource MenuButton}" ToolTip="Stop">
                     <Image Source="images/media-stop-8x.png" />
                 </Button>
             </Viewbox>
             
             <Viewbox>
-                <Button Name="Button_StepBack" Click="Button_StepBack_Click" Style="{StaticResource MenuButton}" ToolTip="Step Back">
+                <Button Name="Button_StepBack" Click="Button_StepBack_Click" Style="{DynamicResource MenuButton}" ToolTip="Step Back">
                     <Image Source="images/action-undo-8x.png" />
                     <ToolTipService.ToolTip>
                         <TextBlock Text="Step Back" />
@@ -70,7 +70,7 @@
             </Viewbox>
 
             <Viewbox>
-                <Button Name="Button_StepForward" Click="Button_StepForward_Click" Style="{StaticResource MenuButton}" ToolTip="Step Forward">
+                <Button Name="Button_StepForward" Click="Button_StepForward_Click" Style="{DynamicResource MenuButton}" ToolTip="Step Forward">
                     <Image Source="images/action-redo-8x.png" />
                 </Button>
             </Viewbox>
@@ -91,6 +91,13 @@
                     <Image Source="images/Stopbtn.png" Height="10" Width="10" ToolTip="Stop"></Image>
                 </ToggleButton>
             </Viewbox>
+            <Viewbox>
+                <ComboBox Text="Is not open" Background="{DynamicResource MenuColor}">
+                    <ComboBoxItem MouseMove="combBoxDefault_MouseMove" Name="combBoxDefault">Default</ComboBoxItem>
+                    <ComboBoxItem MouseMove="combBoxOrange_MouseMove"  Name="combBoxOrange">Orange</ComboBoxItem>
+                    <ComboBoxItem  Name="cbi3">Item3</ComboBoxItem>
+                </ComboBox>
+            </Viewbox>
             
         </StackPanel>
         
@@ -103,28 +110,28 @@
                 <ColumnDefinition Width="51*" />
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
-            <Label Background="{StaticResource MenuColor}" Grid.Column="0"></Label>
-            <Label Background="{StaticResource MenuColor}" Grid.Column="1"></Label>
-            <Label Background="{StaticResource MenuColor}" Grid.Column="2"></Label>
-            <Label Background="{StaticResource MenuColor}" Grid.Column="3"></Label>
+            <Label Background="{DynamicResource MenuColor}" Grid.Column="0"></Label>
+            <Label Background="{DynamicResource MenuColor}" Grid.Column="1"></Label>
+            <Label Background="{DynamicResource MenuColor}" Grid.Column="2"></Label>
+            <Label Background="{DynamicResource MenuColor}" Grid.Column="3"></Label>
             <!-- TODO: Visa vad som är Operationer / Värde i minnet -->
             <Viewbox Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Background="{StaticResource MenuColor}" FontSize="25">Row</Label>
+                <Label Background="{DynamicResource MenuColor}" FontSize="25">Row</Label>
             </Viewbox>
             <Viewbox Grid.Column="2" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Background="{StaticResource MenuColor}" Grid.Column="2" FontSize="25">Operation</Label>
+                <Label Background="{DynamicResource MenuColor}" Grid.Column="2" FontSize="25">Operation</Label>
             </Viewbox>
             <Viewbox Grid.Column="3" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Background="{StaticResource MenuColor}" Grid.Column="3" FontSize="25">Value</Label>
+                <Label Background="{DynamicResource MenuColor}" Grid.Column="3" FontSize="25">Value</Label>
             </Viewbox>
             
                  
             <UniformGrid Columns="3" Grid.Column="4" >
-                <RadioButton Style="{StaticResource EditorTabs}" Content="Machine Code" Name="MKTab" Click="TabsToggle_event" />
-                <RadioButton Style="{StaticResource EditorTabs}" Content="Split View" Name="SplitTab" Click="TabsToggle_event" IsChecked="True" />
-                <RadioButton Style="{StaticResource EditorTabs}" Content="Assembly" Name="AssemblyTab" Click="TabsToggle_event"/>
+                <RadioButton Style="{DynamicResource EditorTabs}" Content="Machine Code" Name="MKTab" Click="TabsToggle_event" />
+                <RadioButton Style="{DynamicResource EditorTabs}" Content="Split View" Name="SplitTab" Click="TabsToggle_event" IsChecked="True" />
+                <RadioButton Style="{DynamicResource EditorTabs}" Content="Assembly" Name="AssemblyTab" Click="TabsToggle_event"/>
             </UniformGrid>
-            <Label Background="{StaticResource MenuColor}" Grid.Column="6" /> <!-- För att fylla ut tomrummet -->
+            <Label Background="{DynamicResource MenuColor}" Grid.Column="6" /> <!-- För att fylla ut tomrummet -->
         </Grid>
 
         <Grid Grid.Row="3" Margin="10,2,10,10">
