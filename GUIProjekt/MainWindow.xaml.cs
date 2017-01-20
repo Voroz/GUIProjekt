@@ -277,45 +277,19 @@ namespace GUIProjekt
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
 
             // Uppdatera grafiskt minnet som ändrats
-            switch (opr) {
-                case Operations.STORE: {
-                        byte index = (byte)(val);
-                        MemoryRow row = getMMRowOfPosition(255 - index);
+            byte index;
+            if (_assemblerModel.addrIdxToUpdate(currentAddr, out index)) {
+                index++;
+                MemoryRow row = getMMRowOfPosition(255 - index);
 
-                        row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
-                        // TODO: Update missing GUI instructionPtr;
-                    } break;
-
-                case Operations.IN: {
-                        // TODO: Update missing GUI workingRegister;
-                        // TODO: Update missing GUI instructionPtr;
-                    } break;
-
-                case Operations.OUT: {
-                        // TODO: Update missing GUI output
-                        // TODO: Update missing GUI instructionPtr;
-                    } break;
-
-                case Operations.CALL: {
-                        // TODO: Update missing GUI instructionPtr;
-                        byte index = (byte)(256 - _assemblerModel.stack().size());
-                        MemoryRow row = getMMRowOfPosition(255 - index);
-
-                        row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
-                    } break;
-
-                case Operations.RETURN: {
-                        // TODO: Update missing GUI instructionPtr;
-                        byte index = (byte)(256 - _assemblerModel.stack().size() - 1);
-                        MemoryRow row = getMMRowOfPosition(255 - index);
-
-                        row.ClearMemoryAdress();
-                    } break;
-
-                default: {
-                        // TODO: Update missing GUI instructionPtr;
-                    } break;
+                if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
+                    row.ClearMemoryAdress();
+                }
+                else {
+                    row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                }
             }
+            // TODO: Update in, out, workingRegister, instructionPtr
         }
 
         /******************************************************
@@ -472,7 +446,30 @@ namespace GUIProjekt
         }
 
         private void Button_StepBack_Click(object sender, RoutedEventArgs e) {
+            if (_assemblerModel.undoStack().Count == 0){
+                return;
+            }
 
+            UndoStorage undoValues = _assemblerModel.undo();
+            ushort currentAddr = _assemblerModel.getAddr(undoValues._instructionPtr);
+
+            // Mark current row
+            markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
+
+            // Uppdatera grafiskt minnet som ändrats
+            byte index;
+            if (_assemblerModel.addrIdxToUpdate(currentAddr, out index)) {
+                index++;
+                MemoryRow row = getMMRowOfPosition(255 - index);
+
+                if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
+                    row.ClearMemoryAdress();
+                }
+                else {
+                    row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                }
+            }
+            // TODO: Update in, out, workingRegister, instructionPtr
         }
 
         private void Button_StepForward_Click(object sender, RoutedEventArgs e) {

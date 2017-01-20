@@ -28,6 +28,29 @@ namespace GUIProjekt
         RETURN = 9,
     }
 
+    struct UndoStorage {
+        public UndoStorage(ushort[] memory
+            , MyStack<ushort> memoryStack
+            , byte instructionPtr
+            , ushort workingRegister
+            , ushort input
+            , ushort output) {
+                _memory = memory;
+                _memoryStack = memoryStack;
+                _instructionPtr = instructionPtr;
+                _workingRegister = workingRegister;
+                _input = input;
+                _output = output;
+        }
+
+        public ushort[] _memory;
+        public MyStack<ushort> _memoryStack;
+        public byte _instructionPtr;
+        public ushort _workingRegister;
+        public ushort _input;
+        public ushort _output;
+    }
+
     class AssemblerModel
     {
         public AssemblerModel()
@@ -35,6 +58,7 @@ namespace GUIProjekt
             _size = 256; // Leave this at 256 (many of our attributes are 8 bit)
             _memory = new ushort[_size];
             _memoryStack = new MyStack<ushort>(_memory);
+            _undoStack = new Stack<UndoStorage>();
             _instructionPtr = 0;
             _workingRegister = 0;
             _input = 0;
@@ -261,17 +285,33 @@ namespace GUIProjekt
             return _instructionPtr;
         }
 
-        ushort input(){
+        public ushort input() {
             return _input;
         }
 
-        ushort output() {
+        /******************************************************
+         CALL: setInput(ushort);
+         TASK: Sets input.
+         *****************************************************/
+        public void setInput(ushort input) {
+            _input = input;
+        }
+
+        public ushort output() {
             return _output;
+        }
+
+        public void setOutput(ushort output) {
+            _output = output;
         }
 
         public MyStack<ushort> stack()
         {
             return _memoryStack;
+        }
+
+        public Stack<UndoStorage> undoStack() {
+            return _undoStack;
         }
 
         /******************************************************
@@ -292,15 +332,6 @@ namespace GUIProjekt
         public void setAddr(byte idx, ushort val) {
             Debug.Assert(idx >= 0 && idx < _size);
             _memory[idx] = val;
-        }
-
-
-        /******************************************************
-         CALL: setInput(ushort);
-         TASK: Sets input.
-         *****************************************************/
-        void setInput(ushort input) {
-            _input = input;
         }
 
 
@@ -404,6 +435,34 @@ namespace GUIProjekt
             return true;
         }
 
+        public bool addrIdxToUpdate(ushort command, out byte idx) {
+            byte val = (byte)extractVal(command);
+            Operations opr;
+            Debug.Assert(extractOperation(command, out opr));
+
+            switch (opr) {
+                case Operations.STORE: {
+                        idx = (byte)(val);
+                        return true;
+                    }
+
+                case Operations.CALL: {
+                        idx = (byte)(255 - _memoryStack.size());
+                        return true;
+                    }
+
+                case Operations.RETURN: {
+                        idx = (byte)(255 - _memoryStack.size() - 1);
+                        return true;
+                    }
+
+                default: {
+                        idx = 0;
+                        return false;
+                    }
+            }
+        }
+
 
         /******************************************************
          CALL: processCurrentAddr();
@@ -416,6 +475,9 @@ namespace GUIProjekt
             byte addr = (byte)extractVal(current);
 
             Debug.Assert(extractOperation(current, out opr));
+
+            _undoStack.Push(new UndoStorage(_memory, _memoryStack, _instructionPtr, _workingRegister, _input, _output));
+
 
             switch (opr) {
                 case Operations.LOAD: {
@@ -465,8 +527,9 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.RETURN: {
-                    _instructionPtr = (byte)_memoryStack.top();
+                    _instructionPtr = (byte)_memoryStack.top();                    
                     _memoryStack.pop();
+                    _memory[255 - _memoryStack.size()] = Constants.UshortMax;
                 } break;
 
                 default: {
@@ -475,9 +538,21 @@ namespace GUIProjekt
             } 
         }
 
+        public UndoStorage undo() {
+            UndoStorage undoValues = _undoStack.Pop();
+            _memory = undoValues._memory;
+            _memoryStack = undoValues._memoryStack;
+            _instructionPtr = undoValues._instructionPtr;
+            _workingRegister = undoValues._workingRegister;
+            _input = undoValues._input;
+            _output = undoValues._output;
+
+            return undoValues;
+        }
         
-        private UInt16[] _memory;
+        private ushort[] _memory;
         private MyStack<ushort> _memoryStack;
+        private Stack<UndoStorage> _undoStack;
         private byte _instructionPtr;
         private ushort _workingRegister;
         private ushort _input;
