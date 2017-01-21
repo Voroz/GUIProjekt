@@ -411,10 +411,7 @@ namespace GUIProjekt
             }
         }
 
-        /******************************************************
-         CALL: When clicking the Save button in the Menu
-         TASK: Saves the assembler code as a txt.
-         *****************************************************/
+        
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
@@ -425,6 +422,20 @@ namespace GUIProjekt
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
+
+        /******************************************************
+         CALL: When clicking the Exit button in the Menu
+         TASK: Gives the user a messageBox Yes/No to Exit.
+         *****************************************************/
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Exit the application without saving?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+               
 
         /******************************************************
          CALL: When clicking the About button in the menu.
@@ -601,6 +612,8 @@ namespace GUIProjekt
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+
+       
  
 
     }
