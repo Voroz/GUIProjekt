@@ -422,6 +422,16 @@ namespace GUIProjekt
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
+
+        /******************************************************
+         CALL: When clicking the About button in the menu.
+         TASK: Displays info about the devolopment.
+         *****************************************************/
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            About aboutWin = new About();
+            aboutWin.Show();
+        }
        
         /******************************************************
          CALL: When clicking the pause button in the menu.
