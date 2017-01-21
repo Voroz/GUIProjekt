@@ -218,23 +218,10 @@ namespace GUIProjekt
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
                     mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');                   
-                    MemoryRow rad = getMMRowOfPosition(255 - i);
-
-                    // TODO: Enkel variant för att byta färg på Minnets rutor 
-                    if(_currentSkin == Skins.Blue)
-                    {
-                        rad.MemoryColors(Color.FromRgb(58, 72, 102), Color.FromRgb(127, 112, 98));
-                    }
-                    else if(_currentSkin == Skins.Orange)
-                    {
-                        rad.MemoryColors(Color.FromRgb(255, 234, 180), Color.FromRgb(255, 142, 17));
-                    }
-                    else
-                    {
-                        rad.MemoryColors(Color.FromArgb(255, 2, 132, 130), Color.FromArgb(255, 128, 255, 0));
-                    }
+                    MemoryRow row = getMMRowOfPosition(255 - i);                    
+                    changeColor(row);
                     
-                    rad.ShowMemoryAdress(mkStr);
+                    row.ShowMemoryAdress(mkStr);
                 }
 
                 if (assemblyStr.Length > 0 && assemblyStr[assemblyStr.Length - 1] == '\n') {
@@ -295,7 +282,7 @@ namespace GUIProjekt
             if (_assemblerModel.addrIdxToUpdate(currentAddr, out index)) {
                 index++;
                 MemoryRow row = getMMRowOfPosition(255 - index);
-
+                changeColor(row);
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
                 }
@@ -305,6 +292,8 @@ namespace GUIProjekt
             }
             // TODO: Update in, out, workingRegister, instructionPtr
         }
+
+        
 
         /******************************************************
          CALL: When clicking the run button.
@@ -580,6 +569,26 @@ namespace GUIProjekt
                 this.Resources.MergedDictionaries.Clear();
                 this.Resources.MergedDictionaries.Add(SkinManager.GetSkin(selected));
                 _currentSkin = selected;
+            }
+        }
+
+        /******************************************************
+         CALL: changeColor(row);
+         TASK: Updates the color of the Memorys zeros and ones.
+        *****************************************************/
+        void changeColor(MemoryRow row)
+        {
+            if (_currentSkin == Skins.Visual)
+            {
+                row.MemoryColors(Color.FromRgb(58, 72, 102), Color.FromRgb(127, 112, 98));
+            }
+            else if (_currentSkin == Skins.Orange)
+            {
+                row.MemoryColors(Color.FromRgb(255, 234, 180), Color.FromRgb(255, 142, 17));
+            }
+            else
+            {
+                row.MemoryColors(Color.FromArgb(255, 2, 132, 130), Color.FromArgb(255, 128, 255, 0));
             }
         }
 

@@ -92,10 +92,10 @@
                 </ToggleButton>
             </Viewbox>-->
             <Viewbox>
-                <ComboBox Text="Is not open" SelectedIndex="0" ToolTip="Skin" Background="{DynamicResource MenuColor1}">
+                <ComboBox Text="Is not open" SelectedIndex="0" ToolTip="Skin" Background="{DynamicResource MenuColor1}" RenderTransformOrigin="0.636,0.636">
                     <ComboBoxItem Name="combBoxDefault" Selected="changeSkinEvent">Default</ComboBoxItem>
                     <ComboBoxItem Name="combBoxOrange" Selected="changeSkinEvent">Orange</ComboBoxItem>
-                    <ComboBoxItem Name="combBoxBlue" Selected="changeSkinEvent">Blue</ComboBoxItem>
+                    <ComboBoxItem Name="combBoxBlue" Selected="changeSkinEvent">Visual</ComboBoxItem>
                 </ComboBox>
             </Viewbox>
             
