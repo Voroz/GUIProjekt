@@ -515,12 +515,20 @@ namespace GUIProjekt
                 Grid.SetColumn(TextBox_Assembler, 1);
                 Grid.SetColumnSpan(TextBox_Assembler, 2);
                 TextBox_Assembler.MinWidth = 400;
+
+                AssemblyTab.FontWeight = FontWeights.Bold;
+                MKTab.FontWeight = FontWeights.Normal;
+                SplitTab.FontWeight = FontWeights.Normal;
             }
             else if(Convert.ToBoolean(MKTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Hidden;
                 TextBox_MK.Visibility = Visibility.Visible;
                 Grid.SetColumnSpan(TextBox_MK, 2);
                 TextBox_MK.MinWidth = 400;
+
+                MKTab.FontWeight = FontWeights.Bold;
+                AssemblyTab.FontWeight = FontWeights.Normal;
+                SplitTab.FontWeight = FontWeights.Normal;
             }
             else if (Convert.ToBoolean(SplitTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Visible;
@@ -530,6 +538,10 @@ namespace GUIProjekt
                 Grid.SetColumnSpan(TextBox_Assembler, 1);
                 TextBox_MK.MinWidth = 200;
                 TextBox_Assembler.MinWidth = 200;
+
+                SplitTab.FontWeight = FontWeights.Bold;
+                AssemblyTab.FontWeight = FontWeights.Normal;
+                MKTab.FontWeight = FontWeights.Normal;
             }
         }
 
