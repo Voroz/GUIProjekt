@@ -22,6 +22,14 @@ namespace GUIProjekt
     /// </summary>
     public partial class MemoryRow : UserControl
     {
+        private Color _colorZero = Color.FromArgb(255, 2, 132, 130);
+        private Color _colorOne = Color.FromArgb(255, 128, 255, 0);
+
+        public void MemoryColors(Color value, Color value2)
+        {
+            _colorZero = value;
+            _colorOne = value2;                          
+        }
         public MemoryRow()
         {
             InitializeComponent();
@@ -36,8 +44,8 @@ namespace GUIProjekt
             SolidColorBrush[] br = new SolidColorBrush[2];
             br[0] = new SolidColorBrush();
             br[1] = new SolidColorBrush();
-            br[0].Color = Color.FromArgb(255, 2, 132, 130);
-            br[1].Color = Color.FromArgb(255, 128, 255, 0);
+            br[0].Color = _colorZero;
+            br[1].Color = _colorOne;
 
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 

@@ -163,7 +163,7 @@ namespace GUIProjekt
                     _assemblerModel.stringToMachine(mkStr.TrimEnd(trimChars), out bits);
                     _assemblerModel.machineToAssembly(bits, out assemblyStr);
                     MemoryRow rad = getMMRowOfPosition(255 - i);
-                    rad.ShowMemoryAdress(mkStr);
+                    rad.ShowMemoryAdress(mkStr);                   
                 }
 
                 if (mkStr.Length > 0 && mkStr[mkStr.Length - 1] == '\n') {
@@ -217,9 +217,23 @@ namespace GUIProjekt
                 if (!string.IsNullOrWhiteSpace(assemblyStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
-                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');
-
+                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');                   
                     MemoryRow rad = getMMRowOfPosition(255 - i);
+
+                    // TODO: Enkel variant för att byta färg på Minnets rutor 
+                    if(_currentSkin == Skins.Blue)
+                    {
+                        rad.MemoryColors(Color.FromRgb(58, 72, 102), Color.FromRgb(127, 112, 98));
+                    }
+                    else if(_currentSkin == Skins.Orange)
+                    {
+                        rad.MemoryColors(Color.FromRgb(255, 234, 180), Color.FromRgb(255, 142, 17));
+                    }
+                    else
+                    {
+                        rad.MemoryColors(Color.FromArgb(255, 2, 132, 130), Color.FromArgb(255, 128, 255, 0));
+                    }
+                    
                     rad.ShowMemoryAdress(mkStr);
                 }
 
