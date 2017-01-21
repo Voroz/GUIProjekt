@@ -4,7 +4,18 @@
     <Style x:Key="WindowBackground" TargetType="Window">
         <Setter Property="Background" Value="WhiteSmoke"/>
     </Style>
-    
+
+    <Brush x:Key="MenuColor">#DDDDE4</Brush> <!--Row #0-->
+    <Brush x:Key="MenuColor1">#DDDDE4</Brush> <!--Row #1-->
+    <Brush x:Key="MenuColor2">#DDDDE4</Brush> <!--Row #2-->
+    <Brush x:Key="fontColor">#000000</Brush>
+
+    <Style x:Key="Menu" TargetType="Menu">
+        <Setter Property="Background" Value="{StaticResource MenuColor}" />
+        <Setter Property="Foreground" Value="{StaticResource fontColor}"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
     <Style x:Key="MenuButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -20,17 +31,12 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-    <Brush x:Key="MenuColor">#DDDDE4</Brush>
-    
-    <Style x:Key="TextBoxBackground" TargetType="TextBox">
-        <Setter Property="Background" Value="White"/>
-    </Style>
 
     <Style BasedOn="{StaticResource {x:Type ToggleButton}}" x:Key="EditorTabs" TargetType="RadioButton">
-        <Setter Property="Background" Value="{StaticResource MenuColor}" />
+        <Setter Property="Background" Value="{StaticResource MenuColor2}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource fontColor}"/>
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Margin" Value="0, 0, 0, 0" />
         <Setter Property="Padding" Value="0" />
@@ -46,10 +52,22 @@
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="White" />
+                <Setter Property="Foreground" Value="Black"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="TextBoxBackground" TargetType="TextBox">
+        <Setter Property="Background" Value="White"/>
+    </Style>
+
+    <!-- Row, Operation, Value -->
+    <Style x:Key="Labels" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource MenuColor2}"/>
+        <Setter Property="Foreground" Value="{StaticResource fontColor}"/>
+    </Style>
+   
+    <!-- MemoryGrid label -->
     <Style x:Key="label" TargetType="{x:Type Label}">
         <Setter Property="Width" Value="Auto" />
         <Setter Property="Height" Value="Auto" />
