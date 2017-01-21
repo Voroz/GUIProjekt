@@ -2,15 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <Style x:Key="WindowBackground" TargetType="Window">
-        <Setter Property="Background" Value="LightBlue"/>
+        <Setter Property="Background" Value="#c6cbcc"/>
     </Style>
    
     <!--Row #0-->
-    <Brush x:Key="MenuColor">#0000ff</Brush>    
+    <Brush x:Key="MenuColor">#33484c</Brush>    
     <!--Row #1-->
-    <Brush x:Key="MenuColor1">#0000ff</Brush>   
+    <Brush x:Key="MenuColor1">#33484c</Brush>   
     <!--Row #2-->
-    <Brush x:Key="MenuColor2">#0000ff</Brush>
+    <Brush x:Key="MenuColor2">#3a4866</Brush>
     <Brush x:Key="fontColor">#FFFF</Brush>
     <Brush x:Key="fontColorFileMenu">#000000</Brush>
 
@@ -55,8 +55,8 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="White" />
-                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="	#7f7062" />
+                <Setter Property="Foreground" Value="White"/>
             </Trigger>
         </Style.Triggers>
     </Style>
