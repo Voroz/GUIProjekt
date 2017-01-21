@@ -32,7 +32,7 @@
             <RowDefinition Height="20*" />  <!--Stack-->
         </Grid.RowDefinitions>
         
-        <Menu Grid.Row="0" Width="Auto" Height="30" Background="{DynamicResource MenuColor}" FontSize="16">   <!-- Topmeny/Standardmeny -->
+        <Menu Grid.Row="0" Width="Auto" Height="30" Style="{DynamicResource Menu}">   <!-- Topmeny/Standardmeny -->
             <MenuItem Header="_File">
                 <MenuItem Name="Open" Header="Open" Click="Open_Click"></MenuItem>
                 <MenuItem Name="Save" Header="Save" Click="Save_Click"></MenuItem>
@@ -43,7 +43,7 @@
             </MenuItem>
         </Menu>
         
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="{DynamicResource MenuColor}">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="{DynamicResource MenuColor1}">
             <Viewbox>
                 <Button Click="Button_Run_Click" Style="{DynamicResource MenuButton}" ToolTip="Play">
                     <Image Source="images/media-play-8x.png" />
@@ -92,7 +92,7 @@
                 </ToggleButton>
             </Viewbox>-->
             <Viewbox>
-                <ComboBox Text="Is not open" SelectedIndex="0" ToolTip="Skin" Background="{DynamicResource MenuColor}">
+                <ComboBox Text="Is not open" SelectedIndex="0" ToolTip="Skin" Background="{DynamicResource MenuColor1}">
                     <ComboBoxItem Name="combBoxDefault" Selected="changeSkinEvent">Default</ComboBoxItem>
                     <ComboBoxItem Name="combBoxOrange" Selected="changeSkinEvent">Orange</ComboBoxItem>
                     <ComboBoxItem Name="combBoxBlue" Selected="changeSkinEvent">Blue</ComboBoxItem>
@@ -110,19 +110,19 @@
                 <ColumnDefinition Width="51*" />
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
-            <Label Background="{DynamicResource MenuColor}" Grid.Column="0"></Label>
-            <Label Background="{DynamicResource MenuColor}" Grid.Column="1"></Label>
-            <Label Background="{DynamicResource MenuColor}" Grid.Column="2"></Label>
-            <Label Background="{DynamicResource MenuColor}" Grid.Column="3"></Label>
+            <Label Background="{DynamicResource MenuColor2}" Grid.Column="0"></Label>
+            <Label Background="{DynamicResource MenuColor2}" Grid.Column="1"></Label>
+            <Label Background="{DynamicResource MenuColor2}" Grid.Column="2"></Label>
+            <Label Background="{DynamicResource MenuColor2}" Grid.Column="3"></Label>
             <!-- TODO: Visa vad som är Operationer / Värde i minnet -->
             <Viewbox Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Background="{DynamicResource MenuColor}" FontSize="25">Row</Label>
+                <Label Style="{DynamicResource Labels}" FontSize="25">Row</Label>
             </Viewbox>
             <Viewbox Grid.Column="2" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Background="{DynamicResource MenuColor}" Grid.Column="2" FontSize="25">Operation</Label>
+                <Label Style="{DynamicResource Labels}" Grid.Column="2" FontSize="25">Operation</Label>
             </Viewbox>
             <Viewbox Grid.Column="3" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Background="{DynamicResource MenuColor}" Grid.Column="3" FontSize="25">Value</Label>
+                <Label Style="{DynamicResource Labels}" Grid.Column="3" FontSize="25">Value</Label>
             </Viewbox>
             
                  
@@ -131,7 +131,7 @@
                 <RadioButton Style="{DynamicResource EditorTabs}" Content="Split View" Name="SplitTab" Click="TabsToggle_event" IsChecked="True" Cursor="Hand" FontWeight="Bold" />
                 <RadioButton Style="{DynamicResource EditorTabs}" Content="Assembly" Name="AssemblyTab" Click="TabsToggle_event" Cursor="Hand" />
             </UniformGrid>
-            <Label Background="{DynamicResource MenuColor}" Grid.Column="6" /> <!-- För att fylla ut tomrummet -->
+            <Label Background="{DynamicResource MenuColor2}" Grid.Column="6" /> <!-- För att fylla ut tomrummet -->
         </Grid>
 
         <Grid Grid.Row="3" Margin="10,2,10,10">
