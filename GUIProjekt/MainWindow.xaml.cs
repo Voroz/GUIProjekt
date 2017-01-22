@@ -444,6 +444,13 @@ namespace GUIProjekt
         private void About_Click(object sender, RoutedEventArgs e)
         {
             About aboutWin = new About();
+
+            double mainLeft = Application.Current.MainWindow.Left;
+            double mainTop = Application.Current.MainWindow.Top;
+
+            aboutWin.Left = mainLeft + 60;
+            aboutWin.Top = mainTop + 60;
+
             aboutWin.Show();
         }
        
