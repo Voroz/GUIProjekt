@@ -413,7 +413,10 @@ namespace GUIProjekt
             }
         }
 
-        
+        /******************************************************
+         CALL: When clicking the Save button in the menu.
+         TASK: Saves the inputted assembler code as a .txt file.
+         *****************************************************/
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
@@ -470,6 +473,12 @@ namespace GUIProjekt
             textBoxAssembler.IsReadOnly = false;
         }
 
+
+        /******************************************************
+         CALL: Clicking the step back button.
+         TASK: Rolls back the program one step i.e. undo the 
+               previous operation.
+        *****************************************************/
         private void Button_StepBack_Click(object sender, RoutedEventArgs e) {
             if (_runTimer.IsEnabled) {
                 return;
@@ -501,6 +510,11 @@ namespace GUIProjekt
             // TODO: Update in, out, workingRegister, instructionPtr
         }
 
+
+        /******************************************************
+         CALL: Clicking the step forward button.
+         TASK: Progresses the execution of the program one step.
+        *****************************************************/
         private void Button_StepForward_Click(object sender, RoutedEventArgs e) {
             // TODO: I stort sett samma kod som i Button_Run_Click. Kanske ska dags att göra en funktion?
             if (_runTimer.IsEnabled) {
@@ -539,7 +553,12 @@ namespace GUIProjekt
             textBoxAssembler.IsReadOnly = false;
         }
 
-        // Togglar MK-textbox och Assembler-textbox visibility
+
+        /******************************************************
+         CALL: Clicking one of the tabs.
+         TASK: Toggles machine code textbox and assembler 
+               textbox visibility. 
+        *****************************************************/
         // Ganska ful kod, men vågar inte röra XAML-filen så att den inte förstör text alignment
         private void TabsToggle_event(object sender, RoutedEventArgs e) {
             if (Convert.ToBoolean(AssemblyTab.IsChecked)) {
@@ -579,7 +598,10 @@ namespace GUIProjekt
         }
 
 
-        // Ändrar Skin Color / Tema.
+        /******************************************************
+         CALL: Clicking the drop down list to change skin.
+         TASK: Changes the skin color (theme).
+        *****************************************************/
         private void changeSkinEvent(object sender, RoutedEventArgs e) {
             ComboBoxItem item = sender as ComboBoxItem;
             Skins selected;
@@ -621,9 +643,6 @@ namespace GUIProjekt
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
-
-       
- 
 
     }
 }
