@@ -280,7 +280,9 @@ namespace GUIProjekt
             // Uppdatera grafiskt minnet som ändrats
             byte index;
             if (_assemblerModel.addrIdxToUpdate(currentAddr, out index)) {
-                index++;
+                if (opr != Operations.STORE) {
+                    index++;
+                }
                 MemoryRow row = getMMRowOfPosition(255 - index);
                 changeColor(row);
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {

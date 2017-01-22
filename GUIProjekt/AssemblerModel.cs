@@ -17,15 +17,16 @@ namespace GUIProjekt
 
     enum Operations : byte {
         LOAD = 0,
-        STORE = 1,
-        ADD = 2,
-        SUB = 3,
-        JUMP = 4,
-        PJUMP = 5,
-        IN = 6,
-        OUT = 7,
-        CALL = 8,
-        RETURN = 9,
+        STORE,
+        ADD,
+        SUB,
+        MUL,
+        JUMP,
+        PJUMP,
+        IN,
+        OUT,
+        CALL,
+        RETURN,
     }
 
     struct UndoStorage {
@@ -502,6 +503,11 @@ namespace GUIProjekt
 
                 case Operations.SUB: {
                     _workingRegister -= _memory[addr];
+                    _instructionPtr = (byte)(++_instructionPtr % _size);
+                } break;
+
+                case Operations.MUL: {
+                    _workingRegister *= _memory[addr];
                     _instructionPtr = (byte)(++_instructionPtr % _size);
                 } break;
 
