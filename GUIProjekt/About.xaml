@@ -13,11 +13,11 @@
                 <RowDefinition Height="30*"/>
             </Grid.RowDefinitions>
         
-            <Label Grid.Row="0">Jonny Fherm </Label>
-            <Label Grid.Row="1">Gustav Halje</Label>
-            <Label Grid.Row="2">Marcus Jakobsson</Label>
-            <Label Grid.Row="3">Pontus Mansfeld</Label>
-            <Label Grid.Row="4">DMP 2015</Label>
+            <Label Grid.Row="0" Foreground="BurlyWood">Jonny Fherm </Label>
+            <Label Grid.Row="1" Foreground="BurlyWood">Gustav Halje</Label>
+            <Label Grid.Row="2" Foreground="BurlyWood">Marcus Jakobsson</Label>
+            <Label Grid.Row="3" Foreground="BurlyWood">Pontus Mansfeld</Label>
+            <Label Grid.Row="4" Foreground="BurlyWood" FontStyle="Italic">DMP 2015</Label>
         </Grid>
     </Viewbox>
 </Window>

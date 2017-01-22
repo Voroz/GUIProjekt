@@ -22,6 +22,7 @@ namespace GUIProjekt
         public About()
         {
             InitializeComponent();
+            this.Background = new LinearGradientBrush(Colors.Black, Colors.White, new Point(0,1), new Point(1,0));
         }
     }
 }
