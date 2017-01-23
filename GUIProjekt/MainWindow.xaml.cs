@@ -55,6 +55,12 @@ namespace GUIProjekt
                 MemoryRow row = getMMRowOfPosition(255 - i);
                 row.ShowMemoryRowNumber((byte)i);
             }
+
+            for (int i = 0; i < 5; i++)
+            {
+                MemoryRow stackRow = getStackRowOfPosition(i);
+                stackRow.ShowMemoryRowNumber((byte)(255-i));
+            }
         }
 
         private void updateGUIMemory(byte from, byte to) {
@@ -288,17 +294,19 @@ namespace GUIProjekt
 
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
-                    if (index > 251)
+                    if (index > 250)
                     {
                         MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        changeColor(stackRow);
                         stackRow.ClearMemoryAdress();
                     }
                 }
                 else {
                     row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
-                    if (index > 251)
+                    if (index > 250)
                     {
                         MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        changeColor(stackRow);
                         stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
                     }
                 }
@@ -617,9 +625,10 @@ namespace GUIProjekt
 
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
-                    if (index > 251)
+                    if (index > 250)
                     {
                         MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        changeColor(stackRow);
                         stackRow.ClearMemoryAdress();
                     }
                 }
@@ -628,6 +637,7 @@ namespace GUIProjekt
                     if (index > 250)
                     {
                         MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        changeColor(stackRow);
                         stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
                     }
                 }
