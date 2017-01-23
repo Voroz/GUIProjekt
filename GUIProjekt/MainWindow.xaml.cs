@@ -291,6 +291,7 @@ namespace GUIProjekt
                     if (index > 251)
                     {
                         MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        changeColor(stackRow);
                         stackRow.ClearMemoryAdress();
                     }
                 }
@@ -299,6 +300,7 @@ namespace GUIProjekt
                     if (index > 251)
                     {
                         MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        changeColor(stackRow);
                         stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
                     }
                 }
@@ -531,6 +533,7 @@ namespace GUIProjekt
                     if (index > 251)
                     {
                         MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        changeColor(stackRow);
                         stackRow.ClearMemoryAdress();
                     }
                 }
@@ -539,6 +542,7 @@ namespace GUIProjekt
                     if (index > 250)
                     {
                         MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        changeColor(stackRow);
                         stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
                     }
                 }
