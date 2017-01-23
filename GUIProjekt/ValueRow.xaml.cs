@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using GUIProjekt;
 using System.Windows.Controls.Primitives;
 
+// TODO: Byt ut denna klass mot vår MemoryRow klass och sätt radnummer som hidden bara.
+
 namespace GUIProjekt
 {
     /// <summary>
