@@ -56,6 +56,8 @@ namespace GUIProjekt
                 row.ShowMemoryRowNumber((byte)i);
             }
 
+            // TODO: Fixa grafisk stack så den bara visar översta 5 adresser i stacken
+            // TODO: Denna for loopen kommer inte visa korrekta radnummer efter det.
             for (int i = 0; i < 5; i++)
             {
                 MemoryRow stackRow = getStackRowOfPosition(i);
