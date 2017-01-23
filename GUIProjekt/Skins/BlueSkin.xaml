@@ -44,6 +44,15 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Margin" Value="0, 0, 0, 0" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox>
+                        <ContentPresenter Content="{TemplateBinding Content}" />
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
