@@ -341,8 +341,8 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: int execDelay = delay();
-         TASK: Return execution delay variable. Used to improve
-               smoothness of running program.
+         TASK: Return execution delay variable. Used to set instruction
+         * delay of running program.
          *****************************************************/
         public int delay() {
             return _executionDelay;

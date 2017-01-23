@@ -20,19 +20,55 @@ namespace GUIProjekt
     /// <summary>
     /// Interaction logic for MemoryRow.xaml
     /// </summary>
+    /// 
+
+    public class RowColor {
+        public RowColor(Color backgroundZero
+            , Color backgroundOne) {
+
+            _backgroundZero = backgroundZero;
+            _backgroundOne = backgroundOne;
+        }
+
+        public Color _backgroundZero;
+        public Color _backgroundOne;
+    }
     public partial class MemoryRow : UserControl
     {
-        private Color _colorZero = Color.FromArgb(255, 2, 132, 130);
-        private Color _colorOne = Color.FromArgb(255, 128, 255, 0);
-
-        public void MemoryColors(Color value, Color value2)
-        {
-            _colorZero = value;
-            _colorOne = value2;                          
-        }
-        public MemoryRow()
-        {
+        public MemoryRow() {
             InitializeComponent();
+            _rowColor = new RowColor(Color.FromArgb(255, 2, 132, 130)
+                , Color.FromArgb(255, 128, 255, 0)
+                );
+        }
+
+        public void setColor(RowColor newColor)
+        {
+            _rowColor = newColor;
+            updateColor();
+        }
+        private void updateColor() {
+            SolidColorBrush[] br = new SolidColorBrush[2];
+            br[0] = new SolidColorBrush();
+            br[1] = new SolidColorBrush();
+            br[0].Color = _rowColor._backgroundZero;
+            br[1].Color = _rowColor._backgroundOne;
+
+            UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
+
+            for (int i = 0; i < memoryGrid.Children.Count; i++) {
+                Grid cell = memoryGrid.Children[i] as Grid;
+                Rectangle rect = cell.Children[0] as Rectangle;
+                Label lab = cell.Children[1] as Label;
+
+                if ((string)lab.Content == "0" || (string)lab.Content == "1") {
+                    int val = int.Parse(lab.Content.ToString());
+                    rect.Fill = br[val];
+                }
+            }
+        }
+        public RowColor color() {
+            return _rowColor;
         }
 
 
@@ -45,8 +81,8 @@ namespace GUIProjekt
             SolidColorBrush[] br = new SolidColorBrush[2];
             br[0] = new SolidColorBrush();
             br[1] = new SolidColorBrush();
-            br[0].Color = _colorZero;
-            br[1].Color = _colorOne;
+            br[0].Color = _rowColor._backgroundZero;
+            br[1].Color = _rowColor._backgroundOne;
 
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
@@ -109,5 +145,7 @@ namespace GUIProjekt
             
             lab.Content = val.ToString();
         }
+
+        private RowColor _rowColor;
     }
 }
