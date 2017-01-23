@@ -481,6 +481,8 @@ namespace GUIProjekt
 
             UndoStorage undoValues = _assemblerModel.undo();
             ushort currentAddr = _assemblerModel.getAddr(undoValues._instructionPtr);
+            Operations opr = Operations.LOAD;
+            _assemblerModel.extractOperation(currentAddr, out opr);
 
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
@@ -488,9 +490,11 @@ namespace GUIProjekt
             // Uppdatera grafiskt minnet som ändrats
             byte index;
             if (_assemblerModel.addrIdxToUpdate(currentAddr, out index)) {
-                index++;
+                if (opr != Operations.STORE) {
+                    index++;
+                }
                 MemoryRow row = getMMRowOfPosition(255 - index);
-
+                changeColor(row);
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
                 }
