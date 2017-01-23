@@ -284,7 +284,7 @@ namespace GUIProjekt
                     index++;
                 }
                 MemoryRow row = getMMRowOfPosition(255 - index);
-                changeColor(row);
+
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
                 }
@@ -503,7 +503,7 @@ namespace GUIProjekt
                     index++;
                 }
                 MemoryRow row = getMMRowOfPosition(255 - index);
-                changeColor(row);
+
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
                 }
@@ -626,15 +626,15 @@ namespace GUIProjekt
         {
             if (_currentSkin == Skins.Visual)
             {
-                row.MemoryColors(Color.FromRgb(58, 72, 102), Color.FromRgb(127, 112, 98));
+                row.setColor(new RowColor(Color.FromRgb(58, 72, 102), Color.FromRgb(127, 112, 98)));
             }
             else if (_currentSkin == Skins.Orange)
             {
-                row.MemoryColors(Color.FromRgb(255, 234, 180), Color.FromRgb(255, 142, 17));
+                row.setColor(new RowColor(Color.FromRgb(255, 234, 180), Color.FromRgb(255, 142, 17)));
             }
             else
             {
-                row.MemoryColors(Color.FromArgb(255, 2, 132, 130), Color.FromArgb(255, 128, 255, 0));
+                row.setColor(new RowColor(Color.FromArgb(255, 2, 132, 130), Color.FromArgb(255, 128, 255, 0)));
             }
         }
 
