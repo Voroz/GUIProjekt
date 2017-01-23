@@ -3,6 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Dev Team" Height="200" Width="250" MaxHeight="200" MaxWidth="250">
     
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0, 1" EndPoint="1, 0">
+            <GradientStop Color="Black" Offset="0.0" />
+            <GradientStop Color="White" Offset="1.0" />
+        </LinearGradientBrush>
+    </Window.Background>
+    
     <Viewbox HorizontalAlignment="Left">
         <Grid>
             <Grid.RowDefinitions>
@@ -17,7 +24,7 @@
             <Label Grid.Row="1" Foreground="BurlyWood">Gustav Halje</Label>
             <Label Grid.Row="2" Foreground="BurlyWood">Marcus Jakobsson</Label>
             <Label Grid.Row="3" Foreground="BurlyWood">Pontus Mansfeld</Label>
-            <Label Grid.Row="4" Foreground="BurlyWood" FontStyle="Italic">DMP 2015</Label>
+            <Label Grid.Row="4" Foreground="BurlyWood" FontStyle="Italic">DMP 2015 JTH</Label>
         </Grid>
     </Viewbox>
 </Window>

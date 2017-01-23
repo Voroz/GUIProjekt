@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GUIProjekt
 {
     /// <summary>
-    /// Interaction logic for About.xaml
+    /// Interaction logic for ValueRow.xaml
     /// </summary>
-    public partial class About : Window
+    public partial class ValueRow : UserControl
     {
-        public About()
+        public ValueRow()
         {
             InitializeComponent();
         }
