@@ -34,8 +34,8 @@ namespace GUIProjekt
         public void ShowValue(string str)
         {
             SolidColorBrush[] br = new SolidColorBrush[2];
-            br[0] = new SolidColorBrush(Colors.Aqua);
-            br[1] = new SolidColorBrush(Colors.Red);
+            br[0] = new SolidColorBrush(Color.FromArgb(255, 2, 132, 130));
+            br[1] = new SolidColorBrush(Color.FromArgb(255, 128, 255, 0));
             /*br[0].Color = _colorZero;
             br[1].Color = _colorOne;*/
 

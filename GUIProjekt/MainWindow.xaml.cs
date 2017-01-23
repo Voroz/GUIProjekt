@@ -305,7 +305,96 @@ namespace GUIProjekt
             }
 
             // TODO: Update in, out, workingRegister, instructionPtr
-            
+            updateNonMemoryRows(opr, val);
+        }
+
+        //Ej färdig
+        void updateNonMemoryRows(Operations opr, byte val)
+        {
+            switch (opr)
+            {
+                case Operations.LOAD:
+                    {
+                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.getAddr(val), 2).PadLeft(8, '0'));
+                        //_instructionPtr = (byte)(++_instructionPtr % _size);
+                    } break;
+
+                case Operations.STORE:
+                    {
+                        //_instructionPtr = (byte)(++_instructionPtr % _size);
+                    } break;
+
+                case Operations.ADD:
+                    {
+                        byte workingRegVal = (byte)_assemblerModel.workingRegister();
+                        byte memoryVal = (byte)_assemblerModel.getAddr(val);
+                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((workingRegVal + memoryVal), 2).PadLeft(8, '0'));
+
+                        //  _instructionPtr = (byte)(++_instructionPtr % _size);
+                    } break;
+
+                case Operations.SUB:
+                    {
+                        byte workingRegVal = (byte)_assemblerModel.workingRegister();
+                        byte memoryVal = (byte)_assemblerModel.getAddr(val);
+                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((workingRegVal - memoryVal), 2).PadLeft(8, '0'));
+
+                        // _instructionPtr = (byte)(++_instructionPtr % _size);
+                    } break;
+
+                case Operations.MUL:
+                    {
+                        byte workingRegVal = (byte)_assemblerModel.workingRegister();
+                        byte memoryVal = (byte)_assemblerModel.getAddr(val);
+                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((workingRegVal * memoryVal), 2).PadLeft(8, '0'));
+
+                        // _instructionPtr = (byte)(++_instructionPtr % _size);
+                    } break;
+
+                case Operations.JUMP:
+                    {
+                        // _instructionPtr = addr;
+                    } break;
+
+                case Operations.PJUMP:
+                    {
+                        if (_assemblerModel.workingRegister() > 0)
+                        {
+                            //  _instructionPtr = addr;
+                        }
+                    } break;
+
+                case Operations.IN:
+                    {
+                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.input(), 2).PadLeft(8, '0'));
+
+                        //        _instructionPtr = (byte)(++_instructionPtr % _size);
+                    } break;
+
+                case Operations.OUT:
+                    {
+                        ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(8, '0'));
+
+                        //        _instructionPtr = (byte)(++_instructionPtr % _size);*/
+                    } break;
+
+                //case Operations.CALL:
+                //    {
+                //        _instructionPtr++;
+                //        _memoryStack.push(_instructionPtr);
+                //        _instructionPtr = addr;
+                //    } break;
+
+                //case Operations.RETURN:
+                //    {
+                //        _instructionPtr = (byte)_memoryStack.top();
+                //    } break;
+
+                default:
+                    {
+                        Debug.Assert(false);
+                    } break;
+            }
         }
 
         
@@ -544,6 +633,7 @@ namespace GUIProjekt
                 }
             }
             // TODO: Update in, out, workingRegister, instructionPtr
+            
         }
 
 
