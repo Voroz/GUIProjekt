@@ -55,6 +55,12 @@ namespace GUIProjekt
                 MemoryRow row = getMMRowOfPosition(255 - i);
                 row.ShowMemoryRowNumber((byte)i);
             }
+
+            for (int i = 0; i < 5; i++)
+            {
+                MemoryRow stackRow = getStackRowOfPosition(i);
+                stackRow.ShowMemoryRowNumber((byte)(255-i));
+            }
         }
 
         private void updateGUIMemory(byte from, byte to) {
