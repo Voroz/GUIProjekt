@@ -45,6 +45,7 @@ namespace GUIProjekt
             // TODO: update instructionPtr
             ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(8, '0'));
             ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(8, '0'));
+            ValueRow_Input.ShowValue(Convert.ToString((byte)_assemblerModel.input(), 2).PadLeft(8, '0'));
         }
 
 
