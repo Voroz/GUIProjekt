@@ -36,8 +36,12 @@ namespace GUIProjekt
             , ushort workingRegister
             , ushort input
             , ushort output) {
-                _memory = memory;
-                _memoryStack = memoryStack;
+                _memory = new ushort[memory.Length];
+                _memoryStack = new MyStack<ushort>(_memory);
+                Array.Copy(memory, _memory, memory.Length);
+                for (int i = 0; i < memoryStack.size(); i++) {
+                    _memoryStack.push(_memory[255 - i]);
+                }
                 _instructionPtr = instructionPtr;
                 _workingRegister = workingRegister;
                 _input = input;

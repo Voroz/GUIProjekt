@@ -311,100 +311,12 @@ namespace GUIProjekt
                     }
                 }
             }
-
-            // TODO: Update in, out, workingRegister, instructionPtr
-            updateNonMemoryRows(opr, val);
-        }
-
-        //Ej färdig
-        void updateNonMemoryRows(Operations opr, byte val)
-        {
-            switch (opr)
-            {
-                case Operations.LOAD:
-                    {
-                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.getAddr(val), 2).PadLeft(8, '0'));
-                        //_instructionPtr = (byte)(++_instructionPtr % _size);
-                    } break;
-
-                case Operations.STORE:
-                    {
-                        //_instructionPtr = (byte)(++_instructionPtr % _size);
-                    } break;
-
-                case Operations.ADD:
-                    {
-                        byte workingRegVal = (byte)_assemblerModel.workingRegister();
-                        byte memoryVal = (byte)_assemblerModel.getAddr(val);
-                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((workingRegVal + memoryVal), 2).PadLeft(8, '0'));
-
-                        //  _instructionPtr = (byte)(++_instructionPtr % _size);
-                    } break;
-
-                case Operations.SUB:
-                    {
-                        byte workingRegVal = (byte)_assemblerModel.workingRegister();
-                        byte memoryVal = (byte)_assemblerModel.getAddr(val);
-                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((workingRegVal - memoryVal), 2).PadLeft(8, '0'));
-
-                        // _instructionPtr = (byte)(++_instructionPtr % _size);
-                    } break;
-
-                case Operations.MUL:
-                    {
-                        byte workingRegVal = (byte)_assemblerModel.workingRegister();
-                        byte memoryVal = (byte)_assemblerModel.getAddr(val);
-                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((workingRegVal * memoryVal), 2).PadLeft(8, '0'));
-
-                        // _instructionPtr = (byte)(++_instructionPtr % _size);
-                    } break;
-
-                case Operations.JUMP:
-                    {
-                        // _instructionPtr = addr;
-                    } break;
-
-                case Operations.PJUMP:
-                    {
-                        if (_assemblerModel.workingRegister() > 0)
-                        {
-                            //  _instructionPtr = addr;
-                        }
-                    } break;
-
-                case Operations.IN:
-                    {
-                        ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.input(), 2).PadLeft(8, '0'));
-
-                        //        _instructionPtr = (byte)(++_instructionPtr % _size);
-                    } break;
-
-                case Operations.OUT:
-                    {
-                        ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(8, '0'));
-
-                        //        _instructionPtr = (byte)(++_instructionPtr % _size);*/
-                    } break;
-
-                //case Operations.CALL:
-                //    {
-                //        _instructionPtr++;
-                //        _memoryStack.push(_instructionPtr);
-                //        _instructionPtr = addr;
-                //    } break;
-
-                //case Operations.RETURN:
-                //    {
-                //        _instructionPtr = (byte)_memoryStack.top();
-                //    } break;
-
-                default:
-                    {
-                        Debug.Assert(false);
-                    } break;
+            else {
+                // TODO: update instructionPtr
+                ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(8, '0'));
+                ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(8, '0'));
             }
         }
-
         
 
         /******************************************************
@@ -606,7 +518,7 @@ namespace GUIProjekt
             }
 
             UndoStorage undoValues = _assemblerModel.undo();
-            ushort currentAddr = _assemblerModel.getAddr(undoValues._instructionPtr);
+            ushort currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
             Operations opr = Operations.LOAD;
             _assemblerModel.extractOperation(currentAddr, out opr);
 
@@ -616,12 +528,7 @@ namespace GUIProjekt
             // Uppdatera grafiskt minnet som ändrats
             byte index;
             if (_assemblerModel.addrIdxToUpdate(currentAddr, out index)) {
-                if (opr != Operations.STORE) {
-                    index++;
-                }
-                MemoryRow row = getMMRowOfPosition(255 - index);
-                
-                
+                MemoryRow row = getMMRowOfPosition(255 - index);                
 
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
@@ -642,7 +549,11 @@ namespace GUIProjekt
                     }
                 }
             }
-            // TODO: Update in, out, workingRegister, instructionPtr
+            else {
+                // TODO: update instructionPtr
+                ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(8, '0'));
+                ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(8, '0'));
+            }
             
         }
 
