@@ -287,9 +287,19 @@ namespace GUIProjekt
 
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
+                    if (index > 251)
+                    {
+                        MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        stackRow.ClearMemoryAdress();
+                    }
                 }
                 else {
                     row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                    if (index > 251)
+                    {
+                        MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                    }
                 }
             }
             // TODO: Update in, out, workingRegister, instructionPtr
@@ -366,6 +376,11 @@ namespace GUIProjekt
             return theMemory.Children[(theMemory.Children.Count-1)-pos] as MemoryRow;
         }
 
+        // TODO implementera stacken visuellt
+        private MemoryRow getStackRowOfPosition(int pos)
+        {
+            return theStack.Children[(theStack.Children.Count - 1) - pos] as MemoryRow;
+        }
         /******************************************************
          CALL: clearMemoryRows(int);
          TASK: Clears the rows of memory that has been removed.
@@ -374,6 +389,8 @@ namespace GUIProjekt
             // Debug.Assert(from < memLineCount && to < memLineCount);
             for (int i = from; i <= to; i++) {
                 getMMRowOfPosition(255 - i).ClearMemoryAdress();
+                if(i>250)
+                getStackRowOfPosition(255 - i).ClearMemoryAdress();
             }
         }
 
@@ -473,7 +490,7 @@ namespace GUIProjekt
             textBoxAssembler.IsReadOnly = false;
         }
 
-
+        
         /******************************************************
          CALL: Clicking the step back button.
          TASK: Rolls back the program one step i.e. undo the 
@@ -503,12 +520,24 @@ namespace GUIProjekt
                     index++;
                 }
                 MemoryRow row = getMMRowOfPosition(255 - index);
+                
+                
 
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
+                    if (index > 251)
+                    {
+                        MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        stackRow.ClearMemoryAdress();
+                    }
                 }
                 else {
                     row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                    if (index > 250)
+                    {
+                        MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                        stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                    }
                 }
             }
             // TODO: Update in, out, workingRegister, instructionPtr

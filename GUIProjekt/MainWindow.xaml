@@ -484,7 +484,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Viewbox Grid.Column="0">
-                            <UniformGrid Name="theMemory2" Rows="5" Columns="1" MinWidth="280" MinHeight="97.66" HorizontalAlignment="Right">
+                            <UniformGrid Name="theStack" Rows="5" Columns="1" MinWidth="280" MinHeight="97.66" HorizontalAlignment="Right">
                                 <local:MemoryRow></local:MemoryRow>
                                 <local:MemoryRow></local:MemoryRow>
                                 <local:MemoryRow></local:MemoryRow>
