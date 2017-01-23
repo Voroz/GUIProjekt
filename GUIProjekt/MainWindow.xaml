@@ -148,15 +148,20 @@
                     <RowDefinition Height="20*" />
                     <RowDefinition Height="20*" />
                 </Grid.RowDefinitions>
-
+                
+                <Label Grid.Row="1">Working Register</Label>
                 <Viewbox Grid.Row="1">
-                    <local:ValueRow x:Name="WorkingRegister"></local:ValueRow>
+                    <local:ValueRow x:Name="ValueRow_WorkingRegister"></local:ValueRow>
                 </Viewbox>
+                
+                <Label Grid.Row="2">Input</Label>
                 <Viewbox Grid.Row="2">
-                    <local:ValueRow x:Name="Input"></local:ValueRow>
+                    <local:ValueRow x:Name="ValueRow_Input"></local:ValueRow>
                 </Viewbox>
+                
+                <Label Grid.Row="3">Output</Label>
                 <Viewbox Grid.Row="3">
-                    <local:ValueRow x:Name="Output"></local:ValueRow>
+                    <local:ValueRow x:Name="ValueRow_Output"></local:ValueRow>
                 </Viewbox>
         </Grid>
             

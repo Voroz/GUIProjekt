@@ -270,6 +270,7 @@ namespace GUIProjekt
             ushort currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
             Operations opr;
             byte val = (byte)_assemblerModel.extractVal(currentAddr);
+
             _assemblerModel.extractOperation(currentAddr, out opr);
 
             _assemblerModel.processCurrentAddr();
@@ -292,7 +293,9 @@ namespace GUIProjekt
                     row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
                 }
             }
+
             // TODO: Update in, out, workingRegister, instructionPtr
+            
         }
 
         
