@@ -35,10 +35,11 @@ namespace GUIProjekt
             InitializeComponent();
         }
 
-        /************************************************************************
-         * Anrop: ShowMemoryAdress()
-         * Uppgift: Ritar ut en rad av nollor och ettor i Minnet.
-         ************************************************************************/
+
+        /******************************************************
+         CALL: ShowMemoryAdress()
+         TASK: Prints a row of ones and zeros in the memory.
+         *****************************************************/
         public void ShowMemoryAdress(string str)
         {
             SolidColorBrush[] br = new SolidColorBrush[2];
@@ -68,10 +69,12 @@ namespace GUIProjekt
             }
         }
 
-        /************************************************************************
-         * Anrop: ClearMemoryAdress()
-         * Uppgift: Rensar en rad i Minnet och färgar dess rutor "vita"
-         ************************************************************************/
+
+        /******************************************************
+         CALL: ClearMemoryAdress();
+         TASK: Clears a row in the memory and colors these 
+               squares white.
+         *****************************************************/
         public void ClearMemoryAdress()
         {
             Brush br = Brushes.White;
@@ -91,10 +94,11 @@ namespace GUIProjekt
             }
         }
 
-        /************************************************************************
-         * Anrop: ShowMemoryRowNumber(int val)
-         * Uppgift: Skapar denna radens numreringsvärde.
-         ************************************************************************/
+
+        /******************************************************
+         CALL: ShowMemoryRowNumber(byte val);
+         TASK: Creates this row's numbering.
+         *****************************************************/
         public void ShowMemoryRowNumber(byte val)
         {
             UniformGrid rowNumbers = this.AdressNumber as UniformGrid;
