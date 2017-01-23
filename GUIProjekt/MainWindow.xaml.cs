@@ -265,6 +265,9 @@ namespace GUIProjekt
                 _runTimer.Stop();
                 _assemblerModel.reset();
                 updateGUIMemory(0, 255);
+                // TODO: Input, InstructionPtr uppdatering
+                ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(8, '0'));
+                ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(8, '0'));
 
                 textBoxAssembler.IsReadOnly = false;
                 textBoxMK.IsReadOnly = false;
@@ -371,6 +374,9 @@ namespace GUIProjekt
             _runTimer.Stop();
             _assemblerModel.reset();
             updateGUIMemory(0, 255);
+            // TODO: Input, InstructionPtr uppdatering
+            ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(8, '0'));
+            ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(8, '0'));
             
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
