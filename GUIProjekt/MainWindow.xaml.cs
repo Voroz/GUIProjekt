@@ -541,7 +541,10 @@ namespace GUIProjekt
             // Uppdatera grafiskt minnet som ändrats
             byte index;
             if (_assemblerModel.addrIdxToUpdate(currentAddr, out index)) {
-                MemoryRow row = getMMRowOfPosition(255 - index);                
+                if (opr == Operations.RETURN) {
+                    index += 2;
+                }
+                MemoryRow row = getMMRowOfPosition(255 - index);
 
                 if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
                     row.ClearMemoryAdress();
