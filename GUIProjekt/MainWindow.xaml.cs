@@ -31,6 +31,7 @@ namespace GUIProjekt
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
             showMemoryRowNumbers();
+            clearMemoryRows(0, 255);
             updateGUIMemory(0, 255);
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -71,8 +72,6 @@ namespace GUIProjekt
 
         private void updateGUIMemory(byte from, byte to) {
             TextBox mkBox = TextBox_MK;
-
-            clearMemoryRows(from, to);
 
             for (int i = from; i <= to; i++) {
                 string mkStr = "";
