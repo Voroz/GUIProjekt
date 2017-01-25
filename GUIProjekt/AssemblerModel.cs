@@ -12,7 +12,6 @@ namespace GUIProjekt
         public const byte EndOprBit = 11;   // Defines end position for the Assembler operator in a 16 bit
         public const byte StartValBit = 0; // Defines start position for the Assembler value in a 16 bit
         public const byte EndValBit = 7;  // Defines end position for the Assembler value in a 16 bit
-        public const ushort UshortMax = 65535;  //Max range of an ushort
     }
 
     enum Operations : byte {
@@ -137,6 +136,11 @@ namespace GUIProjekt
         }
 
         public bool stringToMachine(string str, out ushort machineCode) {
+            if (string.IsNullOrWhiteSpace(str)) {
+                machineCode = 0;
+                return true;
+            }
+
             bool binary = isBinary(str);
 
             if (binary) {
@@ -263,7 +267,7 @@ namespace GUIProjekt
         {
             for (int i = 0; i < _size; i++)
             {
-                _memory[i] = (ushort)Constants.UshortMax;
+                _memory[i] = 0;
             }
             while (_memoryStack.size() > 0) {
                 _memoryStack.pop();
@@ -544,7 +548,6 @@ namespace GUIProjekt
                 case Operations.RETURN: {
                     _instructionPtr = (byte)_memoryStack.top();                    
                     _memoryStack.pop();
-                    _memory[255 - _memoryStack.size()] = Constants.UshortMax;
                 } break;
 
                 default: {
