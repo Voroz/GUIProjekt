@@ -78,7 +78,33 @@
     <Style x:Key="TextBoxBackground" TargetType="TextBox">
         <Setter Property="Background" Value="White"/>
     </Style>
-
+    
+    <!-- Textbox Assembler -->
+    <Style x:Key="TextBoxAssembler" TargetType="TextBox">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="FontSize" Value="19.515"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="BorderThickness" Value="0.5"/>
+        <Setter Property="MinWidth" Value="200"/>
+    </Style>
+    <!-- TextBox Maskinkod -->
+    <Style x:Key="TextBoxMK" TargetType="TextBox">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="FontSize" Value="19.515"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="BorderThickness" Value="0.5"/>
+        <Setter Property="MinWidth" Value="200"/>
+    </Style>
+    
     <!-- Row, Operation, Value -->
     <Style x:Key="Labels" TargetType="Label">
         <Setter Property="Background" Value="{DynamicResource MenuColor2}"/>

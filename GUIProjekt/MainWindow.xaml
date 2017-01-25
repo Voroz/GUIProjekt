@@ -164,31 +164,13 @@
 
                         <TextBox
                             Grid.Column="1"
-                            Padding="0"
-                            HorizontalAlignment="Stretch"
-                            FontSize="19.515"
-                            Height="Auto"
-                            TextWrapping="Wrap"
-                            AcceptsReturn="True"
-                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            BorderThickness="0.5"
+                            Style="{StaticResource TextBoxMK}"
                             Name="TextBox_MK"
-                            TextChanged="TextBox_MK_TextChanged"
-                            MinWidth="200"/>
+                            TextChanged="TextBox_MK_TextChanged"/>
 
                         <TextBox
                             Grid.Column="2"
-                            Padding="0"
-                            HorizontalAlignment="Stretch"
-                            Height="Auto"
-                            FontSize="19.515"
-                            TextWrapping="Wrap"
-                            AcceptsReturn="True"
-                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            BorderThickness="0.5"
-                            MinWidth="200"
+                            Style="{StaticResource TextBoxAssembler}"
                             Name="TextBox_Assembler"
                             TextChanged="TextBox_Assembler_TextChanged" />
 
