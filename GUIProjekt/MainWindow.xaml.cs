@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
 using System.Timers;
+using System.Windows.Controls.Primitives;
 
 namespace GUIProjekt
 {
@@ -266,15 +267,13 @@ namespace GUIProjekt
 
         // TODO: Enkel tillfällig funktion för att markera rader
         void markRow(MemoryRow row) {
-            if (_previousInstructionPtr != -1) {
-                MemoryRow previousRow_ = getMMRowOfPosition((byte)(255 - _previousInstructionPtr));
-                previousRow_.BorderThickness = new Thickness(0, 0, 0, 0);
-                previousRow_.Margin = new Thickness(0, 0, 0, 0);
-                Grid.SetZIndex(previousRow_, 999);
+            if (_previousInstructionPtr != -1) {                
+                MemoryRow previousRow = getMMRowOfPosition((byte)(255 - _previousInstructionPtr));
+                previousRow.MemoryRow_Border.Visibility = System.Windows.Visibility.Hidden;
+                Grid.SetZIndex(previousRow, 999);
             }
 
-            row.BorderThickness = new Thickness(4, 4, 4, 4);
-            row.Margin = new Thickness(-4, -4, -4, -4);
+            row.MemoryRow_Border.Visibility = System.Windows.Visibility.Visible;
             Grid.SetZIndex(row, 1000);
 
             _previousInstructionPtr = _assemblerModel.instructionPtr();

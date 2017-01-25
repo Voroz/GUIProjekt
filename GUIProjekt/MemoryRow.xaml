@@ -24,7 +24,11 @@
             <ColumnDefinition Width="40"></ColumnDefinition>
             <ColumnDefinition Width="12*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
+
+        <Border Name="MemoryRow_Border" Grid.Column="1" BorderBrush="Red" 
+        BorderThickness="2,2,2,2" Background="{x:Null}"
+        Visibility="Hidden" Margin="-2,-2,-2,-2"/>
+
         <!--RowNumbers grid-->
         <UniformGrid Name="AdressNumber" Rows="1" Columns="1" Grid.Column="0" Margin="0,0,5,0">
             <Grid>
