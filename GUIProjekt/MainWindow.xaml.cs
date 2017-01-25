@@ -30,7 +30,8 @@ namespace GUIProjekt
             InitializeComponent();
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
-            showMemoryRowNumbers();          
+            showMemoryRowNumbers();
+            updateGUIMemory(0, 255);
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerMK.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -76,17 +77,25 @@ namespace GUIProjekt
 
             clearMemoryRows(from, to);
 
-            for (int i = from; i <= to && i < mkBox.LineCount; i++) {
-                string mkStr = mkBox.GetLineText(i);
+            for (int i = from; i <= to; i++) {
+                string mkStr = "";
+                if (i < mkBox.LineCount) {
+                    mkStr = mkBox.GetLineText(i);
+                }
 
                 if (!_assemblerModel.checkSyntaxMachine(mkStr)) {
                     continue;
                 }
 
-                if (!string.IsNullOrWhiteSpace(mkStr)) {
-                    MemoryRow rad = getMMRowOfPosition(255 - i);
-                    rad.ShowMemoryAdress(mkStr);
+                if (i > 250)
+                {
+                    MemoryRow stackRow = getStackRowOfPosition(255 - i);
+                    changeColor(stackRow);
+                    stackRow.ShowMemoryAdress(mkStr);
                 }
+
+                MemoryRow rad = getMMRowOfPosition(255 - i);
+                rad.ShowMemoryAdress(mkStr);
             }
         }
 
@@ -158,7 +167,6 @@ namespace GUIProjekt
 
             _inputTimerMK.Stop();
             assemblerBox.Clear();
-            clearMemoryRows(0, _previousLineCount);
 
             for (int i = 0; i < mkBox.LineCount; i++) {
                 string mkStr = mkBox.GetLineText(i);
@@ -172,13 +180,16 @@ namespace GUIProjekt
                     continue;
                 }
 
-                if (!string.IsNullOrWhiteSpace(mkStr)) {
+                if (!string.IsNullOrWhiteSpace(mkStr))
+                {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.stringToMachine(mkStr.TrimEnd(trimChars), out bits);
-                    _assemblerModel.machineToAssembly(bits, out assemblyStr);
-                    MemoryRow rad = getMMRowOfPosition(255 - i);
-                    rad.ShowMemoryAdress(mkStr);                   
+                    _assemblerModel.machineToAssembly(bits, out assemblyStr);                                      
                 }
+
+                MemoryRow row = getMMRowOfPosition(255 - i);
+                changeColor(row);
+                row.ShowMemoryAdress(mkStr);
 
                 if (mkStr.Length > 0 && mkStr[mkStr.Length - 1] == '\n') {
                     assemblyStr += '\n';
@@ -214,7 +225,6 @@ namespace GUIProjekt
             
             _inputTimerAssembly.Stop();
             mkBox.Clear();
-            clearMemoryRows(0, _previousLineCount);
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
@@ -228,15 +238,16 @@ namespace GUIProjekt
                     continue;
                 }
 
-                if (!string.IsNullOrWhiteSpace(assemblyStr)) {
+                if (!string.IsNullOrWhiteSpace(assemblyStr))
+                {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
-                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');                   
-                    MemoryRow row = getMMRowOfPosition(255 - i);                    
-                    changeColor(row);
-                    
-                    row.ShowMemoryAdress(mkStr);
+                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');
                 }
+
+                MemoryRow row = getMMRowOfPosition(255 - i);
+                changeColor(row);
+                row.ShowMemoryAdress(mkStr);
 
                 if (assemblyStr.Length > 0 && assemblyStr[assemblyStr.Length - 1] == '\n') {
                     mkStr += '\n';
@@ -265,24 +276,6 @@ namespace GUIProjekt
         }
 
         void programTick() {
-            if (_assemblerModel.currentAddr() == Constants.UshortMax) {
-                TextBox textBoxMK = TextBox_MK;
-                TextBox textBoxAssembler = TextBox_Assembler;
-                _runTimer.Stop();
-                _assemblerModel.reset();
-                updateGUIMemory(0, 255);
-                ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-                ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(12, '0'));
-                ValueRow_InstructionPointer.ShowValue(Convert.ToString((byte)_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-
-                textBoxAssembler.IsReadOnly = false;
-                textBoxMK.IsReadOnly = false;
-
-                // Mark current row
-                markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
-
-                return;
-            }
 
             ushort currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
             Operations opr;
@@ -302,24 +295,13 @@ namespace GUIProjekt
                     index++;
                 }
                 MemoryRow row = getMMRowOfPosition(255 - index);
+                row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
 
-                if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
-                    row.ClearMemoryAdress();
-                    if (index > 250)
-                    {
-                        MemoryRow stackRow = getStackRowOfPosition(255 - index);
-                        changeColor(stackRow);
-                        stackRow.ClearMemoryAdress();
-                    }
-                }
-                else {
-                    row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
-                    if (index > 250)
-                    {
-                        MemoryRow stackRow = getStackRowOfPosition(255 - index);
-                        changeColor(stackRow);
-                        stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
-                    }
+                if (index > 250)
+                {
+                    MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                    changeColor(stackRow);
+                    stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
                 }
             }
 
@@ -353,7 +335,7 @@ namespace GUIProjekt
 
                 // Empty lines to create space are fine
                 if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
-                    _assemblerModel.setAddr(i, Constants.UshortMax);
+                    _assemblerModel.setAddr(i, 0);
                     continue;
                 }
 
@@ -544,25 +526,15 @@ namespace GUIProjekt
                 if (opr == Operations.RETURN) {
                     index += 2;
                 }
-                MemoryRow row = getMMRowOfPosition(255 - index);
 
-                if (_assemblerModel.getAddr(index) == Constants.UshortMax) {
-                    row.ClearMemoryAdress();
-                    if (index > 250)
-                    {
-                        MemoryRow stackRow = getStackRowOfPosition(255 - index);
-                        changeColor(stackRow);
-                        stackRow.ClearMemoryAdress();
-                    }
-                }
-                else {
-                    row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
-                    if (index > 250)
-                    {
-                        MemoryRow stackRow = getStackRowOfPosition(255 - index);
-                        changeColor(stackRow);
-                        stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
-                    }
+                MemoryRow row = getMMRowOfPosition(255 - index);
+                row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+
+                if (index > 250)
+                {
+                    MemoryRow stackRow = getStackRowOfPosition(255 - index);
+                    changeColor(stackRow);
+                    stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
                 }
             }
 
@@ -600,7 +572,7 @@ namespace GUIProjekt
 
                 // Empty lines to create space are fine
                 if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
-                    _assemblerModel.setAddr(i, Constants.UshortMax);
+                    _assemblerModel.setAddr(i, 0);
                     continue;
                 }
 

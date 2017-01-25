@@ -61,7 +61,7 @@ namespace GUIProjekt
                 Rectangle rect = cell.Children[0] as Rectangle;
                 Label lab = cell.Children[1] as Label;
 
-                if ((string)lab.Content == "0" || (string)lab.Content == "1") {
+                if (lab.Content.ToString() == "0" || lab.Content.ToString() == "1") {
                     int val = int.Parse(lab.Content.ToString());
                     rect.Fill = br[val];
                 }
@@ -86,21 +86,31 @@ namespace GUIProjekt
 
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
-            for (int ix = 0; ix < str.Length; ix++)
+            if (string.IsNullOrWhiteSpace(str))
             {
-                if (ix < memoryGrid.Children.Count)
+                for (int i = 0; i < memoryGrid.Children.Count; i++)
                 {
-                    Grid cell = memoryGrid.Children[ix] as Grid;
+                    Grid cell = memoryGrid.Children[i] as Grid;
                     Rectangle rect = cell.Children[0] as Rectangle;
                     Label lab = cell.Children[1] as Label;
 
-                    int value;
-                    bool ok = int.TryParse(str[ix].ToString(), out value);
-                    if (ok && value >= 0 && value <= 1)
-                    {
-                        lab.Content = value.ToString();
-                        rect.Fill = br[value];
-                    }
+                    lab.Content = "0";
+                    rect.Fill = br[0];
+                }
+            }
+
+            for (int i = 0; i < str.Length && i < memoryGrid.Children.Count; i++)
+            {
+                Grid cell = memoryGrid.Children[i] as Grid;
+                Rectangle rect = cell.Children[0] as Rectangle;
+                Label lab = cell.Children[1] as Label;
+
+                    
+
+                if (str[i] == '0' || str[i] == '1')
+                {
+                    lab.Content = str[i];
+                    rect.Fill = br[int.Parse(str[i].ToString())];
                 }
             }
         }
