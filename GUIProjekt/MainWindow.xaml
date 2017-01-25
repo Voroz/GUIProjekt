@@ -3,23 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:GUIProjekt"
         Title="Modelldatorn Assembler" Style="{DynamicResource WindowBackground}" MinHeight="600" MinWidth="800" Height="768" Width="1024">
-    <!--<Window.Background>
-        <VisualBrush TileMode="Tile" Viewport="0,0,1,1">
-            <VisualBrush.Visual>
-                
-                <Image Source="images/backg.jpg" Stretch="Fill"></Image>
-            </VisualBrush.Visual>
-        </VisualBrush>
-    </Window.Background>-->
     
     <Window.Resources>
-        <!-- Mall för layouten av programmet hittar ni under skins, Skapa egna skins för att ändra färger etc -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Layout.xaml" />
                 <ResourceDictionary Source="Skins/DefaultSkin.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        <!--Resources som inte ska tillhöra layout förändring läggs här-->    
-            <local:FontSizeConverter x:Key="fontSizeCon"/>
+            </ResourceDictionary.MergedDictionaries>  
         </ResourceDictionary>               
     </Window.Resources>
     
@@ -27,12 +17,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="3*" /> <!-- Meny -->
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />   <!-- Labels -->
             <RowDefinition Height="50*" />  <!-- Content -->
             <RowDefinition Height="20*" />  <!--Stack-->
         </Grid.RowDefinitions>
+
         
-        <Menu Grid.Row="0" Width="Auto" Height="30" Style="{DynamicResource Menu}">   <!-- Topmeny/Standardmeny -->
+        <!-- Top menu     START -->
+        <Menu Grid.Row="0" Style="{StaticResource Menu}">
             <MenuItem Header="_File">
                 <MenuItem Name="Open" Header="Open" Click="Open_Click"></MenuItem>
                 <MenuItem Name="Save" Header="Save" Click="Save_Click"></MenuItem>
@@ -42,65 +34,52 @@
                 <MenuItem Header="About" Click="About_Click"></MenuItem>
             </MenuItem>
         </Menu>
+        <!-- Top menu    END -->
         
+        
+        <!-- Program menu     START -->
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="{DynamicResource MenuColor1}">
             <Viewbox>
-                <Button Click="Button_Run_Click" Style="{DynamicResource MenuButton}" ToolTip="Play">
+                <Button Click="Button_Run_Click" Style="{StaticResource MenuButton}" ToolTip="Play">
                     <Image Source="images/media-play-8x.png" />
                 </Button>
             </Viewbox>
             <Viewbox>
-                <Button Click="Button_Pause_Click" Style="{DynamicResource MenuButton}" ToolTip="Pause">
+                <Button Click="Button_Pause_Click" Style="{StaticResource MenuButton}" ToolTip="Pause">
                     <Image Source="images/media-pause-8x.png" />
                 </Button>
             </Viewbox>
             <Viewbox>
-                <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{DynamicResource MenuButton}" ToolTip="Stop">
+                <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
                     <Image Source="images/media-stop-8x.png" />
                 </Button>
             </Viewbox>
-            
             <Viewbox>
-                <Button Name="Button_StepBack" Click="Button_StepBack_Click" Style="{DynamicResource MenuButton}" ToolTip="Step Back">
+                <Button Name="Button_StepBack" Click="Button_StepBack_Click" Style="{StaticResource MenuButton}" ToolTip="Step Back">
                     <Image Source="images/action-undo-8x.png" />
                     <ToolTipService.ToolTip>
                         <TextBlock Text="Step Back" />
                     </ToolTipService.ToolTip>
                 </Button>
             </Viewbox>
-
             <Viewbox>
-                <Button Name="Button_StepForward" Click="Button_StepForward_Click" Style="{DynamicResource MenuButton}" ToolTip="Step Forward">
+                <Button Name="Button_StepForward" Click="Button_StepForward_Click" Style="{StaticResource MenuButton}" ToolTip="Step Forward">
                     <Image Source="images/action-redo-8x.png" />
                 </Button>
             </Viewbox>
-            
-
-            <!--<Viewbox>
-                <ToggleButton Name="PlayButton" Background="#DDDDE4" BorderBrush="#DDDDE4">
-                    <Image Source="images/play-button.png" Height="9" Width="9" ToolTip="Play"></Image>
-                </ToggleButton>
-            </Viewbox>
             <Viewbox>
-                <ToggleButton Name="PauseButton" Click="PauseButton_Click" Background="#DDDDE4" BorderBrush="#DDDDE4">
-                    <Image Source="images/pause.png" Height="10" Width="10" ToolTip="Pause"></Image>
-                </ToggleButton>
-            </Viewbox>
-            <Viewbox>
-                <ToggleButton Name="StopButton" Background="#DDDDE4" BorderBrush="#DDDDE4">
-                    <Image Source="images/Stopbtn.png" Height="10" Width="10" ToolTip="Stop"></Image>
-                </ToggleButton>
-            </Viewbox>-->
-            <Viewbox>
-                <ComboBox Text="Is not open" SelectedIndex="0" ToolTip="Skin" Background="{DynamicResource MenuColor1}" RenderTransformOrigin="0.636,0.636">
+                <ComboBox Text="Is not open" Style="{StaticResource ComboBoxSkins}" ToolTip="Skin">
                     <ComboBoxItem Name="combBoxDefault" Selected="changeSkinEvent">Default</ComboBoxItem>
                     <ComboBoxItem Name="combBoxOrange" Selected="changeSkinEvent">Orange</ComboBoxItem>
                     <ComboBoxItem Name="combBoxBlue" Selected="changeSkinEvent">Visual</ComboBoxItem>
                 </ComboBox>
             </Viewbox>
-            
         </StackPanel>
+        <!-- Program menu     END -->
         
+        
+        
+        <!-- LABEL ROW START -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="47*" />
@@ -116,16 +95,14 @@
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="3"></Label>
             <!-- Visar vad som är Operationer / Värde i minnet -->
             <Viewbox Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Style="{DynamicResource Labels}" FontSize="25">Row</Label>
+                <Label Style="{StaticResource Labels}" FontSize="25">Row</Label>
             </Viewbox>
             <Viewbox Grid.Column="2" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Style="{DynamicResource Labels}" Grid.Column="2" FontSize="25">Operation</Label>
+                <Label Style="{StaticResource Labels}" Grid.Column="2" FontSize="25">Operation</Label>
             </Viewbox>
             <Viewbox Grid.Column="3" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Style="{DynamicResource Labels}" Grid.Column="3" FontSize="25">Value</Label>
+                <Label Style="{StaticResource Labels}" Grid.Column="3" FontSize="25">Value</Label>
             </Viewbox>
-            
-                 
             <UniformGrid Columns="3" Grid.Column="4" >
                 <RadioButton Style="{DynamicResource EditorTabs}" Content="Machine Code" Name="MKTab" Click="TabsToggle_event" Cursor="Hand" />
                 <RadioButton Style="{DynamicResource EditorTabs}" Content="Split View" Name="SplitTab" Click="TabsToggle_event" IsChecked="True" Cursor="Hand" FontWeight="Bold" />
@@ -133,14 +110,17 @@
             </UniformGrid>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="6" /> <!-- För att fylla ut tomrummet -->
         </Grid>
-
+        <!-- LABEL ROW END -->
+        
+        
+        <!-- CONTENT / MINNE / EDITORS etc. START -->
         <Grid Grid.Row="3" Margin="10,2,10,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" /> 
                 <ColumnDefinition Width="2*" /> 
             </Grid.ColumnDefinitions>
             
-            
+            <!-- IP, IN, OUT, WR    START -->
             <Grid Grid.Column="0" Grid.Row="1" Margin="0, 0, 10, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20*" />
@@ -168,8 +148,11 @@
                 <Viewbox Grid.Row="3">
                     <local:ValueRow x:Name="ValueRow_Output"></local:ValueRow>
                 </Viewbox>
-        </Grid>
+            </Grid>
+            <!-- IP, IN, OUT, WR    END -->
+
             
+            <!-- Memory, Editors    START -->
             <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1">
                 <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid>
@@ -471,8 +454,13 @@
                         </Viewbox>       
                     </Grid>
                 </Viewbox>
-            </ScrollViewer>
+            </ScrollViewer> <!-- Memory, Editors    END -->
         </Grid>
+        <!-- CONTENT / MINNE / EDITORS etc. END -->
+        
+        
+        
+        
                 <!-- Stacken-->
         <Grid Grid.Row="4" Margin="10,2,10,10">
             <Grid.ColumnDefinitions>

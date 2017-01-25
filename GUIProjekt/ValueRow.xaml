@@ -9,6 +9,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Layout.xaml"/>
                 <ResourceDictionary Source="Skins/DefaultSkin.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <!--Resources som inte ska tillhöra layout förändring läggs här-->

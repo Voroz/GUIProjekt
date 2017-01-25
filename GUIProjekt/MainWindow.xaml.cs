@@ -669,7 +669,7 @@ namespace GUIProjekt
             Enum.TryParse(item.Content.ToString(), out selected);
             if (_currentSkin != selected)
             {
-                this.Resources.MergedDictionaries.Clear();
+                //this.Resources.MergedDictionaries.Add(Application.LoadComponent(new Uri("Skins/DefaultSkin.xaml", UriKind.Relative)) as ResourceDictionary);
                 this.Resources.MergedDictionaries.Add(SkinManager.GetSkin(selected));
                 _currentSkin = selected;
             }
