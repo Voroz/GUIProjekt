@@ -34,8 +34,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryRowLayout}" ></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
+                <Label Style="{StaticResource label}" HorizontalContentAlignment="Right"></Label>
             </Grid>
         </UniformGrid>
 

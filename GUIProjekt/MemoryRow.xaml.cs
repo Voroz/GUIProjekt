@@ -150,8 +150,7 @@ namespace GUIProjekt
             UniformGrid rowNumbers = this.AdressNumber as UniformGrid;
 
             Grid cell = rowNumbers.Children[0] as Grid;
-            Rectangle rect = cell.Children[0] as Rectangle;
-            Label lab = cell.Children[1] as Label;
+            Label lab = cell.Children[0] as Label;
             
             lab.Content = val.ToString();
         }
