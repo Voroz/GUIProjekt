@@ -197,7 +197,13 @@ namespace GUIProjekt
                 assemblerBox.AppendText(assemblyStr);
             }
 
-            _previousLineCount = (byte)assemblerBox.LineCount;
+            // Update deleted lines memory aswell
+            int nrOfDeletedLines = _previousLineCount - mkBox.LineCount;
+            if (nrOfDeletedLines > 0) {
+                updateGUIMemory((byte)mkBox.LineCount, (byte)(mkBox.LineCount + nrOfDeletedLines - 1));
+            }
+
+            _previousLineCount = (byte)mkBox.LineCount;
             assemblerBox.IsReadOnly = false;
         }
 
@@ -253,6 +259,12 @@ namespace GUIProjekt
                     mkStr += '\n';
                 }
                 mkBox.AppendText(mkStr);
+            }
+
+            // Update deleted lines memory aswell
+            int nrOfDeletedLines = _previousLineCount - assemblerBox.LineCount;
+            if (nrOfDeletedLines > 0) {
+                updateGUIMemory((byte)assemblerBox.LineCount, (byte)(assemblerBox.LineCount + nrOfDeletedLines - 1));
             }
 
             _previousLineCount = (byte)assemblerBox.LineCount;
