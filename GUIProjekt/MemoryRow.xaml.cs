@@ -47,6 +47,7 @@ namespace GUIProjekt
             _rowColor = newColor;
             updateColor();
         }
+
         private void updateColor() {
             SolidColorBrush[] br = new SolidColorBrush[2];
             br[0] = new SolidColorBrush();
@@ -67,6 +68,7 @@ namespace GUIProjekt
                 }
             }
         }
+
         public RowColor color() {
             return _rowColor;
         }
@@ -76,8 +78,7 @@ namespace GUIProjekt
          CALL: ShowMemoryAdress()
          TASK: Prints a row of ones and zeros in the memory.
          *****************************************************/
-        public void ShowMemoryAdress(string str)
-        {
+        public void ShowMemoryAdress(string str) {
             SolidColorBrush[] br = new SolidColorBrush[2];
             br[0] = new SolidColorBrush();
             br[1] = new SolidColorBrush();
@@ -86,8 +87,7 @@ namespace GUIProjekt
 
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
-            if (string.IsNullOrWhiteSpace(str))
-            {
+            if (string.IsNullOrWhiteSpace(str)) {
                 for (int i = 0; i < memoryGrid.Children.Count; i++)
                 {
                     Grid cell = memoryGrid.Children[i] as Grid;
@@ -99,16 +99,13 @@ namespace GUIProjekt
                 }
             }
 
-            for (int i = 0; i < str.Length && i < memoryGrid.Children.Count; i++)
-            {
+            for (int i = 0; i < str.Length && i < memoryGrid.Children.Count; i++) {
                 Grid cell = memoryGrid.Children[i] as Grid;
                 Rectangle rect = cell.Children[0] as Rectangle;
                 Label lab = cell.Children[1] as Label;
 
                     
-
-                if (str[i] == '0' || str[i] == '1')
-                {
+                if (str[i] == '0' || str[i] == '1') {
                     lab.Content = str[i];
                     rect.Fill = br[int.Parse(str[i].ToString())];
                 }
@@ -121,15 +118,12 @@ namespace GUIProjekt
          TASK: Clears a row in the memory and colors these 
                squares white.
          *****************************************************/
-        public void ClearMemoryAdress()
-        {
+        public void ClearMemoryAdress() {
             Brush br = Brushes.White;
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
-            for (int ix = 0; ix < 12; ix++)
-            {
-                if (ix < memoryGrid.Children.Count)
-                {
+            for (int ix = 0; ix < 12; ix++) {
+                if (ix < memoryGrid.Children.Count) {
                     Grid cell = memoryGrid.Children[ix] as Grid;
                     Rectangle rect = cell.Children[0] as Rectangle;
                     Label lab = cell.Children[1] as Label;
@@ -145,8 +139,7 @@ namespace GUIProjekt
          CALL: ShowMemoryRowNumber(byte val);
          TASK: Creates this row's numbering.
          *****************************************************/
-        public void ShowMemoryRowNumber(byte val)
-        {
+        public void ShowMemoryRowNumber(byte val) {
             UniformGrid rowNumbers = this.AdressNumber as UniformGrid;
 
             Grid cell = rowNumbers.Children[0] as Grid;

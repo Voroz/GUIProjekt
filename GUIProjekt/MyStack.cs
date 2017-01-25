@@ -54,7 +54,6 @@ namespace GUIProjekt
             return _usedSize;
         }
 
-        
 
         private T[] _arr;
 	    private int _usedSize;

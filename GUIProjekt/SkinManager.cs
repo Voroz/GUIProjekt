@@ -15,15 +15,12 @@ namespace GUIProjekt
 
     class SkinManager
     {
-        public static ResourceDictionary GetSkin(Skins skin)
-        {
+        public static ResourceDictionary GetSkin(Skins skin) {
             return Application.LoadComponent(new Uri(getPath(skin), UriKind.Relative)) as ResourceDictionary;
         }
 
-        private static string getPath(Skins skin)
-        {
-            switch (skin)
-            {
+        private static string getPath(Skins skin) {
+            switch (skin) {
                 default:
                 case Skins.Default:
                     return "Skins/DefaultSkin.xaml";

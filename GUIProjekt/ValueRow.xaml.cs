@@ -33,19 +33,15 @@ namespace GUIProjekt
          CALL: ShowValue();
          TASK: Fills one of the value rows with ones and zeros.
          *****************************************************/
-
-        public void ShowValue(string str)
-        {
+        public void ShowValue(string str) {
             SolidColorBrush[] br = new SolidColorBrush[2];
             br[0] = new SolidColorBrush(Color.FromArgb(255, 2, 132, 130));
             br[1] = new SolidColorBrush(Color.FromArgb(255, 128, 255, 0));
 
             UniformGrid memoryGrid = this.TwelveSquareRow as UniformGrid;
 
-            if (string.IsNullOrWhiteSpace(str))
-            {
-                for (int i = 0; i < memoryGrid.Children.Count; i++)
-                {
+            if (string.IsNullOrWhiteSpace(str)) {
+                for (int i = 0; i < memoryGrid.Children.Count; i++) {
                     Grid cell = memoryGrid.Children[i] as Grid;
                     Rectangle rect = cell.Children[0] as Rectangle;
                     Label lab = cell.Children[1] as Label;
@@ -55,16 +51,14 @@ namespace GUIProjekt
                 }
             }
 
-            for (int i = 0; i < str.Length && i < memoryGrid.Children.Count; i++)
-            {
+            for (int i = 0; i < str.Length && i < memoryGrid.Children.Count; i++) {
                 Grid cell = memoryGrid.Children[i] as Grid;
                 Rectangle rect = cell.Children[0] as Rectangle;
                 Label lab = cell.Children[1] as Label;
 
 
 
-                if (str[i] == '0' || str[i] == '1')
-                {
+                if (str[i] == '0' || str[i] == '1') {
                     lab.Content = str[i];
                     rect.Fill = br[int.Parse(str[i].ToString())];
                 }

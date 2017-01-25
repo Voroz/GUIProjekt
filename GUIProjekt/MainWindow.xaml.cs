@@ -55,18 +55,15 @@ namespace GUIProjekt
          CALL: createMemoryRowNumbers();
          TASK: Displays row numbers for the memory.
         *****************************************************/
-        private void showMemoryRowNumbers()
-        {
-            for (int i = 0; i <= 255; i++)
-            {
+        private void showMemoryRowNumbers() {
+            for (int i = 0; i <= 255; i++) {
                 MemoryRow row = getMMRowOfPosition(255 - i);
                 row.ShowMemoryRowNumber((byte)i);
             }
 
             // TODO: Fixa grafisk stack så den bara visar översta 5 adresser i stacken
             // TODO: Denna for loopen kommer inte visa korrekta radnummer efter det.
-            for (int i = 0; i < 5; i++)
-            {
+            for (int i = 0; i < 5; i++) {
                 MemoryRow stackRow = getStackRowOfPosition(i);
                 stackRow.ShowMemoryRowNumber((byte)(255-i));
             }
@@ -87,8 +84,7 @@ namespace GUIProjekt
                     continue;
                 }
 
-                if (i > 250)
-                {
+                if (i > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - i);
                     changeColor(stackRow);
                     stackRow.ShowMemoryAdress(mkStr);
@@ -180,8 +176,7 @@ namespace GUIProjekt
                     continue;
                 }
 
-                if (!string.IsNullOrWhiteSpace(mkStr))
-                {
+                if (!string.IsNullOrWhiteSpace(mkStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.stringToMachine(mkStr.TrimEnd(trimChars), out bits);
                     _assemblerModel.machineToAssembly(bits, out assemblyStr);                                      
@@ -244,8 +239,7 @@ namespace GUIProjekt
                     continue;
                 }
 
-                if (!string.IsNullOrWhiteSpace(assemblyStr))
-                {
+                if (!string.IsNullOrWhiteSpace(assemblyStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
                     mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');
@@ -309,8 +303,7 @@ namespace GUIProjekt
                 MemoryRow row = getMMRowOfPosition(255 - index);
                 row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
 
-                if (index > 250)
-                {
+                if (index > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - index);
                     changeColor(stackRow);
                     stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
@@ -359,10 +352,8 @@ namespace GUIProjekt
             
         }
 
-        private void OnInputTimerRunElapsed(object source, EventArgs e)
-        {
+        private void OnInputTimerRunElapsed(object source, EventArgs e) {
             programTick();
-            
         }
 
         /******************************************************
@@ -396,10 +387,10 @@ namespace GUIProjekt
         }
 
         // TODO implementera stacken visuellt
-        private MemoryRow getStackRowOfPosition(int pos)
-        {
+        private MemoryRow getStackRowOfPosition(int pos) {
             return theStack.Children[(theStack.Children.Count - 1) - pos] as MemoryRow;
         }
+
         /******************************************************
          CALL: clearMemoryRows(int);
          TASK: Clears the rows of memory that has been removed.
@@ -418,34 +409,15 @@ namespace GUIProjekt
          CALL: When clicking the Open button in the Menu
          TASK: Open a txt file from the directory.
          *****************************************************/
-        private void Open_Click(object sender, RoutedEventArgs e)
-        {
+        private void Open_Click(object sender, RoutedEventArgs e) {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.DefaultExt = ".txt";
             ofd.Filter = "Text Document (.txt)|*.txt";
-            if(ofd.ShowDialog() == true)
-            {
+
+            if(ofd.ShowDialog() == true) {
                 string filename = ofd.FileName;
-                string txt = File.ReadAllText(filename);
-
-                int i = 0;
-
-                while (txt[i] == '\r' || txt[i] == '\n' || txt[i] == ' ' || txt[i] == '\t')
-                {
-                    i++;
-                }
-
-                if (txt[i] == '1' || txt[i] == '0')
-                {
-                    TextBox_MK.Focus();
-                    //TextBox_MK.Text = File.ReadAllText(filename);
-                    TextBox_MK.Text = txt;
-                    return;
-                }
-
                 TextBox_Assembler.Focus();
-                //TextBox_Assembler.Text = File.ReadAllText(filename);
-                TextBox_Assembler.Text = txt;
+                TextBox_Assembler.Text = File.ReadAllText(filename);
             }
         }
 
@@ -453,13 +425,12 @@ namespace GUIProjekt
          CALL: When clicking the Save button in the menu.
          TASK: Saves the inputted assembler code as a .txt file.
          *****************************************************/
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
+        private void Save_Click(object sender, RoutedEventArgs e) {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.DefaultExt = ".txt";
-            sfd.AddExtension = true;           
-            if(sfd.ShowDialog() == true)
-            {
+            sfd.AddExtension = true;      
+     
+            if(sfd.ShowDialog() == true) {
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
             }
         }
@@ -468,11 +439,9 @@ namespace GUIProjekt
          CALL: When clicking the Exit button in the Menu
          TASK: Gives the user a messageBox Yes/No to Exit.
          *****************************************************/
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
+        private void Exit_Click(object sender, RoutedEventArgs e) {
             MessageBoxResult result = MessageBox.Show("Exit the application without saving?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
-            {
+            if (result == MessageBoxResult.Yes) {
                 Application.Current.Shutdown();
             }
         }
@@ -482,8 +451,7 @@ namespace GUIProjekt
          CALL: When clicking the About button in the menu.
          TASK: Displays info about the devolopment.
          *****************************************************/
-        private void About_Click(object sender, RoutedEventArgs e)
-        {
+        private void About_Click(object sender, RoutedEventArgs e) {
             About aboutWin = new About();
 
             double mainLeft = Application.Current.MainWindow.Left;
@@ -500,8 +468,7 @@ namespace GUIProjekt
          TASK: Pauses the run through of the program and enables 
                input in the textboxes again.
          *****************************************************/
-        private void Button_Pause_Click(object sender, RoutedEventArgs e)
-        {
+        private void Button_Pause_Click(object sender, RoutedEventArgs e) {
             TextBox textBoxMK = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             _runTimer.Stop();
@@ -520,7 +487,7 @@ namespace GUIProjekt
                 return;
             }
 
-            if (_assemblerModel.undoStack().Count == 0){
+            if (_assemblerModel.undoStack().Count == 0) {
                 return;
             }
 
@@ -542,8 +509,7 @@ namespace GUIProjekt
                 MemoryRow row = getMMRowOfPosition(255 - index);
                 row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
 
-                if (index > 250)
-                {
+                if (index > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - index);
                     changeColor(stackRow);
                     stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
@@ -617,6 +583,7 @@ namespace GUIProjekt
                 MKTab.FontWeight = FontWeights.Normal;
                 SplitTab.FontWeight = FontWeights.Normal;
             }
+
             else if(Convert.ToBoolean(MKTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Hidden;
                 TextBox_MK.Visibility = Visibility.Visible;
@@ -627,6 +594,7 @@ namespace GUIProjekt
                 AssemblyTab.FontWeight = FontWeights.Normal;
                 SplitTab.FontWeight = FontWeights.Normal;
             }
+
             else if (Convert.ToBoolean(SplitTab.IsChecked)) {
                 TextBox_Assembler.Visibility = Visibility.Visible;
                 TextBox_MK.Visibility = Visibility.Visible;
@@ -651,8 +619,8 @@ namespace GUIProjekt
             ComboBoxItem item = sender as ComboBoxItem;
             Skins selected;
             Enum.TryParse(item.Content.ToString(), out selected);
-            if (_currentSkin != selected)
-            {
+
+            if (_currentSkin != selected) {
                 //this.Resources.MergedDictionaries.Add(Application.LoadComponent(new Uri("Skins/DefaultSkin.xaml", UriKind.Relative)) as ResourceDictionary);
                 this.Resources.MergedDictionaries.Add(SkinManager.GetSkin(selected));
                 _currentSkin = selected;
@@ -663,18 +631,14 @@ namespace GUIProjekt
          CALL: changeColor(row);
          TASK: Updates the color of the Memorys zeros and ones.
         *****************************************************/
-        void changeColor(MemoryRow row)
-        {
-            if (_currentSkin == Skins.Visual)
-            {
+        void changeColor(MemoryRow row) {
+            if (_currentSkin == Skins.Visual) {
                 row.setColor(new RowColor(Color.FromRgb(58, 72, 102), Color.FromRgb(127, 112, 98)));
             }
-            else if (_currentSkin == Skins.Orange)
-            {
+            else if (_currentSkin == Skins.Orange) {
                 row.setColor(new RowColor(Color.FromRgb(255, 234, 180), Color.FromRgb(255, 142, 17)));
             }
-            else
-            {
+            else {
                 row.setColor(new RowColor(Color.FromArgb(255, 2, 132, 130), Color.FromArgb(255, 128, 255, 0)));
             }
         }

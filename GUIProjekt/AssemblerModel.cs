@@ -79,8 +79,7 @@ namespace GUIProjekt
                method in the class and returns true if no bug could 
                be found. 
         *****************************************************/ 
-        public bool SelfTest()
-        {
+        public bool SelfTest() {
 
             // Onödig test
             bool ok = false;
@@ -249,8 +248,7 @@ namespace GUIProjekt
          CALL: reset();
          TASK: Sets the member variables to their initiated value.
         *****************************************************/ 
-        public void reset()
-        {
+        public void reset() {
             _input = 0;
             _output = 0;
             _instructionPtr = 0;
@@ -263,15 +261,15 @@ namespace GUIProjekt
          CALL: resetMemory();
          TASK: Resets the memory.
         *****************************************************/ 
-        public void resetMemory()
-        {
-            for (int i = 0; i < _size; i++)
-            {
+        public void resetMemory() {
+            for (int i = 0; i < _size; i++) {
                 _memory[i] = 0;
             }
+
             while (_memoryStack.size() > 0) {
                 _memoryStack.pop();
             }
+
             while (_undoStack.Count > 0) {
                 _undoStack.Pop();
             }
