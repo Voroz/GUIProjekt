@@ -45,10 +45,10 @@ namespace GUIProjekt
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
 
             // TODO: update instructionPtr
-            ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(12, '0'));
-            ValueRow_Input.ShowValue(Convert.ToString((byte)_assemblerModel.input(), 2).PadLeft(12, '0'));
-            ValueRow_InstructionPointer.ShowValue(Convert.ToString((byte)_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowValue(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
+            ValueRow_Output.ShowValue(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
+            ValueRow_Input.ShowValue(Convert.ToString(_assemblerModel.input(), 2).PadLeft(12, '0'));
+            ValueRow_InstructionPointer.ShowValue(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
         }
 
 
@@ -309,9 +309,9 @@ namespace GUIProjekt
                 }
             }
 
-            ValueRow_InstructionPointer.ShowValue(Convert.ToString((byte)_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-            ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(12, '0'));
+            ValueRow_InstructionPointer.ShowValue(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowValue(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
+            ValueRow_Output.ShowValue(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
         }
         
 
@@ -323,7 +323,7 @@ namespace GUIProjekt
             
             TextBox textBoxMK = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
-            if (!checkSyntaxMachineTextBox(textBoxMK) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
+            if (!checkSyntaxAssemblyTextBox(textBoxAssembler) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
                 return;
             }
 
@@ -363,9 +363,9 @@ namespace GUIProjekt
             _runTimer.Stop();
             _assemblerModel.reset();
             updateGUIMemory(0, 255);
-            ValueRow_InstructionPointer.ShowValue(Convert.ToString((byte)_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-            ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(12, '0'));
+            ValueRow_InstructionPointer.ShowValue(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowValue(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
+            ValueRow_Output.ShowValue(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
             
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
@@ -515,9 +515,9 @@ namespace GUIProjekt
                 }
             }
 
-            ValueRow_InstructionPointer.ShowValue(Convert.ToString((byte)_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-            ValueRow_WorkingRegister.ShowValue(Convert.ToString((byte)_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowValue(Convert.ToString((byte)_assemblerModel.output(), 2).PadLeft(12, '0'));            
+            ValueRow_InstructionPointer.ShowValue(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowValue(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
+            ValueRow_Output.ShowValue(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));            
         }
 
 
@@ -533,7 +533,7 @@ namespace GUIProjekt
 
             TextBox textBoxMK = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
-            if (!checkSyntaxMachineTextBox(textBoxMK) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
+            if (!checkSyntaxAssemblyTextBox(textBoxAssembler) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
                 return;
             }
 

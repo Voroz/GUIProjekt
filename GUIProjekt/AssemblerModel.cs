@@ -410,7 +410,7 @@ namespace GUIProjekt
             string[] splitString = str.Split(' ');
 
             // Special case where length is 1
-            ushort constant;
+            ushort constant = 0;
             if (splitString.Length == 1
                 && (splitString[0] == "IN"
                 || splitString[0] == "OUT"
