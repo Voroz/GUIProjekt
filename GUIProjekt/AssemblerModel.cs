@@ -73,25 +73,6 @@ namespace GUIProjekt
         }
 
 
-        /******************************************************
-         CALL: bool ok = SelfTest();
-         TASK: Used at debugging. The method calls every (testable) 
-               method in the class and returns true if no bug could 
-               be found. 
-        *****************************************************/ 
-        public bool SelfTest() {
-
-            // Onödig test
-            bool ok = false;
-            ok = (_size == _memory.GetLength(0));
-
-            if (!ok) {
-                Debug.Write("SelfTest failed IN GUIProjekt.AssemblerModel: size of _memory was "
-                    + _memory.GetLength(0)
-                    + ", expected " + _size + "\n");
-            }
-            return ok;
-        }
 
         // (stolen) function for extracting an interval of bits from a 16 bit integer
         ushort createMask(ushort a, ushort b) {
@@ -554,6 +535,7 @@ namespace GUIProjekt
             } 
         }
 
+
         public UndoStorage undo() {
             UndoStorage undoValues = _undoStack.Pop();
             _memory = undoValues._memory;
@@ -565,6 +547,53 @@ namespace GUIProjekt
 
             return undoValues;
         }
+
+
+        /******************************************************
+        CALL: bool ok = SelfTest();
+        TASK: Used at debugging. The method calls every (testable) 
+              method in the class and returns true if no bug could 
+              be found. 
+       *****************************************************/
+        public bool SelfTest()
+        {
+
+            // Onödig test
+            bool ok = false;
+            ok = (_size == _memory.GetLength(0));
+
+            if (!ok) {
+                Debug.Write("SelfTest failed in GUIProjekt.AssemblerModel: size of _memory was "  
+                    + _memory.GetLength(0)
+                    + ", expected " + _size + "\n");
+            }
+
+            ok = ok && isBinary("00000000")
+                 && isBinary("11111111")
+                 && isBinary("01010110");
+            System.Diagnostics.Debug.WriteLine("isBinary: " + ok);
+
+            ok = ok && checkSyntaxMachine("000011111111")
+                 && checkSyntaxMachine("001101011111")
+                 && checkSyntaxMachine("100111111111");
+            System.Diagnostics.Debug.WriteLine("checkSyntaxMachine: " + ok);
+
+            ok = ok && checkSyntaxAssembly("ADD 255")
+                 && checkSyntaxAssembly("RETURN")
+                 && checkSyntaxAssembly("CALL 10")
+                 && checkSyntaxAssembly("PJUMP 0");
+            System.Diagnostics.Debug.WriteLine("checkSyntaxAssembly: " + ok);
+
+            ushort machineCode = 0;
+            ok = ok && stringToMachine("000100010001", out machineCode)
+                 && stringToMachine("101011101110", out machineCode)
+                 && stringToMachine("011011110000", out machineCode);
+            System.Diagnostics.Debug.WriteLine("stringToMachine: " + ok);
+
+
+            return ok;
+        }
+
         
         private ushort[] _memory;
         private MyStack<ushort> _memoryStack;
