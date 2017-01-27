@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GUIProjekt;
 using System.Windows.Controls.Primitives;
+using System.Diagnostics;
 
 namespace GUIProjekt
 {
@@ -36,11 +37,13 @@ namespace GUIProjekt
          CALL: ShowMemoryAdress()
          TASK: Prints a row of ones and zeros in the memory.
          *****************************************************/
-        public void ShowMemoryAdress(string str) {
+        public void ShowMemoryAdress(Bit12 val) {
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
-            if (string.IsNullOrWhiteSpace(str)) {
-                str = "000000000000";
+            string str = Convert.ToString(val.value(), 2).PadLeft(12, '0');
+
+            if (str.Length > 12) {
+                str = str.Substring(str.Length - 12);
             }
 
             for (int i = 0; i < str.Length && i < memoryGrid.Children.Count; i++) {

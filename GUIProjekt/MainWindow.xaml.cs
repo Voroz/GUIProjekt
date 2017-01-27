@@ -44,11 +44,10 @@ namespace GUIProjekt
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
 
-            // TODO: update instructionPtr
-            ValueRow_WorkingRegister.ShowMemoryAdress(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowMemoryAdress(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
-            ValueRow_Input.ShowMemoryAdress(Convert.ToString(_assemblerModel.input(), 2).PadLeft(12, '0'));
-            ValueRow_InstructionPointer.ShowMemoryAdress(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
+            ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
+            ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
+            ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
         }
 
 
@@ -83,14 +82,23 @@ namespace GUIProjekt
                     continue;
                 }
 
+                char[] trimChars = new char[2] { '\r', '\n' };
+                mkStr = mkStr.TrimEnd(trimChars);
+
+                short val = 0;
+                if (!string.IsNullOrWhiteSpace(mkStr)) {
+                    val = Convert.ToInt16(mkStr, 2);
+                }
+                Bit12 bit12Val = new Bit12(val);
+
                 if (i > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - i);
                     //changeColor(stackRow);
-                    stackRow.ShowMemoryAdress(mkStr);
+                    stackRow.ShowMemoryAdress(bit12Val);
                 }
 
                 MemoryRow rad = getMMRowOfPosition(255 - i);
-                rad.ShowMemoryAdress(mkStr);
+                rad.ShowMemoryAdress(bit12Val);
             }
         }
 
@@ -165,7 +173,7 @@ namespace GUIProjekt
 
             for (int i = 0; i < mkBox.LineCount; i++) {
                 string mkStr = mkBox.GetLineText(i);
-                ushort bits = 0;
+                Bit12 bits = new Bit12(0);
                 string assemblyStr = "";
 
                 if (!_assemblerModel.checkSyntaxMachine(mkStr)) {
@@ -181,9 +189,13 @@ namespace GUIProjekt
                     _assemblerModel.machineToAssembly(bits, out assemblyStr);                                      
                 }
 
+                short val = 0;
+                short.TryParse(mkStr, out val);
+                Bit12 bit12Val = new Bit12(val);
+
                 MemoryRow row = getMMRowOfPosition(255 - i);
-                //changeColor(row);
-                row.ShowMemoryAdress(mkStr);
+                //changeColor(row);                
+                row.ShowMemoryAdress(bit12Val);
 
                 if (mkStr.Length > 0 && mkStr[mkStr.Length - 1] == '\n') {
                     assemblyStr += '\n';
@@ -193,9 +205,10 @@ namespace GUIProjekt
 
             // Update deleted lines memory aswell
             int nrOfDeletedLines = _previousLineCount - mkBox.LineCount;
-            if (nrOfDeletedLines > 0) {
-                updateGUIMemory((byte)mkBox.LineCount, (byte)(mkBox.LineCount + nrOfDeletedLines - 1));
+            if (nrOfDeletedLines >= 0) {
+                updateGUIMemory((byte)(mkBox.LineCount - 1), (byte)(mkBox.LineCount - 1 + nrOfDeletedLines));
             }
+            updateGUIMemory((byte)0, (byte)(mkBox.LineCount - 1));
 
             _previousLineCount = (byte)mkBox.LineCount;
             assemblerBox.IsReadOnly = false;
@@ -228,7 +241,7 @@ namespace GUIProjekt
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
-                ushort bits = 0;
+                Bit12 bits = new Bit12(0);
                 string mkStr = "";
 
                 if (!_assemblerModel.checkSyntaxAssembly(assemblyStr)) {
@@ -241,12 +254,20 @@ namespace GUIProjekt
                 if (!string.IsNullOrWhiteSpace(assemblyStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
-                    mkStr = Convert.ToString(bits, 2).PadLeft(12, '0');
+                    mkStr = Convert.ToString(bits.value(), 2).PadLeft(12, '0');
+
+                    if (mkStr.Length > 12) {
+                        mkStr = mkStr.Substring(mkStr.Length - 12);
+                    }
                 }
+
+                short val = 0;
+                short.TryParse(mkStr, out val);
+                Bit12 bit12Val = new Bit12(val);
 
                 MemoryRow row = getMMRowOfPosition(255 - i);
                 //changeColor(row);
-                row.ShowMemoryAdress(mkStr);
+                row.ShowMemoryAdress(bit12Val);
 
                 if (assemblyStr.Length > 0 && assemblyStr[assemblyStr.Length - 1] == '\n') {
                     mkStr += '\n';
@@ -256,9 +277,10 @@ namespace GUIProjekt
 
             // Update deleted lines memory aswell
             int nrOfDeletedLines = _previousLineCount - assemblerBox.LineCount;
-            if (nrOfDeletedLines > 0) {
-                updateGUIMemory((byte)assemblerBox.LineCount, (byte)(assemblerBox.LineCount + nrOfDeletedLines - 1));
+            if (nrOfDeletedLines >= 0) {
+                updateGUIMemory((byte)(assemblerBox.LineCount - 1), (byte)(assemblerBox.LineCount - 1 + nrOfDeletedLines));
             }
+            updateGUIMemory((byte)0, (byte)(assemblerBox.LineCount - 1));
 
             _previousLineCount = (byte)assemblerBox.LineCount;
             mkBox.IsReadOnly = false;
@@ -280,11 +302,11 @@ namespace GUIProjekt
 
         void programTick() {
 
-            ushort currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
+            Bit12 currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
             Operations opr;
-            byte val = (byte)_assemblerModel.extractVal(currentAddr);
+            byte val = (byte)_assemblerModel.extractVal(currentAddr.value());
 
-            _assemblerModel.extractOperation(currentAddr, out opr);
+            _assemblerModel.extractOperation(currentAddr.value(), out opr);
 
             _assemblerModel.processCurrentAddr();
 
@@ -297,18 +319,19 @@ namespace GUIProjekt
                 if (opr != Operations.STORE) {
                     index++;
                 }
+
                 MemoryRow row = getMMRowOfPosition(255 - index);
-                row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                row.ShowMemoryAdress(_assemblerModel.getAddr(index));
 
                 if (index > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - index);
-                    stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                    stackRow.ShowMemoryAdress(_assemblerModel.getAddr(index));
                 }
             }
 
-            ValueRow_InstructionPointer.ShowMemoryAdress(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-            ValueRow_WorkingRegister.ShowMemoryAdress(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowMemoryAdress(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
+            ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
+            ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
         }
         
 
@@ -332,11 +355,11 @@ namespace GUIProjekt
             for (byte i = 0; i < textBoxMK.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBoxMK.GetLineText(i).TrimEnd(trimChars);
-                ushort bits = 0;
+                Bit12 bits = new Bit12(0);
 
                 // Empty lines to create space are fine
                 if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
-                    _assemblerModel.setAddr(i, 0);
+                    _assemblerModel.setAddr(i, new Bit12(0));
                     continue;
                 }
 
@@ -360,9 +383,10 @@ namespace GUIProjekt
             _runTimer.Stop();
             _assemblerModel.reset();
             updateGUIMemory(0, 255);
-            ValueRow_InstructionPointer.ShowMemoryAdress(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-            ValueRow_WorkingRegister.ShowMemoryAdress(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowMemoryAdress(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
+
+            ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
+            ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
+            ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
             
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
@@ -475,9 +499,9 @@ namespace GUIProjekt
             }
 
             UndoStorage undoValues = _assemblerModel.undo();
-            ushort currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
+            Bit12 currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
             Operations opr = Operations.LOAD;
-            _assemblerModel.extractOperation(currentAddr, out opr);
+            _assemblerModel.extractOperation(currentAddr.value(), out opr);
 
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
@@ -490,18 +514,18 @@ namespace GUIProjekt
                 }
 
                 MemoryRow row = getMMRowOfPosition(255 - index);
-                row.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                row.ShowMemoryAdress(_assemblerModel.getAddr(index));
 
                 if (index > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - index);
                     //changeColor(stackRow);
-                    stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
+                    stackRow.ShowMemoryAdress(_assemblerModel.getAddr(index));
                 }
             }
 
-            ValueRow_InstructionPointer.ShowMemoryAdress(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-            ValueRow_WorkingRegister.ShowMemoryAdress(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowMemoryAdress(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));            
+            ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
+            ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
+            ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
         }
 
 
@@ -529,11 +553,11 @@ namespace GUIProjekt
             for (byte i = 0; i < textBoxMK.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBoxMK.GetLineText(i).TrimEnd(trimChars);
-                ushort bits = 0;
+                Bit12 bits = new Bit12(0);
 
                 // Empty lines to create space are fine
                 if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
-                    _assemblerModel.setAddr(i, 0);
+                    _assemblerModel.setAddr(i, new Bit12(0));
                     continue;
                 }
 

@@ -29,14 +29,14 @@ namespace GUIProjekt
     }
 
     struct UndoStorage {
-        public UndoStorage(ushort[] memory
-            , MyStack<ushort> memoryStack
+        public UndoStorage(Bit12[] memory
+            , MyStack<Bit12> memoryStack
             , byte instructionPtr
-            , ushort workingRegister
-            , ushort input
-            , ushort output) {
-                _memory = new ushort[memory.Length];
-                _memoryStack = new MyStack<ushort>(_memory);
+            , Bit12 workingRegister
+            , Bit12 input
+            , Bit12 output) {
+                _memory = new Bit12[memory.Length];
+                _memoryStack = new MyStack<Bit12>(_memory);
                 Array.Copy(memory, _memory, memory.Length);
                 for (int i = 0; i < memoryStack.size(); i++) {
                     _memoryStack.push(_memory[255 - i]);
@@ -47,12 +47,12 @@ namespace GUIProjekt
                 _output = output;
         }
 
-        public ushort[] _memory;
-        public MyStack<ushort> _memoryStack;
+        public Bit12[] _memory;
+        public MyStack<Bit12> _memoryStack;
         public byte _instructionPtr;
-        public ushort _workingRegister;
-        public ushort _input;
-        public ushort _output;
+        public Bit12 _workingRegister;
+        public Bit12 _input;
+        public Bit12 _output;
     }
 
     class AssemblerModel
@@ -60,13 +60,16 @@ namespace GUIProjekt
         public AssemblerModel()
         {
             _size = 256; // Leave this at 256 (many of our attributes are 8 bit)
-            _memory = new ushort[_size];
-            _memoryStack = new MyStack<ushort>(_memory);
+            _memory = new Bit12[_size];
+            for (int i = 0; i < _size; i++) {
+                _memory[i] = new Bit12(0);
+            }
+            _memoryStack = new MyStack<Bit12>(_memory);
             _undoStack = new Stack<UndoStorage>();
             _instructionPtr = 0;
-            _workingRegister = 0;
-            _input = 0;
-            _output = 0;
+            _workingRegister = new Bit12(0);
+            _input = new Bit12(0);
+            _output = new Bit12(0);
             _executionDelay = 200;
 
             resetMemory();
@@ -75,21 +78,21 @@ namespace GUIProjekt
 
 
         // (stolen) function for extracting an interval of bits from a 16 bit integer
-        ushort createMask(ushort a, ushort b) {
-            ushort r = 0;
-            for (ushort i = a; i <= b; i++)
-                r |= (ushort)(1 << i);
+        short createMask(short a, short b) {
+            short r = 0;
+            for (short i = a; i <= b; i++)
+                r |= (short)(1 << i);
 
             return r;
         }
 
-        ushort extractValFromBits(byte a, byte b, ushort bits) {
-            ushort mask = (ushort)(createMask(a, b) & bits);
-            ushort val = (ushort)(mask >> a);
+        short extractValFromBits(byte a, byte b, short bits) {
+            short mask = (short)(createMask(a, b) & bits);
+            short val = (short)(mask >> a);
             return val;
         }
 
-        public bool extractOperation(ushort bits, out Operations opr) {
+        public bool extractOperation(short bits, out Operations opr) {
             byte oprVal = (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits);
             if (!Enum.IsDefined(typeof(Operations), oprVal)) {
                 opr = Operations.LOAD;
@@ -99,7 +102,7 @@ namespace GUIProjekt
             return true;
         }
 
-        public byte extractVal(ushort bits) {
+        public byte extractVal(short bits) {
             return (byte)extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
         }
 
@@ -115,21 +118,21 @@ namespace GUIProjekt
             return binary;
         }
 
-        public bool stringToMachine(string str, out ushort machineCode) {
+        public bool stringToMachine(string str, out Bit12 machineCode) {
             if (string.IsNullOrWhiteSpace(str)) {
-                machineCode = 0;
+                machineCode = new Bit12(0);
                 return true;
             }
 
             bool binary = isBinary(str);
 
             if (binary) {
-                machineCode = Convert.ToUInt16(str, 2);                
+                machineCode = new Bit12(Convert.ToInt16(str, 2));
                 return true;
             }
             else {
                 if (!assemblyToMachine(str, out machineCode)) {
-                    machineCode = 0;
+                    machineCode = new Bit12(0);
                     return false;
                 }
 
@@ -137,9 +140,9 @@ namespace GUIProjekt
             }
         }
 
-        public bool machineToAssembly(ushort bits, out string assemblyCode) {
+        public bool machineToAssembly(Bit12 bits, out string assemblyCode) {
             Operations opr;
-            if (!extractOperation(bits, out opr)) {
+            if (!extractOperation(bits.value(), out opr)) {
                 assemblyCode = "";
                 return false;
             }
@@ -153,24 +156,30 @@ namespace GUIProjekt
             }
 
             // Otherwise read the value aswell
-            byte addr = extractVal(bits);
+            byte addr = extractVal(bits.value());
             assemblyCode += " " + addr;
             return true;
         }
 
-        public bool assemblyToMachine(string assemblyString, out ushort machineCode) {
+        public bool assemblyToMachine(string assemblyString, out Bit12 machineCode) {
             string[] splitString = assemblyString.Split(' ');
 
             // Special case where length is 1 and is a constant(number)
-            if (splitString.Length == 1
-                && ushort.TryParse(splitString[0], out machineCode)
+            if (splitString.Length == 1){
+                short val = 0;
+                if (short.TryParse(splitString[0], out val)
                 ) {
-                return true;
+                    machineCode = new Bit12(val);
+                    if (val < -2048 || val > 2047) {
+                        return false;
+                    }                    
+                    return true;
+                }
             }
 
             Operations opr;
             if (!Enum.TryParse(splitString[0], false, out opr)) {
-                machineCode = 0;
+                machineCode = new Bit12(0);
                 return false;
             }
 
@@ -180,7 +189,7 @@ namespace GUIProjekt
                 || splitString[0] == "OUT"
                 || splitString[0] == "RETURN")
                 ) {
-                    machineCode = (ushort)((ushort)opr << Constants.StartOprBit);
+                    machineCode = new Bit12((short)((short)opr << Constants.StartOprBit));
                     return true;
             }
 
@@ -189,19 +198,19 @@ namespace GUIProjekt
                 || splitString[0] == "OUT"
                 || splitString[0] == "RETURN")
                 ) {
-                    machineCode = 0;
+                    machineCode = new Bit12(0);
                     return false;
             }
 
             byte addr = 0;
             if (!byte.TryParse(splitString[1], out addr)) {
-                machineCode = 0;
+                machineCode = new Bit12(0);
                 return false;
             }
 
-            machineCode = (ushort)opr;
-            machineCode = (ushort)(machineCode << Constants.StartOprBit);
-            machineCode += addr;
+            machineCode = new Bit12((short)opr);
+            machineCode = new Bit12((short)(machineCode.value() << Constants.StartOprBit));
+            machineCode += new Bit12(addr);
             return true;
         }
 
@@ -210,7 +219,7 @@ namespace GUIProjekt
          CALL: ushort workingReg = workingRegister();
          TASK: Returns the working register.
         *****************************************************/ 
-        public ushort workingRegister() {
+        public Bit12 workingRegister() {
             return _workingRegister;
         }
 
@@ -219,8 +228,8 @@ namespace GUIProjekt
          CALL: ushort currentValue = currentAddr();
          TASK: Returns the value of the adress in the memory
                where the instruction pointer is currently at.
-        *****************************************************/ 
-        public ushort currentAddr() {
+        *****************************************************/
+        public Bit12 currentAddr() {
             return _memory[_instructionPtr];
         }
 
@@ -230,10 +239,10 @@ namespace GUIProjekt
          TASK: Sets the member variables to their initiated value.
         *****************************************************/ 
         public void reset() {
-            _input = 0;
-            _output = 0;
+            _input = new Bit12(0);
+            _output = new Bit12(0);
             _instructionPtr = 0;
-            _workingRegister = 0;
+            _workingRegister = new Bit12(0);
             resetMemory();
         }
 
@@ -244,7 +253,7 @@ namespace GUIProjekt
         *****************************************************/ 
         public void resetMemory() {
             for (int i = 0; i < _size; i++) {
-                _memory[i] = 0;
+                _memory[i] = new Bit12(0);
             }
 
             while (_memoryStack.size() > 0) {
@@ -276,7 +285,7 @@ namespace GUIProjekt
             return _instructionPtr;
         }
 
-        public ushort input() {
+        public Bit12 input() {
             return _input;
         }
 
@@ -284,19 +293,19 @@ namespace GUIProjekt
          CALL: setInput(ushort);
          TASK: Sets input.
          *****************************************************/
-        public void setInput(ushort input) {
+        public void setInput(Bit12 input) {
             _input = input;
         }
 
-        public ushort output() {
+        public Bit12 output() {
             return _output;
         }
 
-        public void setOutput(ushort output) {
+        public void setOutput(Bit12 output) {
             _output = output;
         }
 
-        public MyStack<ushort> stack()
+        public MyStack<Bit12> stack()
         {
             return _memoryStack;
         }
@@ -309,8 +318,8 @@ namespace GUIProjekt
          CALL: ushort addr = getAddr(byte);
          TASK: Returns the value in the memory of the parameter 
                value.
-        *****************************************************/ 
-        public ushort getAddr(byte idx) {
+        *****************************************************/
+        public Bit12 getAddr(byte idx) {
             Debug.Assert(idx >= 0 && idx < _size);
             return _memory[idx];
         }
@@ -320,7 +329,7 @@ namespace GUIProjekt
          CALL: setAddr(byte, ushort);
          TASK: Sets position "byte" in memory to value "ushort".
         *****************************************************/ 
-        public void setAddr(byte idx, ushort val) {
+        public void setAddr(byte idx, Bit12 val) {
             Debug.Assert(idx >= 0 && idx < _size);
             _memory[idx] = val;
         }
@@ -360,13 +369,8 @@ namespace GUIProjekt
                 return false;
             }
 
-            ushort bits;
+            Bit12 bits;
             if (!stringToMachine(str, out bits)) {
-                return false;
-            }
-
-            Operations opr;
-            if (!extractOperation(bits, out opr)) {
                 return false;
             }
 
@@ -390,13 +394,23 @@ namespace GUIProjekt
 
             string[] splitString = str.Split(' ');
 
+            // Special case where length is 1 and is a constant(number)
+            if (splitString.Length == 1) {
+                short val = 0;
+                if (short.TryParse(splitString[0], out val)
+                ) {
+                    if (val < -2048 || val > 2047) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+
             // Special case where length is 1
-            ushort constant = 0;
             if (splitString.Length == 1
                 && (splitString[0] == "IN"
                 || splitString[0] == "OUT"
                 || splitString[0] == "RETURN")
-                || (ushort.TryParse(splitString[0], out constant) && constant < 4096)
                 ) {
                 return true;
             }
@@ -426,10 +440,10 @@ namespace GUIProjekt
             return true;
         }
 
-        public bool addrIdxToUpdate(ushort command, out byte idx) {
-            byte val = (byte)extractVal(command);
+        public bool addrIdxToUpdate(Bit12 command, out byte idx) {
+            byte val = (byte)extractVal(command.value());
             Operations opr = Operations.LOAD;
-            bool success = extractOperation(command, out opr);
+            bool success = extractOperation(command.value(), out opr);
             Debug.Assert(success);
 
             switch (opr) {
@@ -462,11 +476,11 @@ namespace GUIProjekt
                corresponding function.
         *****************************************************/
         public void processCurrentAddr() {
-            ushort current = _memory[_instructionPtr];
+            Bit12 current = _memory[_instructionPtr];
             Operations opr = Operations.LOAD;            
-            byte addr = (byte)extractVal(current);
+            byte addr = (byte)extractVal(current.value());
 
-            bool success = extractOperation(current, out opr);
+            bool success = extractOperation(current.value(), out opr);
             Debug.Assert(success);
 
             _undoStack.Push(new UndoStorage(_memory, _memoryStack, _instructionPtr, _workingRegister, _input, _output));
@@ -503,7 +517,7 @@ namespace GUIProjekt
                 } break;
 
                 case Operations.PJUMP: {
-                    if (_workingRegister > 0) {
+                    if (_workingRegister > new Bit12(0)) {
                         _instructionPtr = addr;
                     }
                 } break;
@@ -520,12 +534,12 @@ namespace GUIProjekt
 
                 case Operations.CALL: {
                     _instructionPtr++;
-                    _memoryStack.push(_instructionPtr);
+                    _memoryStack.push(new Bit12(_instructionPtr));
                     _instructionPtr = addr;                    
                 } break;
 
                 case Operations.RETURN: {
-                    _instructionPtr = (byte)_memoryStack.top();                    
+                    _instructionPtr = (byte)_memoryStack.top().value();                    
                     _memoryStack.pop();
                 } break;
 
@@ -584,7 +598,7 @@ namespace GUIProjekt
                  && checkSyntaxAssembly("PJUMP 0");
             System.Diagnostics.Debug.WriteLine("checkSyntaxAssembly: " + ok);
 
-            ushort machineCode = 0;
+            Bit12 machineCode = new Bit12(0);
             ok = ok && stringToMachine("000100010001", out machineCode)
                  && stringToMachine("101011101110", out machineCode)
                  && stringToMachine("011011110000", out machineCode);
@@ -594,14 +608,14 @@ namespace GUIProjekt
             return ok;
         }
 
-        
-        private ushort[] _memory;
-        private MyStack<ushort> _memoryStack;
+
+        private Bit12[] _memory;
+        private MyStack<Bit12> _memoryStack;
         private Stack<UndoStorage> _undoStack;
         private byte _instructionPtr;
-        private ushort _workingRegister;
-        private ushort _input;
-        private ushort _output;
+        private Bit12 _workingRegister;
+        private Bit12 _input;
+        private Bit12 _output;
         private readonly int _size;
         private int _executionDelay;
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GUIProjekt
 {
-    class Bit12
+    public class Bit12
     {
         public Bit12(short val) {
             _bit12Val = convertTo12Bit(val);
@@ -21,6 +21,16 @@ namespace GUIProjekt
         public static Bit12 operator -(Bit12 a, Bit12 b)
         {
             Bit12 newBit12 = new Bit12((short)(a.value() - b.value()));
+            return newBit12;
+        }
+
+        public static Bit12 operator *(Bit12 a, Bit12 b) {
+            Bit12 newBit12 = new Bit12((short)(a.value() * b.value()));
+            return newBit12;
+        }
+
+        public static Bit12 operator /(Bit12 a, Bit12 b) {
+            Bit12 newBit12 = new Bit12((short)(a.value() / b.value()));
             return newBit12;
         }
 
