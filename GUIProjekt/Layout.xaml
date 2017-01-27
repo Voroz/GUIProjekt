@@ -83,7 +83,7 @@
     <Style x:Key="TextBoxAssembler" TargetType="TextBox">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="Height" Value="Auto"/>
-        <Setter Property="FontSize" Value="19.515"/>
+        <Setter Property="FontSize" Value="20.262"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
@@ -96,7 +96,7 @@
         <Setter Property="Padding" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Height" Value="Auto"/>
-        <Setter Property="FontSize" Value="19.515"/>
+        <Setter Property="FontSize" Value="20.262"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
