@@ -56,6 +56,7 @@
     <Compile Include="About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Bit12.cs" />
     <Compile Include="MyStack.cs" />
     <Compile Include="RowMarker.xaml.cs">
       <DependentUpon>RowMarker.xaml</DependentUpon>
