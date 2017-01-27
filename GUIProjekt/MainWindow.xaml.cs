@@ -32,7 +32,6 @@ namespace GUIProjekt
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
             showMemoryRowNumbers();
-            clearMemoryRows(0, 255);
             updateGUIMemory(0, 255);
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -46,10 +45,10 @@ namespace GUIProjekt
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
 
             // TODO: update instructionPtr
-            ValueRow_WorkingRegister.ShowValue(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowValue(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
-            ValueRow_Input.ShowValue(Convert.ToString(_assemblerModel.input(), 2).PadLeft(12, '0'));
-            ValueRow_InstructionPointer.ShowValue(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowMemoryAdress(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
+            ValueRow_Output.ShowMemoryAdress(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
+            ValueRow_Input.ShowMemoryAdress(Convert.ToString(_assemblerModel.input(), 2).PadLeft(12, '0'));
+            ValueRow_InstructionPointer.ShowMemoryAdress(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
         }
 
 
@@ -86,7 +85,7 @@ namespace GUIProjekt
 
                 if (i > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - i);
-                    changeColor(stackRow);
+                    //changeColor(stackRow);
                     stackRow.ShowMemoryAdress(mkStr);
                 }
 
@@ -183,7 +182,7 @@ namespace GUIProjekt
                 }
 
                 MemoryRow row = getMMRowOfPosition(255 - i);
-                changeColor(row);
+                //changeColor(row);
                 row.ShowMemoryAdress(mkStr);
 
                 if (mkStr.Length > 0 && mkStr[mkStr.Length - 1] == '\n') {
@@ -246,7 +245,7 @@ namespace GUIProjekt
                 }
 
                 MemoryRow row = getMMRowOfPosition(255 - i);
-                changeColor(row);
+                //changeColor(row);
                 row.ShowMemoryAdress(mkStr);
 
                 if (assemblyStr.Length > 0 && assemblyStr[assemblyStr.Length - 1] == '\n') {
@@ -303,14 +302,13 @@ namespace GUIProjekt
 
                 if (index > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - index);
-                    changeColor(stackRow);
                     stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
                 }
             }
 
-            ValueRow_InstructionPointer.ShowValue(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-            ValueRow_WorkingRegister.ShowValue(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowValue(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
+            ValueRow_InstructionPointer.ShowMemoryAdress(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowMemoryAdress(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
+            ValueRow_Output.ShowMemoryAdress(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
         }
         
 
@@ -362,9 +360,9 @@ namespace GUIProjekt
             _runTimer.Stop();
             _assemblerModel.reset();
             updateGUIMemory(0, 255);
-            ValueRow_InstructionPointer.ShowValue(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-            ValueRow_WorkingRegister.ShowValue(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowValue(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
+            ValueRow_InstructionPointer.ShowMemoryAdress(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowMemoryAdress(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
+            ValueRow_Output.ShowMemoryAdress(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));
             
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
@@ -387,19 +385,6 @@ namespace GUIProjekt
         // TODO implementera stacken visuellt
         private MemoryRow getStackRowOfPosition(int pos) {
             return theStack.Children[(theStack.Children.Count - 1) - pos] as MemoryRow;
-        }
-
-        /******************************************************
-         CALL: clearMemoryRows(int);
-         TASK: Clears the rows of memory that has been removed.
-         *****************************************************/
-        private void clearMemoryRows(byte from, byte to) {
-            // Debug.Assert(from < memLineCount && to < memLineCount);
-            for (int i = from; i <= to; i++) {
-                getMMRowOfPosition(255 - i).ClearMemoryAdress();
-                if(i>250)
-                getStackRowOfPosition(255 - i).ClearMemoryAdress();
-            }
         }
 
         
@@ -509,14 +494,14 @@ namespace GUIProjekt
 
                 if (index > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - index);
-                    changeColor(stackRow);
+                    //changeColor(stackRow);
                     stackRow.ShowMemoryAdress(Convert.ToString(_assemblerModel.getAddr(index), 2).PadLeft(12, '0'));
                 }
             }
 
-            ValueRow_InstructionPointer.ShowValue(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
-            ValueRow_WorkingRegister.ShowValue(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
-            ValueRow_Output.ShowValue(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));            
+            ValueRow_InstructionPointer.ShowMemoryAdress(Convert.ToString(_assemblerModel.instructionPtr(), 2).PadLeft(12, '0'));
+            ValueRow_WorkingRegister.ShowMemoryAdress(Convert.ToString(_assemblerModel.workingRegister(), 2).PadLeft(12, '0'));
+            ValueRow_Output.ShowMemoryAdress(Convert.ToString(_assemblerModel.output(), 2).PadLeft(12, '0'));            
         }
 
 
@@ -615,41 +600,37 @@ namespace GUIProjekt
         *****************************************************/
         private void changeSkinEvent(object sender, RoutedEventArgs e) {
             ComboBoxItem item = sender as ComboBoxItem;
+
+            if (!item.IsFocused)
+                return;
+
             Skins selected;
             Enum.TryParse(item.Content.ToString(), out selected);
+            ResourceDictionary selectedDictionary = SkinManager.GetSkin(selected);
+            this.Resources.MergedDictionaries.Add(selectedDictionary);
 
-            if (_currentSkin != selected) {
-                //this.Resources.MergedDictionaries.Add(Application.LoadComponent(new Uri("Skins/DefaultSkin.xaml", UriKind.Relative)) as ResourceDictionary);
-                this.Resources.MergedDictionaries.Add(SkinManager.GetSkin(selected));
-                _currentSkin = selected;
-            }
-        }
 
-        /******************************************************
-         CALL: changeColor(row);
-         TASK: Updates the color of the Memorys zeros and ones.
-        *****************************************************/
-        void changeColor(MemoryRow row) {
-            if (_currentSkin == Skins.Visual) {
-                row.setColor(new RowColor(Color.FromRgb(58, 72, 102), Color.FromRgb(127, 112, 98)));
+            for (int i = 0; i <= 255; i++) {
+                getMMRowOfPosition(255 - i).ChangeSkin(selectedDictionary);
             }
-            else if (_currentSkin == Skins.Orange) {
-                row.setColor(new RowColor(Color.FromRgb(255, 234, 180), Color.FromRgb(255, 142, 17)));
+
+            for (int i = 0; i < 5; i++) {
+                getStackRowOfPosition(i).ChangeSkin(selectedDictionary);
             }
-            else {
-                row.setColor(new RowColor(Color.FromArgb(255, 2, 132, 130), Color.FromArgb(255, 128, 255, 0)));
-            }
+
+            ValueRow_InstructionPointer.ChangeSkin(selectedDictionary);
+            ValueRow_Input.ChangeSkin(selectedDictionary);
+            ValueRow_Output.ChangeSkin(selectedDictionary);
+            ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
 
         
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
         private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
-        private Skins _currentSkin = Skins.Default;
 
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
-
     }
 }

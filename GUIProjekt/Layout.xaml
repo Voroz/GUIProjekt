@@ -111,20 +111,25 @@
         <Setter Property="Foreground" Value="{DynamicResource fontColor}"/>
     </Style>
 
+    
+
+
+
     <!-- MemoryGrid label -->
     <Style x:Key="label" TargetType="{x:Type Label}">
         <Setter Property="Width" Value="Auto" />
         <Setter Property="Height" Value="Auto" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <!--Lägger man viewbox här blir Minnet skalbart-->
-                    <ContentPresenter Content="{TemplateBinding Content}" />
-
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="BorderThickness" Value="0.5" />
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Value="0">
+                <Setter Property="Background" Value="{DynamicResource zeroColor}"></Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Value="1">
+                <Setter Property="Background" Value="{DynamicResource oneColor}"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     
     

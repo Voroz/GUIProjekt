@@ -10,6 +10,9 @@
     <Brush x:Key="MenuColor2">#3a4866</Brush>
     <Brush x:Key="fontColor">#FFFF</Brush>
     <Brush x:Key="fontColorFileMenu">#000000</Brush>
-    
-   
+
+    <!-- MEMORY ROW COLORS -->
+    <Brush x:Key="zeroColor">#3A4866</Brush>
+    <Brush x:Key="oneColor">#7F7062</Brush>
+
 </ResourceDictionary>

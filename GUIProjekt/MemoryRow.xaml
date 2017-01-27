@@ -31,139 +31,23 @@
 
         <!--RowNumbers grid-->
         <UniformGrid Name="AdressNumber" Rows="1" Columns="1" Grid.Column="0" Margin="0,0,5,0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Label Style="{StaticResource label}" HorizontalContentAlignment="Right"></Label>
-            </Grid>
+            <Label HorizontalContentAlignment="Right" BorderThickness="0"></Label>
         </UniformGrid>
 
         <!--Memory grid 12 columns-->
         <UniformGrid Name="BinaryMemoryAdress" Rows="1" Columns="12" Grid.Column="1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid Margin="0,0,2,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource MemoryGridLayout}"></Rectangle>
-                <Label Style="{StaticResource label}"></Label>
-            </Grid>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
+            <Label Style="{StaticResource label}"></Label>
         </UniformGrid>        
     </Grid>
     

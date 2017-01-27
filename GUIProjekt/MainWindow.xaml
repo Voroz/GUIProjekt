@@ -131,22 +131,22 @@
 
                 <Label Grid.Row="0">Instruction Pointer</Label>
                 <Viewbox Grid.Row="0">
-                    <local:ValueRow x:Name="ValueRow_InstructionPointer"></local:ValueRow>
+                    <local:MemoryRow x:Name="ValueRow_InstructionPointer"></local:MemoryRow>
                 </Viewbox>
 
                 <Label Grid.Row="1">Working Register</Label>
                 <Viewbox Grid.Row="1">
-                    <local:ValueRow x:Name="ValueRow_WorkingRegister"></local:ValueRow>
+                    <local:MemoryRow x:Name="ValueRow_WorkingRegister"></local:MemoryRow>
                 </Viewbox>
                 
                 <Label Grid.Row="2">Input</Label>
                 <Viewbox Grid.Row="2">
-                    <local:ValueRow x:Name="ValueRow_Input"></local:ValueRow>
+                    <local:MemoryRow x:Name="ValueRow_Input"></local:MemoryRow>
                 </Viewbox>
                 
                 <Label Grid.Row="3">Output</Label>
                 <Viewbox Grid.Row="3">
-                    <local:ValueRow x:Name="ValueRow_Output"></local:ValueRow>
+                    <local:MemoryRow x:Name="ValueRow_Output"></local:MemoryRow>
                 </Viewbox>
             </Grid>
             <!-- IP, IN, OUT, WR    END -->
