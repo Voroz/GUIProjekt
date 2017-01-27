@@ -590,6 +590,8 @@ namespace GUIProjekt
                  && stringToMachine("011011110000", out machineCode);
             System.Diagnostics.Debug.WriteLine("stringToMachine: " + ok);
 
+            
+
 
             return ok;
         }
