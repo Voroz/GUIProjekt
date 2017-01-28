@@ -451,7 +451,7 @@
             </Grid.ColumnDefinitions>
 
             <Viewbox Grid.Column="0">
-                <Image Source="images/bulboff.png"></Image>
+                <Image x:Name="bulb" Source="images/bulboff.png"></Image>
             </Viewbox>
 
 

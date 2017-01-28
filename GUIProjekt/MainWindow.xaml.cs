@@ -333,7 +333,28 @@ namespace GUIProjekt
 
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
+
+            //TODO testade att tända lampan om output är över 0
+            short lightup = 0;
+            if(_assemblerModel.output().value() > (short)lightup)
+                lightBulb("bulbon");
+            else
+                lightBulb("bulboff");
+            ////////////////////////////////////////////////////
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
+        }
+
+        //TODO Test för lampan
+        void lightBulb(String imagename)
+        {
+            var uriSource = new Uri(@"/GUIProjekt;component/images/"+imagename+".png", UriKind.Relative);
+            bulb.Source = new BitmapImage(uriSource);
+        }
+        //TODO Test för lampan
+        void lightBulb()
+        {
+            var uriSource = new Uri(@"/GUIProjekt;component/images/bulboff.png", UriKind.Relative);
+            bulb.Source = new BitmapImage(uriSource);
         }
 
         /******************************************************
@@ -430,6 +451,7 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
             clearUserMsg();
+            lightBulb();
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;
