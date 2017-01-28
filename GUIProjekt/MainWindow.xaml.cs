@@ -380,6 +380,9 @@ namespace GUIProjekt
                 return false;
             }
 
+            TextBox_Assembler.IsReadOnly = true;
+            TextBox_MK.IsReadOnly = true;
+
             clearUserMsg();
 
             return true;
@@ -391,7 +394,9 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Run_Click(object sender, RoutedEventArgs e) 
         {
-            InitProgramStart();
+            if (!InitProgramStart()) {
+                return;
+            }
             _runTimer.Start();          
         }
 
@@ -406,7 +411,9 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_StepForward_Click(object sender, RoutedEventArgs e)
         {
-            InitProgramStart();
+            if (!InitProgramStart()) {
+                return;
+            }
             programTick();
         }
 
