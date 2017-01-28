@@ -136,6 +136,7 @@ namespace GUIProjekt
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
                 if (!_assemblerModel.checkSyntaxAssembly(str)) {
+                    errorCode("Syntax error row "+ i +" " + str +" not a valid command \n");
                     return false;
                 }             
             }
