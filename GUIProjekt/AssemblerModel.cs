@@ -234,7 +234,7 @@ namespace GUIProjekt
 
 
         /******************************************************
-         CALL: ushort workingReg = workingRegister();
+         CALL: Bit12 workingReg = workingRegister();
          TASK: Returns the working register.
         *****************************************************/ 
         public Bit12 workingRegister() {
@@ -243,7 +243,7 @@ namespace GUIProjekt
 
 
         /******************************************************
-         CALL: ushort currentValue = currentAddr();
+         CALL: Bit12 currentValue = currentAddr();
          TASK: Returns the value of the adress in the memory
                where the instruction pointer is currently at.
         *****************************************************/
@@ -349,7 +349,7 @@ namespace GUIProjekt
         }
 
         /******************************************************
-         CALL: ushort addr = getAddr(byte);
+         CALL: Bit12 addr = getAddr(byte);
          TASK: Returns the value in the memory of the parameter 
                value.
         *****************************************************/
@@ -605,7 +605,6 @@ namespace GUIProjekt
        *****************************************************/
         public bool SelfTest()
         {
-
             // Onödig test
             bool ok = false;
             ok = (_size == _memory.GetLength(0));
@@ -623,10 +622,16 @@ namespace GUIProjekt
 
             ok = ok && checkSyntaxMachine("000011111111")
                  && checkSyntaxMachine("001101011111")
-                 && checkSyntaxMachine("100111111111");
+                 && checkSyntaxMachine("100111111111")
+                 && checkSyntaxMachine("111100000000");
             System.Diagnostics.Debug.WriteLine("checkSyntaxMachine: " + ok);
 
-            ok = ok && checkSyntaxAssembly("ADD 255")
+            ok = ok && checkSyntaxAssembly("LOAD 0")
+                 && checkSyntaxAssembly("STORE 48")
+                 && checkSyntaxAssembly("SUB 5")
+                 && checkSyntaxAssembly("IN")
+                 && checkSyntaxAssembly("OUT")
+                 && checkSyntaxAssembly("ADD 255")
                  && checkSyntaxAssembly("RETURN")
                  && checkSyntaxAssembly("CALL 10")
                  && checkSyntaxAssembly("PJUMP 0");
