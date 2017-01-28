@@ -632,6 +632,13 @@ namespace GUIProjekt
 
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
+            //TODO testade att tända lampan om output är över 0
+            short lightup = 0;
+            if (_assemblerModel.output().value() > (short)lightup)
+                lightBulb("bulbon");
+            else
+                lightBulb("bulboff");
+            ////////////////////////////////////////////////////
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
         }
 
