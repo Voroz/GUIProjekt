@@ -454,13 +454,13 @@
             
 
 
-            <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1">
+            <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1" >
                 <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
 
                         <Viewbox Grid.Column="0">
@@ -476,9 +476,13 @@
                         <Viewbox Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="200">
 
                         </Viewbox>
-                        <Viewbox Grid.Column="2" HorizontalAlignment="Stretch" MinWidth="200">
-
-                        </Viewbox>
+                        <ScrollViewer Grid.Column="2" HorizontalAlignment="Stretch" MinWidth="200" MaxHeight="100">
+                            <Viewbox>
+                                <TextBlock Name="textBoxError" Foreground="Red" Padding="5"></TextBlock>
+                            </Viewbox>
+                            
+                        </ScrollViewer>
+                        
 
 
                     </Grid>
