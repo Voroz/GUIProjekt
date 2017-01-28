@@ -459,8 +459,8 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="200" />
+                            
+                            <ColumnDefinition Width="400" />
                         </Grid.ColumnDefinitions>
 
                         <Viewbox Grid.Column="0">
@@ -473,16 +473,42 @@
                             </UniformGrid>
 
                         </Viewbox>
-                        <Viewbox Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="200">
+                        <!--<Grid Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="200" MaxHeight="130">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="65" />
+                                    <RowDefinition Height="65" />
+                                </Grid.RowDefinitions>
+                            <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <Viewbox >
+                                    <TextBlock Grid.Row="0" Name="textBoxError" Padding="10" ></TextBlock>
+                                </Viewbox>
+                            </ScrollViewer>
+                            <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <Viewbox >
+                                    <TextBlock Grid.Row="1" Name="textBoxMsg" Padding="10" ></TextBlock>
+                                </Viewbox>
+                            </ScrollViewer>
+                                
+                            </Grid>-->
+                        <Grid Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="200" MaxHeight="130">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="200" />
+                            </Grid.ColumnDefinitions>
+                            <ScrollViewer Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <Viewbox >
+                                    <TextBlock Name="textBoxError" Padding="10"></TextBlock>
+                                </Viewbox>
+                            </ScrollViewer>
+                            <ScrollViewer Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <Viewbox >
+                                    <TextBlock Name="textBoxMsg" Padding="10" ></TextBlock>
+                                </Viewbox>
+                            </ScrollViewer>
 
-                        </Viewbox>
-                        <ScrollViewer Grid.Column="2" HorizontalAlignment="Stretch" MinWidth="200" MaxHeight="100">
-                            <Viewbox>
-                                <TextBlock Name="textBoxError" Foreground="Red" Padding="5"></TextBlock>
-                            </Viewbox>
-                            
-                        </ScrollViewer>
-                        
+                        </Grid>
+
+
 
 
                     </Grid>

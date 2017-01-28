@@ -411,7 +411,10 @@ namespace GUIProjekt
             return theStack.Children[(theStack.Children.Count - 1) - pos] as MemoryRow;
         }
 
-        
+        /******************************************************
+         CALL: errorCode("I want to display this to the user");
+         TASK: displays msg on screen in TextBoxError
+         *****************************************************/
         void errorCode(String errorMsg)
         {
             SolidColorBrush br = new SolidColorBrush(Colors.Red);
@@ -419,12 +422,16 @@ namespace GUIProjekt
             textBoxError.Text += errorMsg;
         }
 
+        /******************************************************
+         CALL: userMsg("I want to display this to the user");
+         TASK: displays msg on screen in TextBoxMsg
+         *****************************************************/
         void userMsg(String userMsg)
         {
             SolidColorBrush br = new SolidColorBrush(Colors.Blue);
-            textBoxError.Foreground = br;
+            textBoxMsg.Foreground = br;
 
-            textBoxError.Text += userMsg;
+            textBoxMsg.Text += userMsg;
         }
         /******************************************************
          CALL: When clicking the Open button in the Menu
