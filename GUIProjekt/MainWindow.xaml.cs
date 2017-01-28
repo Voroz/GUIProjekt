@@ -116,6 +116,7 @@ namespace GUIProjekt
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
                 
                 if (!_assemblerModel.checkSyntaxMachine(str)) {
+                    errorCode("Syntax error row " + i + " " + str + " not a valid command \n");
                     return false;
                 }
             }
@@ -347,7 +348,7 @@ namespace GUIProjekt
             if (!checkSyntaxAssemblyTextBox(textBoxAssembler) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
                 return;
             }
-
+            clearUserMsg();
             // Vid körning av programmet vill vi inte att användaren skall kunna ändra i maskinkoden därför görs textBoxen till readOnly
             textBoxMK.IsReadOnly = true;
             textBoxAssembler.IsReadOnly = true;
@@ -388,7 +389,7 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
-            textBoxError.Text = "";
+            clearUserMsg();
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;
@@ -434,6 +435,17 @@ namespace GUIProjekt
 
             textBoxMsg.Text += userMsg;
         }
+
+        /******************************************************
+         CALL: clearUserMsg()
+         TASK: Empty user message screen
+         *****************************************************/
+        void clearUserMsg()
+        {
+            textBoxError.Text = "";
+            textBoxMsg.Text = "";
+        }
+
         /******************************************************
          CALL: When clicking the Open button in the Menu
          TASK: Open a txt file from the directory.
