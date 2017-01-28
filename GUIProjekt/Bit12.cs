@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace GUIProjekt
 {
+    /******************************************************
+     A class containing a set of operator overloads to
+     enable usage of 12 bit variables in the project.
+     *****************************************************/
     public class Bit12
     {
         public Bit12(short val) {

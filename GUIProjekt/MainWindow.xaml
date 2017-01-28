@@ -26,12 +26,12 @@
         <!-- Top menu     START -->
         <Menu Grid.Row="0" Style="{StaticResource Menu}">
             <MenuItem Header="_File">
-                <MenuItem Name="Open" Header="Open" Click="Open_Click"></MenuItem>
-                <MenuItem Name="Save" Header="Save" Click="Save_Click"></MenuItem>
-                <MenuItem Name="Exit" Header="Exit" Click="Exit_Click"></MenuItem>
+                <MenuItem Name="Open" Header="Open" Click="Open_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Save" Header="Save" Click="Save_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Exit" Header="Exit" Click="Exit_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About" Click="About_Click"></MenuItem>
+                <MenuItem Header="About" Click="About_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
         </Menu>
         <!-- Top menu    END -->
@@ -454,13 +454,13 @@
             
 
 
-            <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1">
+            <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1" >
                 <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
 
                         <Viewbox Grid.Column="0">
@@ -476,9 +476,13 @@
                         <Viewbox Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="200">
 
                         </Viewbox>
-                        <Viewbox Grid.Column="2" HorizontalAlignment="Stretch" MinWidth="200">
-
-                        </Viewbox>
+                        <ScrollViewer Grid.Column="2" HorizontalAlignment="Stretch" MinWidth="200" MaxHeight="100">
+                            <Viewbox>
+                                <TextBlock Name="textBoxError" Foreground="Red" Padding="5"></TextBlock>
+                            </Viewbox>
+                            
+                        </ScrollViewer>
+                        
 
 
                     </Grid>

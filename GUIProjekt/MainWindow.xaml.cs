@@ -387,7 +387,7 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
-            
+            textBoxError.Text = "";
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;
@@ -412,6 +412,20 @@ namespace GUIProjekt
         }
 
         
+        void errorCode(String errorMsg)
+        {
+            SolidColorBrush br = new SolidColorBrush(Colors.Red);
+            textBoxError.Foreground = br;
+            textBoxError.Text += errorMsg;
+        }
+
+        void userMsg(String userMsg)
+        {
+            SolidColorBrush br = new SolidColorBrush(Colors.Blue);
+            textBoxError.Foreground = br;
+
+            textBoxError.Text += userMsg;
+        }
         /******************************************************
          CALL: When clicking the Open button in the Menu
          TASK: Open a txt file from the directory.
@@ -425,6 +439,12 @@ namespace GUIProjekt
                 string filename = ofd.FileName;
                 TextBox_Assembler.Focus();
                 TextBox_Assembler.Text = File.ReadAllText(filename);
+                userMsg("Open file " + filename + "\n");                
+            }
+            else
+            {
+                string filename = ofd.FileName;
+                errorCode("Could not open file " + filename + "\n");
             }
         }
 
@@ -439,6 +459,11 @@ namespace GUIProjekt
      
             if(sfd.ShowDialog() == true) {
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
+                userMsg("Saved successfully\n");
+            }
+            else
+            {
+                errorCode("Could not save the file\n");
             }
         }
 
@@ -491,6 +516,8 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_StepBack_Click(object sender, RoutedEventArgs e) {
             if (_runTimer.IsEnabled) {
+               
+                errorCode("Error cannot do this while running the application\n");
                 return;
             }
 
