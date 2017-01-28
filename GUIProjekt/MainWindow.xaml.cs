@@ -466,7 +466,8 @@ namespace GUIProjekt
      
             if(sfd.ShowDialog() == true) {
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
-                userMsg("Saved successfully\n");
+                String time = DateTime.Now.ToString();
+                userMsg("Saved successfully " + time + "\n");
             }
             else
             {
