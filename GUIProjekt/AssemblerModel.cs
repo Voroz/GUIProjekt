@@ -193,7 +193,7 @@ namespace GUIProjekt
                     return true;
             }
 
-            if (splitString.Length != 1
+            if (splitString.Length > 1
                 && (splitString[0] == "IN"
                 || splitString[0] == "OUT"
                 || splitString[0] == "RETURN")
@@ -415,7 +415,7 @@ namespace GUIProjekt
                 return true;
             }
 
-            if (splitString.Length != 1
+            if (splitString.Length > 1
                 && (splitString[0] == "IN"
                 || splitString[0] == "OUT"
                 || splitString[0] == "RETURN")
