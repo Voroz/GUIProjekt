@@ -636,9 +636,6 @@ namespace GUIProjekt
         }
 
 
-        
-
-
         /******************************************************
          CALL: Clicking one of the tabs.
          TASK: Toggles machine code textbox and assembler 
@@ -713,6 +710,44 @@ namespace GUIProjekt
             ValueRow_Input.ChangeSkin(selectedDictionary);
             ValueRow_Output.ChangeSkin(selectedDictionary);
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
+        }
+
+        /******************************************************
+         CALL: Clicking the minus button.
+         TASK: Decreases the value on input.
+        *****************************************************/
+        private void Button_Minus_Click(object sender, RoutedEventArgs e) {
+            Bit12 input = _assemblerModel.input();
+            input -= new Bit12(1);
+
+            if (input == new Bit12(-1)) {
+                _assemblerModel.setInput(new Bit12(4095));
+            }
+
+            else {
+                _assemblerModel.setInput(input);
+            }
+
+            ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
+        }
+
+        /******************************************************
+         CALL: Clicking the plus button.
+         TASK: Increases the value on input by one.
+        *****************************************************/
+        private void Button_Plus_Click(object sender, RoutedEventArgs e) {
+            Bit12 input = _assemblerModel.input();
+            input += new Bit12(1);
+
+            if (input == new Bit12(4095)) {
+                _assemblerModel.setInput(new Bit12(4095));
+            }
+
+            else {
+                _assemblerModel.setInput(input);
+            }
+
+            ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
         }
 
         
