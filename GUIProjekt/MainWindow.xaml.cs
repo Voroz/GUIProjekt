@@ -340,23 +340,20 @@ namespace GUIProjekt
          CALL: runProgram(TextBox textBoxMK, TextBox textBoxAssembler)
          TASK: Runs through the entered instructions if syntax is ok. 
          *****************************************************/
-        void runProgram(TextBox textBoxMK, TextBox textBoxAssembler)
-        {
 
-            if (!checkSyntaxAssemblyTextBox(textBoxAssembler) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly)
+        
+        bool assemblyTextToModel(TextBox textBoxAssembler) {
+
+            if (!checkSyntaxAssemblyTextBox(textBoxAssembler))
             {
-                return;
+                return false;
             }
-            clearUserMsg();
-            // Vid körning av programmet vill vi inte att användaren skall kunna ändra i maskinkoden därför görs textBoxen till readOnly
-            textBoxMK.IsReadOnly = true;
-            textBoxAssembler.IsReadOnly = true;
 
             // Adds users text input to the model
-            for (byte i = 0; i < textBoxMK.LineCount; i++)
+            for (byte i = 0; i < textBoxAssembler.LineCount; i++)
             {
                 char[] trimChars = new char[2] { '\r', '\n' };
-                string str = textBoxMK.GetLineText(i).TrimEnd(trimChars);
+                string str = textBoxAssembler.GetLineText(i).TrimEnd(trimChars);
                 Bit12 bits = new Bit12(0);
 
                 // Empty lines to create space are fine
@@ -371,6 +368,21 @@ namespace GUIProjekt
 
                 _assemblerModel.setAddr(i, bits);
             }
+            return true;
+        }
+
+        bool InitProgramStart() {
+            if (_runTimer.IsEnabled) {
+                return false;
+            }
+
+            if (!assemblyTextToModel(TextBox_Assembler)) {
+                return false;
+            }
+
+            clearUserMsg();
+
+            return true;
         }
 
         /******************************************************
@@ -378,10 +390,8 @@ namespace GUIProjekt
          TASK: Runs through the entered instructions. 
          *****************************************************/
         private void Button_Run_Click(object sender, RoutedEventArgs e) 
-        {           
-            TextBox textBoxMK = TextBox_MK;
-            TextBox textBoxAssembler = TextBox_Assembler;
-            runProgram(textBoxMK, textBoxAssembler);
+        {
+            InitProgramStart();
             _runTimer.Start();          
         }
 
@@ -396,18 +406,8 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_StepForward_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: I stort sett samma kod som i Button_Run_Click. Kanske ska dags att göra en funktion?
-            if (_runTimer.IsEnabled)
-            {
-                return;
-            }
-
-            TextBox textBoxMK = TextBox_MK;
-            TextBox textBoxAssembler = TextBox_Assembler;
-            runProgram(textBoxMK, textBoxAssembler);
+            InitProgramStart();
             programTick();
-            textBoxMK.IsReadOnly = false;
-            textBoxAssembler.IsReadOnly = false;
         }
 
         /******************************************************
