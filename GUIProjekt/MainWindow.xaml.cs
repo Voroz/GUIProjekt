@@ -729,16 +729,9 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_Minus_Click(object sender, RoutedEventArgs e) {
             Bit12 input = _assemblerModel.input();
+
             input -= new Bit12(1);
-
-            if (input == new Bit12(-1)) {
-                _assemblerModel.setInput(new Bit12(4095));
-            }
-
-            else {
-                _assemblerModel.setInput(input);
-            }
-
+            _assemblerModel.setInput(input);
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
         }
 
@@ -748,16 +741,9 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_Plus_Click(object sender, RoutedEventArgs e) {
             Bit12 input = _assemblerModel.input();
+
             input += new Bit12(1);
-
-            if (input == new Bit12(4095)) {
-                _assemblerModel.setInput(new Bit12(4095));
-            }
-
-            else {
-                _assemblerModel.setInput(input);
-            }
-
+            _assemblerModel.setInput(input);
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
         }
 
