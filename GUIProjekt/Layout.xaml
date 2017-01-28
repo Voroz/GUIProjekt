@@ -15,6 +15,10 @@
         <Setter Property="Height" Value="30" />
     </Style>
     
+    <Style x:Key="MenuItem" TargetType="MenuItem">
+        <Setter Property="Foreground" Value="{DynamicResource fontColorFileMenu}"/>
+    </Style>
+    
     <!-- Combo Box SKINS -->
     <Style x:Key="ComboBoxSkins" TargetType="ComboBox">
         <Setter Property="SelectedIndex" Value="0" />

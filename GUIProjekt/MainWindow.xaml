@@ -26,12 +26,12 @@
         <!-- Top menu     START -->
         <Menu Grid.Row="0" Style="{StaticResource Menu}">
             <MenuItem Header="_File">
-                <MenuItem Name="Open" Header="Open" Click="Open_Click"></MenuItem>
-                <MenuItem Name="Save" Header="Save" Click="Save_Click"></MenuItem>
-                <MenuItem Name="Exit" Header="Exit" Click="Exit_Click"></MenuItem>
+                <MenuItem Name="Open" Header="Open" Click="Open_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Save" Header="Save" Click="Save_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Exit" Header="Exit" Click="Exit_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About" Click="About_Click"></MenuItem>
+                <MenuItem Header="About" Click="About_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
         </Menu>
         <!-- Top menu    END -->
