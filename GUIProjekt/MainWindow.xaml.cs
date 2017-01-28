@@ -268,7 +268,7 @@ namespace GUIProjekt
                 Bit12 bit12Val = new Bit12(val);
 
                 MemoryRow row = getMMRowOfPosition(255 - i);
-                //changeColor(row);
+                
                 row.ShowMemoryAdress(bit12Val);
 
                 if (assemblyStr.Length > 0 && assemblyStr[assemblyStr.Length - 1] == '\n') {
@@ -335,17 +335,16 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
         }
-        
 
         /******************************************************
-         CALL: When clicking the run button.
-         TASK: Runs through the entered instructions. 
+         CALL: runProgram(TextBox textBoxMK, TextBox textBoxAssembler)
+         TASK: Runs through the entered instructions if syntax is ok. 
          *****************************************************/
-        private void Button_Run_Click(object sender, RoutedEventArgs e) {
-            
-            TextBox textBoxMK = TextBox_MK;
-            TextBox textBoxAssembler = TextBox_Assembler;
-            if (!checkSyntaxAssemblyTextBox(textBoxAssembler) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
+        void runProgram(TextBox textBoxMK, TextBox textBoxAssembler)
+        {
+
+            if (!checkSyntaxAssemblyTextBox(textBoxAssembler) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly)
+            {
                 return;
             }
             clearUserMsg();
@@ -354,27 +353,61 @@ namespace GUIProjekt
             textBoxAssembler.IsReadOnly = true;
 
             // Adds users text input to the model
-            for (byte i = 0; i < textBoxMK.LineCount; i++) {
+            for (byte i = 0; i < textBoxMK.LineCount; i++)
+            {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBoxMK.GetLineText(i).TrimEnd(trimChars);
                 Bit12 bits = new Bit12(0);
 
                 // Empty lines to create space are fine
-                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
+                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str))
+                {
                     _assemblerModel.setAddr(i, new Bit12(0));
                     continue;
                 }
 
                 bool success = _assemblerModel.stringToMachine(str, out bits);
                 Debug.Assert(success);
+
                 _assemblerModel.setAddr(i, bits);
             }
-            _runTimer.Start();
-            
+        }
+
+        /******************************************************
+         CALL: When clicking the run button.
+         TASK: Runs through the entered instructions. 
+         *****************************************************/
+        private void Button_Run_Click(object sender, RoutedEventArgs e) 
+        {           
+            TextBox textBoxMK = TextBox_MK;
+            TextBox textBoxAssembler = TextBox_Assembler;
+            runProgram(textBoxMK, textBoxAssembler);
+            _runTimer.Start();          
         }
 
         private void OnInputTimerRunElapsed(object source, EventArgs e) {
             programTick();
+        }
+
+        
+        /******************************************************
+         CALL: Clicking the step forward button.
+         TASK: Progresses the execution of the program one step.
+        *****************************************************/
+        private void Button_StepForward_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: I stort sett samma kod som i Button_Run_Click. Kanske ska dags att göra en funktion?
+            if (_runTimer.IsEnabled)
+            {
+                return;
+            }
+
+            TextBox textBoxMK = TextBox_MK;
+            TextBox textBoxAssembler = TextBox_Assembler;
+            runProgram(textBoxMK, textBoxAssembler);
+            programTick();
+            textBoxMK.IsReadOnly = false;
+            textBoxAssembler.IsReadOnly = false;
         }
 
         /******************************************************
@@ -407,8 +440,7 @@ namespace GUIProjekt
         private MemoryRow getMMRowOfPosition(int pos) {
             return theMemory.Children[(theMemory.Children.Count-1)-pos] as MemoryRow;
         }
-
-        // TODO implementera stacken visuellt
+        
         private MemoryRow getStackRowOfPosition(int pos) {
             return theStack.Children[(theStack.Children.Count - 1) - pos] as MemoryRow;
         }
@@ -432,7 +464,6 @@ namespace GUIProjekt
         {
             SolidColorBrush br = new SolidColorBrush(Colors.Blue);
             textBoxMsg.Foreground = br;
-
             textBoxMsg.Text += userMsg;
         }
 
@@ -565,8 +596,7 @@ namespace GUIProjekt
                 row.ShowMemoryAdress(_assemblerModel.getAddr(index));
 
                 if (index > 250) {
-                    MemoryRow stackRow = getStackRowOfPosition(255 - index);
-                    //changeColor(stackRow);
+                    MemoryRow stackRow = getStackRowOfPosition(255 - index);                   
                     stackRow.ShowMemoryAdress(_assemblerModel.getAddr(index));
                 }
             }
@@ -577,47 +607,7 @@ namespace GUIProjekt
         }
 
 
-        /******************************************************
-         CALL: Clicking the step forward button.
-         TASK: Progresses the execution of the program one step.
-        *****************************************************/
-        private void Button_StepForward_Click(object sender, RoutedEventArgs e) {
-            // TODO: I stort sett samma kod som i Button_Run_Click. Kanske ska dags att göra en funktion?
-            if (_runTimer.IsEnabled) {
-                return;
-            }
-
-            TextBox textBoxMK = TextBox_MK;
-            TextBox textBoxAssembler = TextBox_Assembler;
-            if (!checkSyntaxAssemblyTextBox(textBoxAssembler) || textBoxMK.IsReadOnly || textBoxAssembler.IsReadOnly) {
-                return;
-            }
-
-            // Vid körning av programmet vill vi inte att användaren skall kunna ändra i maskinkoden därför görs textBoxen till readOnly
-            textBoxMK.IsReadOnly = true;
-            textBoxAssembler.IsReadOnly = true;
-
-            // Adds users text input to the model
-            for (byte i = 0; i < textBoxMK.LineCount; i++) {
-                char[] trimChars = new char[2] { '\r', '\n' };
-                string str = textBoxMK.GetLineText(i).TrimEnd(trimChars);
-                Bit12 bits = new Bit12(0);
-
-                // Empty lines to create space are fine
-                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
-                    _assemblerModel.setAddr(i, new Bit12(0));
-                    continue;
-                }
-
-                bool success = _assemblerModel.stringToMachine(str, out bits);
-                Debug.Assert(success);
-
-                _assemblerModel.setAddr(i, bits);
-            }
-            programTick();
-            textBoxMK.IsReadOnly = false;
-            textBoxAssembler.IsReadOnly = false;
-        }
+        
 
 
         /******************************************************
