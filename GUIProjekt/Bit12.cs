@@ -8,7 +8,7 @@ namespace GUIProjekt
 {
     /******************************************************
      A class containing a set of operator overloads to
-     enable usage of 12 bit variables in the project.
+     enable usage of 12 bit object in the project.
      *****************************************************/
     public class Bit12
     {

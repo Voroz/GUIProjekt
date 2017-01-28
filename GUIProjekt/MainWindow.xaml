@@ -129,7 +129,9 @@
                     <RowDefinition Height="20*" />
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0">Instruction Pointer</Label>
+                <!--<Viewbox>-->
+                    <Label Grid.Row="0">Instruction Pointer</Label>
+                <!--</Viewbox>-->
                 <Viewbox Grid.Row="0">
                     <local:MemoryRow x:Name="ValueRow_InstructionPointer"></local:MemoryRow>
                 </Viewbox>
@@ -143,6 +145,9 @@
                 <Viewbox Grid.Row="2">
                     <local:MemoryRow x:Name="ValueRow_Input"></local:MemoryRow>
                 </Viewbox>
+
+                <Button Click="Button_Minus_Click" Grid.Row="2" Width="30" MinHeight="30" Margin="0, 0, 100, 80">-</Button>
+                <Button Click="Button_Plus_Click" Grid.Row="2" Width="30" MinHeight="30" Margin="0, 0, 40, 80">+</Button>
                 
                 <Label Grid.Row="3">Output</Label>
                 <Viewbox Grid.Row="3">
