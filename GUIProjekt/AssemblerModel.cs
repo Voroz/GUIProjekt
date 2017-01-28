@@ -106,6 +106,12 @@ namespace GUIProjekt
             return (byte)extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
         }
 
+
+        /******************************************************
+         CALL: bool ok = isBinary(string);
+         TASK: Returns true if the inputted string only consists 
+               of ones and zeros.
+         *****************************************************/
         bool isBinary(string str) {
             bool binary = true;
             foreach (char ch in str) {
@@ -118,6 +124,11 @@ namespace GUIProjekt
             return binary;
         }
 
+        /******************************************************
+         CALL: bool ok = stringToMachine(string, out Bit12);
+         TASK: Converts the string to machine code and returns
+               true if doing so successfully.
+         *****************************************************/
         public bool stringToMachine(string str, out Bit12 machineCode) {
             if (string.IsNullOrWhiteSpace(str)) {
                 machineCode = new Bit12(0);
@@ -140,6 +151,13 @@ namespace GUIProjekt
             }
         }
 
+        /******************************************************
+         CALL: bool ok = machineToAssembly(Bit12, out string);
+         TASK: Returns true if conversion from machine code
+               to assembly code was done successfully.
+         NOTE: Returns false if the inputted Bit12 doesn't 
+               contain any (or unapproved) assembly instruction.
+         *****************************************************/
         public bool machineToAssembly(Bit12 bits, out string assemblyCode) {
             Operations opr;
             if (!extractOperation(bits.value(), out opr)) {
@@ -285,6 +303,10 @@ namespace GUIProjekt
             return _instructionPtr;
         }
 
+        /******************************************************
+         CALL: Bit12 input = input();
+         TASK: Returns the _input property.
+        *****************************************************/ 
         public Bit12 input() {
             return _input;
         }
@@ -297,14 +319,26 @@ namespace GUIProjekt
             _input = input;
         }
 
+        /******************************************************
+         CALL: Bit12 output = output();
+         TASK: Returns the _output property.
+        *****************************************************/ 
         public Bit12 output() {
             return _output;
         }
 
+        /******************************************************
+         CALL: setOutput(Bit12);
+         TASK: Sets the _output property to the parameter Bit12.
+        *****************************************************/ 
         public void setOutput(Bit12 output) {
             _output = output;
         }
 
+        /******************************************************
+         CALL: MyStack<Bit12> stack = stack();
+         TASK: Returns the memory stack.
+        *****************************************************/ 
         public MyStack<Bit12> stack()
         {
             return _memoryStack;
