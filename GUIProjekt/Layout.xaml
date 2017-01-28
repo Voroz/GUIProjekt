@@ -72,8 +72,8 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="White" />
-                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="{DynamicResource toggleClicked}" />
+                <Setter Property="Foreground" Value="{DynamicResource toggleFont}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

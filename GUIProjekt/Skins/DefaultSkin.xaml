@@ -10,6 +10,8 @@
     <Brush x:Key="MenuColor2">#DDDDE4</Brush> <!--Row #2-->
     <Brush x:Key="fontColor">#000000</Brush>
     <Brush x:Key="fontColorFileMenu">#000000</Brush>
+    <Brush x:Key="toggleClicked">#FFFFFF</Brush>
+    <Brush x:Key="toggleFont">#000000</Brush>
     
     <!-- MEMORY ROW COLORS -->
     <Brush x:Key="zeroColor">#028482</Brush>
