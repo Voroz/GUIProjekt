@@ -496,12 +496,12 @@
                                 <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
                             <ScrollViewer Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                <Viewbox >
+                                <Viewbox VerticalAlignment="Top">
                                     <TextBlock Name="textBoxError" Padding="10"></TextBlock>
                                 </Viewbox>
                             </ScrollViewer>
                             <ScrollViewer Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                <Viewbox >
+                                <Viewbox VerticalAlignment="Top">
                                     <TextBlock Name="textBoxMsg" Padding="10" ></TextBlock>
                                 </Viewbox>
                             </ScrollViewer>
