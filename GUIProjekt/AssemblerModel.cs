@@ -13,7 +13,7 @@ namespace GUIProjekt
         public const byte StartValBit = 0; // Defines start position for the Assembler value in a 16 bit
         public const byte EndValBit = 7;  // Defines end position for the Assembler value in a 16 bit
         public const int FastExecutionDelay = 0;
-        public const int SlowExecutionDelay = 200;
+        public const int SlowExecutionDelay = 260;
     }
 
     enum Operations : byte {
@@ -541,6 +541,9 @@ namespace GUIProjekt
                 case Operations.PJUMP: {
                     if (_workingRegister > new Bit12(0)) {
                         _instructionPtr = addr;
+                    }
+                    else {
+                        _instructionPtr++;
                     }
                 } break;
 
