@@ -43,7 +43,6 @@ namespace GUIProjekt
                 }
                 _instructionPtr = instructionPtr;
                 _workingRegister = workingRegister;
-                _input = input;
                 _output = output;
         }
 
@@ -51,7 +50,6 @@ namespace GUIProjekt
         public MyStack<Bit12> _memoryStack;
         public byte _instructionPtr;
         public Bit12 _workingRegister;
-        public Bit12 _input;
         public Bit12 _output;
     }
 
@@ -257,7 +255,6 @@ namespace GUIProjekt
          TASK: Sets the member variables to their initiated value.
         *****************************************************/ 
         public void reset() {
-            _input = new Bit12(0);
             _output = new Bit12(0);
             _instructionPtr = 0;
             _workingRegister = new Bit12(0);
@@ -590,7 +587,6 @@ namespace GUIProjekt
             _memoryStack = undoValues._memoryStack;
             _instructionPtr = undoValues._instructionPtr;
             _workingRegister = undoValues._workingRegister;
-            _input = undoValues._input;
             _output = undoValues._output;
 
             return undoValues;

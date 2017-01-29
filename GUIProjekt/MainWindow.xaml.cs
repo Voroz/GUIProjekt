@@ -723,30 +723,6 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
 
-        /******************************************************
-         CALL: Clicking the minus button.
-         TASK: Decreases the value on input.
-        *****************************************************/
-        private void Button_Minus_Click(object sender, RoutedEventArgs e) {
-            Bit12 input = _assemblerModel.input();
-
-            input -= new Bit12(1);
-            _assemblerModel.setInput(input);
-            ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
-        }
-
-        /******************************************************
-         CALL: Clicking the plus button.
-         TASK: Increases the value on input by one.
-        *****************************************************/
-        private void Button_Plus_Click(object sender, RoutedEventArgs e) {
-            Bit12 input = _assemblerModel.input();
-
-            input += new Bit12(1);
-            _assemblerModel.setInput(input);
-            ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
-        }
-
         
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
@@ -755,5 +731,11 @@ namespace GUIProjekt
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+
+        private void Slider_Input_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            Slider slider = sender as Slider;
+            _assemblerModel.setInput(new Bit12((short)slider.Value));
+            ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
+        }
     }
 }
