@@ -394,7 +394,7 @@ namespace GUIProjekt
         }
 
         bool InitProgramStart() {
-            if (_runTimer.IsEnabled) {
+            if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled) {
                 return false;
             }
 
