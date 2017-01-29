@@ -178,9 +178,27 @@
                 </DockPanel>
 
                 <Label Grid.Row="3">Output</Label>
-                <Viewbox Grid.Row="3">
-                    <local:MemoryRow x:Name="ValueRow_Output"></local:MemoryRow>
-                </Viewbox>
+                    <UniformGrid Grid.Row="3" Rows="2">
+                        <Viewbox>
+                            <local:MemoryRow x:Name="ValueRow_Output"></local:MemoryRow>
+                        </Viewbox>
+                        <Viewbox>
+                        <UniformGrid Name="UniformGrid_Lights" Columns="12" Margin="1000,-400,0,0">                            
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                            <Image Source="images/light-off.png" />
+                        </UniformGrid>
+                       </Viewbox>
+                </UniformGrid>           
             </Grid>
             <!-- IP, IN, OUT, WR    END -->
 
@@ -481,11 +499,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-
-            <Viewbox Grid.Column="0">
-                <Image x:Name="bulb" Source="images/bulboff.png"></Image>
-            </Viewbox>
+            </Grid.ColumnDefinitions>            
 
 
             <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1" >

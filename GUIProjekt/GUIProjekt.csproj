@@ -184,6 +184,10 @@
   <ItemGroup>
     <Resource Include="images\fast-forward-button.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\light-off.png" />
+    <Resource Include="images\light-on.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

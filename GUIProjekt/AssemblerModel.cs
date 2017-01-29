@@ -85,7 +85,7 @@ namespace GUIProjekt
             return r;
         }
 
-        short extractValFromBits(byte a, byte b, short bits) {
+        public short extractValFromBits(byte a, byte b, short bits) {
             short mask = (short)(createMask(a, b) & bits);
             short val = (short)(mask >> a);
             return val;

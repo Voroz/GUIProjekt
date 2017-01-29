@@ -344,33 +344,33 @@ namespace GUIProjekt
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
 
-            //TODO testade att tända lampan om output är över 0
-            short lightup = 0;
-            if(_assemblerModel.output().value() > (short)lightup)
-                lightBulb("bulbon");
-            else
-                lightBulb("bulboff");
+            // TODO: Lamptest
+            for (byte i = 0; i < 12; i++) {
+                short lightup = _assemblerModel.extractValFromBits((byte)(11 - i), (byte)(11 - i), _assemblerModel.output().value());
+                if (lightup > 0)
+                    lightOn(i);
+                else
+                    lightOff(i);
+            }
             ////////////////////////////////////////////////////            
         }
 
         //TODO Test för lampan
-        void lightBulb(String imagename)
+        void lightOn(int index)
         {
-            var uriSource = new Uri(@"/GUIProjekt;component/images/"+imagename+".png", UriKind.Relative);
-            bulb.Source = new BitmapImage(uriSource);
+            Debug.Assert(index >= 0 && index < 12);
+            var uriSource = new Uri(@"/GUIProjekt;component/images/light-on.png", UriKind.Relative);
+            Image image = UniformGrid_Lights.Children[index] as Image;
+            image.Source = new BitmapImage(uriSource);
         }
         //TODO Test för lampan
-        void lightBulb()
+        void lightOff(int index)
         {
-            var uriSource = new Uri(@"/GUIProjekt;component/images/bulboff.png", UriKind.Relative);
-            bulb.Source = new BitmapImage(uriSource);
+            Debug.Assert(index >= 0 && index < 12);
+            var uriSource = new Uri(@"/GUIProjekt;component/images/light-off.png", UriKind.Relative);
+            Image image = UniformGrid_Lights.Children[index] as Image;
+            image.Source = new BitmapImage(uriSource);
         }
-
-        /******************************************************
-         CALL: runProgram(TextBox textBoxMK, TextBox textBoxAssembler)
-         TASK: Runs through the entered instructions if syntax is ok. 
-         *****************************************************/
-
         
         bool assemblyTextToModel(TextBox textBoxAssembler) {
 
@@ -463,7 +463,9 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
             clearUserMsg();
-            lightBulb();
+            for (int i = 0; i < 12; i++) {
+                lightOff(i);
+            }
             TextBox textBox = TextBox_MK;
             TextBox textBoxAssembler = TextBox_Assembler;
             textBoxAssembler.IsReadOnly = false;
@@ -645,11 +647,13 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             //TODO testade att tända lampan om output är över 0
-            short lightup = 0;
-            if (_assemblerModel.output().value() > (short)lightup)
-                lightBulb("bulbon");
-            else
-                lightBulb("bulboff");
+            for (byte i = 0; i < 12; i++) {
+                short lightup = _assemblerModel.extractValFromBits((byte)(11 - i), (byte)(11 - i), _assemblerModel.output().value());
+                if (lightup > 0)
+                    lightOn(i);
+                else
+                    lightOff(i);
+            }
             ////////////////////////////////////////////////////
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
         }
