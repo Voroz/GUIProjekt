@@ -75,15 +75,15 @@
                               ToolTip="Fast">
                               <Image Source="images/fast-forward-button.png" />
                 </ToggleButton>
-            </Viewbox>
-            <Viewbox>
-                <ComboBox Text="Is not open" Style="{StaticResource ComboBoxSkins}" ToolTip="Skin">
-                    <ComboBoxItem Name="combBoxDefault" Selected="changeSkinEvent">Default</ComboBoxItem>
-                    <ComboBoxItem Name="combBoxOrange" Selected="changeSkinEvent">Orange</ComboBoxItem>
-                    <ComboBoxItem Name="combBoxBlue" Selected="changeSkinEvent">Visual</ComboBoxItem>
-                </ComboBox>
-            </Viewbox>
+            </Viewbox>            
         </StackPanel>
+        <Viewbox Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0" Height="30">
+            <ComboBox Text="Is not open" Style="{StaticResource ComboBoxSkins}" ToolTip="Skin">
+                <ComboBoxItem Name="combBoxDefault" Selected="changeSkinEvent">Default</ComboBoxItem>
+                <ComboBoxItem Name="combBoxOrange" Selected="changeSkinEvent">Orange</ComboBoxItem>
+                <ComboBoxItem Name="combBoxBlue" Selected="changeSkinEvent">Visual</ComboBoxItem>
+            </ComboBox>
+        </Viewbox>
         <!-- Program menu     END -->
         
         
