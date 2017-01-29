@@ -38,7 +38,7 @@ namespace GUIProjekt
             _inputTimerMK.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerAssembly.Tick += OnInputTimerAssemblyElapsed;
             _inputTimerMK.Tick += OnInputTimerMKElapsed;
-            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, _assemblerModel.delay());
+            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
             _runTimer.Tick += OnInputTimerRunElapsed;
 
             // Mark current row
@@ -309,6 +309,14 @@ namespace GUIProjekt
             byte val = (byte)_assemblerModel.extractVal(currentAddr.value());
 
             _assemblerModel.extractOperation(currentAddr.value(), out opr);
+
+            if (opr == Operations.RETURN && _assemblerModel.stack().size() == 0) {
+                _runTimer.Stop();
+                TextBox_MK.IsReadOnly = false;
+                TextBox_Assembler.IsReadOnly = false;
+                errorCode("Error: Attempted Return on an empty stack");
+                return;
+            }
 
             _assemblerModel.processCurrentAddr();
 
@@ -736,6 +744,14 @@ namespace GUIProjekt
             Slider slider = sender as Slider;
             _assemblerModel.setInput(new Bit12((short)slider.Value));
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
+        }
+
+        private void Button_FastForward_Checked(object sender, RoutedEventArgs e) {
+            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.FastExecutionDelay);
+        }
+
+        private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e) {
+            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
         }
     }
 }

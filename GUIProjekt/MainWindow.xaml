@@ -65,7 +65,16 @@
             <Viewbox>
                 <Button Name="Button_StepForward" Click="Button_StepForward_Click" Style="{StaticResource MenuButton}" ToolTip="Step Forward">
                     <Image Source="images/action-redo-8x.png" />
-                </Button>
+                </Button>                
+            </Viewbox>
+            <Viewbox>
+                <ToggleButton Name="Button_FastForward"
+                              Checked="Button_FastForward_Checked"
+                              Unchecked="Button_FastForward_Unchecked"
+                              Style="{StaticResource MenuToggleButton}"
+                              ToolTip="Fast">
+                              <Image Source="images/fast-forward-button.png" />
+                </ToggleButton>
             </Viewbox>
             <Viewbox>
                 <ComboBox Text="Is not open" Style="{StaticResource ComboBoxSkins}" ToolTip="Skin">

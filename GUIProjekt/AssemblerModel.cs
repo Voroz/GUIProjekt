@@ -12,6 +12,8 @@ namespace GUIProjekt
         public const byte EndOprBit = 11;   // Defines end position for the Assembler operator in a 16 bit
         public const byte StartValBit = 0; // Defines start position for the Assembler value in a 16 bit
         public const byte EndValBit = 7;  // Defines end position for the Assembler value in a 16 bit
+        public const int FastExecutionDelay = 0;
+        public const int SlowExecutionDelay = 200;
     }
 
     enum Operations : byte {
@@ -68,7 +70,6 @@ namespace GUIProjekt
             _workingRegister = new Bit12(0);
             _input = new Bit12(0);
             _output = new Bit12(0);
-            _executionDelay = 200;
 
             resetMemory();
         }
@@ -367,16 +368,6 @@ namespace GUIProjekt
 
 
         /******************************************************
-         CALL: int execDelay = delay();
-         TASK: Return execution delay variable. Used to set instruction
-         * delay of running program.
-         *****************************************************/
-        public int delay() {
-            return _executionDelay;
-        }
-
-
-        /******************************************************
          CALL: bool ok = checkSyntaxMachine(string);
          TASK: Checks if parameter is approved machine code.
         *****************************************************/ 
@@ -652,6 +643,5 @@ namespace GUIProjekt
         private Bit12 _input;
         private Bit12 _output;
         private readonly int _size;
-        private int _executionDelay;
     }
 }
