@@ -361,8 +361,9 @@ namespace GUIProjekt
         void errorCode(String errorMsg)
         {
             SolidColorBrush br = new SolidColorBrush(Colors.Red);
-            textBoxMsg.Foreground = br;
-            textBoxMsg.Text += (errorMsg + "\n");
+            TextBlock_MessageBox.Foreground = br;
+            TextBlock_MessageBox.Text += (errorMsg + "\n");
+            ScrollViewer_MessageBox.ScrollToEnd();
         }
 
         /******************************************************
@@ -372,8 +373,9 @@ namespace GUIProjekt
         void userMsg(String userMsg)
         {
             SolidColorBrush br = new SolidColorBrush(Colors.Blue);
-            textBoxMsg.Foreground = br;
-            textBoxMsg.Text += (userMsg  + "\n");
+            TextBlock_MessageBox.Foreground = br;
+            TextBlock_MessageBox.Text += (userMsg + "\n");
+            ScrollViewer_MessageBox.ScrollToEnd();
         }
 
         /******************************************************
@@ -382,7 +384,7 @@ namespace GUIProjekt
          *****************************************************/
         void clearUserMsg()
         {
-            textBoxMsg.Text = "";
+            TextBlock_MessageBox.Text = "";
         }
 
         /******************************************************

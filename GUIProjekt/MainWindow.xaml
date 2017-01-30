@@ -530,8 +530,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <ScrollViewer Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                <TextBlock Name="textBoxMsg" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10" ></TextBlock>
+                            <ScrollViewer Name="ScrollViewer_MessageBox" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <TextBlock Name="TextBlock_MessageBox" TextWrapping="Wrap" VerticalAlignment="Top" Padding="10" ></TextBlock>
                             </ScrollViewer>
 
                         </Grid>
