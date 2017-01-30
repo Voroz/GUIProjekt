@@ -116,7 +116,7 @@ namespace GUIProjekt
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
                 
                 if (!_assemblerModel.checkSyntaxMachine(str)) {
-                    errorCode("Syntax error row " + i + " " + str + " not a valid command \n");
+                    errorCode("Syntax error row " + i + " " + str + " not a valid command");
                     return false;
                 }
             }
@@ -137,7 +137,7 @@ namespace GUIProjekt
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
                 if (!_assemblerModel.checkSyntaxAssembly(str)) {
-                    errorCode("Syntax error row "+ i +" " + str +" not a valid command \n");
+                    errorCode("Syntax error row "+ i +" " + str +" not a valid command");
                     return false;
                 }             
             }
@@ -496,7 +496,7 @@ namespace GUIProjekt
         {
             SolidColorBrush br = new SolidColorBrush(Colors.Red);
             textBoxError.Foreground = br;
-            textBoxError.Text += errorMsg;
+            textBoxError.Text += (errorMsg + "\n");
         }
 
         /******************************************************
@@ -507,7 +507,7 @@ namespace GUIProjekt
         {
             SolidColorBrush br = new SolidColorBrush(Colors.Blue);
             textBoxMsg.Foreground = br;
-            textBoxMsg.Text += userMsg;
+            textBoxMsg.Text += (userMsg  + "\n");
         }
 
         /******************************************************
@@ -533,12 +533,12 @@ namespace GUIProjekt
                 string filename = ofd.FileName;
                 TextBox_Assembler.Focus();
                 TextBox_Assembler.Text = File.ReadAllText(filename);
-                userMsg("Open file " + filename + "\n");                
+                userMsg("Open file " + filename);                
             }
             else
             {
                 string filename = ofd.FileName;
-                errorCode("Could not open file " + filename + "\n");
+                errorCode("Could not open file " + filename);
             }
         }
 
@@ -554,11 +554,11 @@ namespace GUIProjekt
             if(sfd.ShowDialog() == true) {
                 File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
                 String time = DateTime.Now.ToString();
-                userMsg("Saved successfully " + time + "\n");
+                userMsg("Saved successfully " + time);
             }
             else
             {
-                errorCode("Could not save the file\n");
+                errorCode("Could not save the file");
             }
         }
 
@@ -612,7 +612,7 @@ namespace GUIProjekt
         private void Button_StepBack_Click(object sender, RoutedEventArgs e) {
             if (_runTimer.IsEnabled) {
                
-                errorCode("Error cannot do this while running the application\n");
+                errorCode("Error cannot do this while running the application");
                 return;
             }
 
