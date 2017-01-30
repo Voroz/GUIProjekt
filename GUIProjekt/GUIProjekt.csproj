@@ -146,12 +146,15 @@
     <Resource Include="blue-button.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\media-pause-8x-blue.png" />
     <Resource Include="images\media-pause-8x.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\media-play-8x-green.png" />
     <Resource Include="images\media-play-8x.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\media-stop-8x-red.png" />
     <Resource Include="images\media-stop-8x.png" />
   </ItemGroup>
   <ItemGroup>

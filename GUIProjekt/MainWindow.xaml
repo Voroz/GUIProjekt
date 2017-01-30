@@ -16,7 +16,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="3*" /> <!-- Meny -->
+            <RowDefinition Height="30px" /> <!-- Meny -->
             <RowDefinition Height="2*" />   <!-- Labels -->
             <RowDefinition Height="50*" />  <!-- Content -->
             <RowDefinition Height="20*" />  <!--Stack-->
@@ -41,17 +41,17 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="{DynamicResource MenuColor1}">
             <Viewbox>
                 <Button Click="Button_Run_Click" Style="{StaticResource MenuButton}" ToolTip="Play">
-                    <Image Source="images/media-play-8x.png" />
+                    <Image Source="images/media-play-8x-green.png" />
                 </Button>
             </Viewbox>
             <Viewbox>
                 <Button Click="Button_Pause_Click" Style="{StaticResource MenuButton}" ToolTip="Pause">
-                    <Image Source="images/media-pause-8x.png" />
+                    <Image Source="images/media-pause-8x-blue.png" />
                 </Button>
             </Viewbox>
             <Viewbox>
                 <Button Name="Button_Stop" Click="Button_Stop_Click" Style="{StaticResource MenuButton}" ToolTip="Stop">
-                    <Image Source="images/media-stop-8x.png" />
+                    <Image Source="images/media-stop-8x-red.png" />
                 </Button>
             </Viewbox>
             <Viewbox>
