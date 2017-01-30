@@ -274,7 +274,7 @@ namespace GUIProjekt
         }
 
         bool InitProgramStart() {
-            if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled) {
+            if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled) {
                 return false;
             }
 
@@ -560,7 +560,6 @@ namespace GUIProjekt
         private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
 
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
-        private System.Windows.Threading.DispatcherTimer _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
 
         private void Slider_Input_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
