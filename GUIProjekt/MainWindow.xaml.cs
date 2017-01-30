@@ -284,8 +284,6 @@ namespace GUIProjekt
 
             TextBox_Assembler.IsReadOnly = true;
 
-            clearUserMsg();
-
             return true;
         }
 
@@ -332,7 +330,7 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
-            clearUserMsg();
+
             for (int i = 0; i < 12; i++) {
                 lightOff(i);
             }
@@ -363,8 +361,8 @@ namespace GUIProjekt
         void errorCode(String errorMsg)
         {
             SolidColorBrush br = new SolidColorBrush(Colors.Red);
-            textBoxError.Foreground = br;
-            textBoxError.Text += (errorMsg + "\n");
+            textBoxMsg.Foreground = br;
+            textBoxMsg.Text += (errorMsg + "\n");
         }
 
         /******************************************************
@@ -384,7 +382,6 @@ namespace GUIProjekt
          *****************************************************/
         void clearUserMsg()
         {
-            textBoxError.Text = "";
             textBoxMsg.Text = "";
         }
 
