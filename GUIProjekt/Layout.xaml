@@ -104,7 +104,8 @@
     
     <!-- Textbox Assembler -->
     <Style x:Key="TextBoxAssembler" TargetType="TextBox">
-        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Padding" Value="5, 0, 0, 0"/>
+        <Setter Property="Margin" Value="5, 0, 0, 0" />
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="FontSize" Value="20.262"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
@@ -112,7 +113,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="BorderThickness" Value="0.5"/>
-        <Setter Property="MinWidth" Value="200"/>
+        <Setter Property="MinWidth" Value="300"/>
     </Style>
     <!-- TextBox Maskinkod -->
     <Style x:Key="TextBoxMK" TargetType="TextBox">

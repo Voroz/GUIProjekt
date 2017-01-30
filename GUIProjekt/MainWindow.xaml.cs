@@ -93,7 +93,6 @@ namespace GUIProjekt
 
                 if (i > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - i);
-                    //changeColor(stackRow);
                     stackRow.ShowMemoryAdress(bit12Val);
                 }
 
@@ -656,52 +655,6 @@ namespace GUIProjekt
             }
             ////////////////////////////////////////////////////
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
-        }
-
-
-        /******************************************************
-         CALL: Clicking one of the tabs.
-         TASK: Toggles machine code textbox and assembler 
-               textbox visibility. 
-        *****************************************************/
-        // Ganska ful kod, men vågar inte röra XAML-filen så att den inte förstör text alignment
-        private void TabsToggle_event(object sender, RoutedEventArgs e) {
-            if (Convert.ToBoolean(AssemblyTab.IsChecked)) {
-                TextBox_Assembler.Visibility = Visibility.Visible;
-                TextBox_MK.Visibility = Visibility.Hidden;
-                Grid.SetColumn(TextBox_Assembler, 1);
-                Grid.SetColumnSpan(TextBox_Assembler, 2);
-                TextBox_Assembler.MinWidth = 400;
-
-                AssemblyTab.FontWeight = FontWeights.Bold;
-                MKTab.FontWeight = FontWeights.Normal;
-                SplitTab.FontWeight = FontWeights.Normal;
-            }
-
-            else if(Convert.ToBoolean(MKTab.IsChecked)) {
-                TextBox_Assembler.Visibility = Visibility.Hidden;
-                TextBox_MK.Visibility = Visibility.Visible;
-                Grid.SetColumnSpan(TextBox_MK, 2);
-                TextBox_MK.MinWidth = 400;
-
-                MKTab.FontWeight = FontWeights.Bold;
-                AssemblyTab.FontWeight = FontWeights.Normal;
-                SplitTab.FontWeight = FontWeights.Normal;
-            }
-
-            else if (Convert.ToBoolean(SplitTab.IsChecked)) {
-                TextBox_Assembler.Visibility = Visibility.Visible;
-                TextBox_MK.Visibility = Visibility.Visible;
-                Grid.SetColumnSpan(TextBox_MK, 1);
-                Grid.SetColumn(TextBox_Assembler, 2);
-                Grid.SetColumnSpan(TextBox_Assembler, 1);
-                TextBox_MK.MinWidth = 200;
-                TextBox_Assembler.MinWidth = 200;
-
-                SplitTab.FontWeight = FontWeights.Bold;
-                AssemblyTab.FontWeight = FontWeights.Normal;
-                MKTab.FontWeight = FontWeights.Normal;
-            }
         }
 
 
