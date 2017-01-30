@@ -210,13 +210,6 @@
                         
                         <TextBox
                             Grid.Column="1"
-                            Style="{StaticResource TextBoxMK}"
-                            Name="TextBox_MK"
-                            TextChanged="TextBox_MK_TextChanged"
-                            Visibility="Hidden"/>
-                        
-                        <TextBox
-                            Grid.Column="2"
                             Style="{StaticResource TextBoxAssembler}"
                             Name="TextBox_Assembler"
                             TextChanged="TextBox_Assembler_TextChanged" />

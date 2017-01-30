@@ -179,6 +179,20 @@ namespace GUIProjekt
         }
 
         public bool assemblyToMachine(string assemblyString, out Bit12 machineCode) {
+            if (isBinary(assemblyString) && assemblyString.Length == 12) {
+                machineCode = new Bit12(0);
+                return false;
+            }
+
+            // Empty lines to create space are fine
+            if (assemblyString == "\r\n" || assemblyString == "\r" || assemblyString == "\n" || string.IsNullOrWhiteSpace(assemblyString)) {
+                machineCode = new Bit12(0);
+                return true;
+            }
+
+            char[] trimChars = new char[2] { '\r', '\n' };
+            assemblyString = assemblyString.TrimEnd(trimChars);
+
             string[] splitString = assemblyString.Split(' ');
 
             // Special case where length is 1 and is a constant(number)
@@ -194,41 +208,35 @@ namespace GUIProjekt
                 }
             }
 
-            Operations opr;
-            if (!Enum.TryParse(splitString[0], false, out opr)) {
-                machineCode = new Bit12(0);
-                return false;
+            Operations opr = Operations.LOAD;
+            byte addr = 0;
+            if (splitString.Length == 2
+                && Enum.TryParse(splitString[0], false, out opr)
+                && byte.TryParse(splitString[1], out addr)
+                && !(splitString[0] == "IN"
+                || splitString[0] == "OUT"
+                || splitString[0] == "RETURN")
+                ) {                
+
+                machineCode = new Bit12((short)opr);
+                machineCode = new Bit12((short)(machineCode.value() << Constants.StartOprBit));
+                machineCode += new Bit12(addr);
+
+                return true;
             }
 
-            // Special case where length is 1
             if (splitString.Length == 1
                 && (splitString[0] == "IN"
                 || splitString[0] == "OUT"
                 || splitString[0] == "RETURN")
+                && Enum.TryParse(splitString[0], false, out opr)
                 ) {
                     machineCode = new Bit12((short)((short)opr << Constants.StartOprBit));
                     return true;
             }
 
-            if (splitString.Length > 1
-                && (splitString[0] == "IN"
-                || splitString[0] == "OUT"
-                || splitString[0] == "RETURN")
-                ) {
-                    machineCode = new Bit12(0);
-                    return false;
-            }
-
-            byte addr = 0;
-            if (!byte.TryParse(splitString[1], out addr)) {
-                machineCode = new Bit12(0);
-                return false;
-            }
-
-            machineCode = new Bit12((short)opr);
-            machineCode = new Bit12((short)(machineCode.value() << Constants.StartOprBit));
-            machineCode += new Bit12(addr);
-            return true;
+            machineCode = new Bit12(0);
+            return false;
         }
 
 
@@ -399,69 +407,6 @@ namespace GUIProjekt
             return true;
         }
 
-        // TODO: Add error code as return value instead of boolean
-        // Maybe a struct with error code + line number
-        public bool checkSyntaxAssembly(string str) {
-            if (isBinary(str) && str.Length == 12) {
-                return false;
-            }
-
-            // Empty lines to create space are fine
-            if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
-                return true;
-            }
-
-            char[] trimChars = new char[2] { '\r', '\n' };
-            str = str.TrimEnd(trimChars);
-
-            string[] splitString = str.Split(' ');
-
-            // Special case where length is 1 and is a constant(number)
-            if (splitString.Length == 1) {
-                short val = 0;
-                if (short.TryParse(splitString[0], out val)
-                ) {
-                    if (val < -2048 || val > 2047) {
-                        return false;
-                    }
-                    return true;
-                }
-            }
-
-            // Special case where length is 1
-            if (splitString.Length == 1
-                && (splitString[0] == "IN"
-                || splitString[0] == "OUT"
-                || splitString[0] == "RETURN")
-                ) {
-                return true;
-            }
-
-            if (splitString.Length > 1
-                && (splitString[0] == "IN"
-                || splitString[0] == "OUT"
-                || splitString[0] == "RETURN")
-                ) {
-                return false;
-            }
-
-            if (splitString.Length != 2) {
-                return false;
-            }
-
-            Operations opr;
-            if (!Enum.TryParse(splitString[0], false, out opr)) {
-                return false;
-            }            
-
-            byte addr = 0;
-            if (!byte.TryParse(splitString[1], out addr)) {
-                return false;
-            }
-
-            return true;
-        }
-
         public bool addrIdxToUpdate(Bit12 command, out byte idx) {
             byte val = (byte)extractVal(command.value());
             Operations opr = Operations.LOAD;
@@ -615,17 +560,6 @@ namespace GUIProjekt
                  && checkSyntaxMachine("100111111111")
                  && checkSyntaxMachine("111100000000");
             System.Diagnostics.Debug.WriteLine("checkSyntaxMachine: " + ok);
-
-            ok = ok && checkSyntaxAssembly("LOAD 0")
-                 && checkSyntaxAssembly("STORE 48")
-                 && checkSyntaxAssembly("SUB 5")
-                 && checkSyntaxAssembly("IN")
-                 && checkSyntaxAssembly("OUT")
-                 && checkSyntaxAssembly("ADD 255")
-                 && checkSyntaxAssembly("RETURN")
-                 && checkSyntaxAssembly("CALL 10")
-                 && checkSyntaxAssembly("PJUMP 0");
-            System.Diagnostics.Debug.WriteLine("checkSyntaxAssembly: " + ok);
 
             Bit12 machineCode = new Bit12(0);
             ok = ok && stringToMachine("000100010001", out machineCode)

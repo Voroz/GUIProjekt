@@ -35,9 +35,7 @@ namespace GUIProjekt
             updateGUIMemory(0, 255);
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            _inputTimerMK.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerAssembly.Tick += OnInputTimerAssemblyElapsed;
-            _inputTimerMK.Tick += OnInputTimerMKElapsed;
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
             _runTimer.Tick += OnInputTimerRunElapsed;
 
@@ -70,56 +68,29 @@ namespace GUIProjekt
         }
 
         private void updateGUIMemory(byte from, byte to) {
-            TextBox mkBox = TextBox_MK;
 
             for (int i = from; i <= to; i++) {
-                string mkStr = "";
-                if (i < mkBox.LineCount) {
-                    mkStr = mkBox.GetLineText(i);
-                }
-
-                if (!_assemblerModel.checkSyntaxMachine(mkStr)) {
-                    continue;
+                string assStr = "";
+                if (i < TextBox_Assembler.LineCount) {
+                    assStr = TextBox_Assembler.GetLineText(i);
                 }
 
                 char[] trimChars = new char[2] { '\r', '\n' };
-                mkStr = mkStr.TrimEnd(trimChars);
+                assStr = assStr.TrimEnd(trimChars);
 
-                short val = 0;
-                if (!string.IsNullOrWhiteSpace(mkStr)) {
-                    val = Convert.ToInt16(mkStr, 2);
+                Bit12 val = new Bit12(0);
+                if (!string.IsNullOrWhiteSpace(assStr)) {
+                    _assemblerModel.assemblyToMachine(assStr, out val);
                 }
-                Bit12 bit12Val = new Bit12(val);
 
                 if (i > 250) {
                     MemoryRow stackRow = getStackRowOfPosition(255 - i);
-                    stackRow.ShowMemoryAdress(bit12Val);
+                    stackRow.ShowMemoryAdress(val);
                 }
 
                 MemoryRow rad = getMMRowOfPosition(255 - i);
-                rad.ShowMemoryAdress(bit12Val);
+                rad.ShowMemoryAdress(val);
             }
-        }
-
-
-        /******************************************************
-         CALL: bool ok = checkSyntaxMachineTextBox(TextBox);
-         TASK: Checks if any line entered in the machine code 
-               section contains unapproved characters.
-        *****************************************************/ 
-        private bool checkSyntaxMachineTextBox(TextBox textBox) {
-            // TODO: Add error code as return value instead of boolean
-            // Maybe a struct with error code + line number
-            for (byte i = 0; i < textBox.LineCount; i++) {
-                char[] trimChars = new char[2] { '\r', '\n' };
-                string str = textBox.GetLineText(i).TrimEnd(trimChars);
-                
-                if (!_assemblerModel.checkSyntaxMachine(str)) {
-                    errorCode("Syntax error row " + i + " " + str + " not a valid command");
-                    return false;
-                }
-            }
-            return true;
         }
 
 
@@ -135,7 +106,8 @@ namespace GUIProjekt
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
-                if (!_assemblerModel.checkSyntaxAssembly(str)) {
+                Bit12 val = new Bit12(0);
+                if (!_assemblerModel.assemblyToMachine(str, out val)) {
                     errorCode("Syntax error row "+ i +" " + str +" not a valid command");
                     return false;
                 }             
@@ -146,83 +118,11 @@ namespace GUIProjekt
 
 
         /******************************************************
-         CALL: When writing in the machine code section.
-         TASK: Updates the assembler section.
-        *****************************************************/ 
-        private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
-            // TODO: Intellisens stuff
-            // (use struct from checkSyntax functions with error code and line number to create highlighting and error information for user)
-
-            TextBox mkBox = sender as TextBox;
-            TextBox assemblerBox = TextBox_Assembler;
-
-            if (!mkBox.IsFocused || mkBox.IsReadOnly) { 
-                return;
-            }
-
-            _inputTimerMK.Stop();
-            _inputTimerMK.Start();
-            assemblerBox.IsReadOnly = true;           
-        }
-
-        private void OnInputTimerMKElapsed(object source, EventArgs e) {
-            TextBox assemblerBox = TextBox_Assembler;
-            TextBox mkBox = TextBox_MK;
-
-            _inputTimerMK.Stop();
-            assemblerBox.Clear();
-
-            for (int i = 0; i < mkBox.LineCount; i++) {
-                string mkStr = mkBox.GetLineText(i);
-                Bit12 bits = new Bit12(0);
-                string assemblyStr = "";
-
-                if (!_assemblerModel.checkSyntaxMachine(mkStr)) {
-                    if (i != mkBox.LineCount - 1) {
-                        assemblerBox.AppendText("\n");
-                    }
-                    continue;
-                }
-
-                if (!string.IsNullOrWhiteSpace(mkStr)) {
-                    char[] trimChars = new char[2] { '\r', '\n' };
-                    _assemblerModel.stringToMachine(mkStr.TrimEnd(trimChars), out bits);
-                    _assemblerModel.machineToAssembly(bits, out assemblyStr);                                      
-                }
-
-                short val = 0;
-                short.TryParse(mkStr, out val);
-                Bit12 bit12Val = new Bit12(val);
-
-                MemoryRow row = getMMRowOfPosition(255 - i);
-                //changeColor(row);                
-                row.ShowMemoryAdress(bit12Val);
-
-                if (mkStr.Length > 0 && mkStr[mkStr.Length - 1] == '\n') {
-                    assemblyStr += '\n';
-                }
-                assemblerBox.AppendText(assemblyStr);
-            }
-
-            // Update deleted lines memory aswell
-            int nrOfDeletedLines = _previousLineCount - mkBox.LineCount;
-            if (nrOfDeletedLines >= 0) {
-                updateGUIMemory((byte)(mkBox.LineCount - 1), (byte)(mkBox.LineCount - 1 + nrOfDeletedLines));
-            }
-            updateGUIMemory((byte)0, (byte)(mkBox.LineCount - 1));
-
-            _previousLineCount = (byte)mkBox.LineCount;
-            assemblerBox.IsReadOnly = false;
-        }
-
-
-        /******************************************************
          CALL: When writing in the assembler section.
          TASK: Updates the machine code section and the memory.
         *****************************************************/ 
         private void TextBox_Assembler_TextChanged(object sender, TextChangedEventArgs e) {
             TextBox assemblerBox = sender as TextBox;
-            TextBox mkBox = TextBox_MK;
             
             if (!assemblerBox.IsFocused || assemblerBox.IsReadOnly) {
                 return;
@@ -230,50 +130,25 @@ namespace GUIProjekt
             
             _inputTimerAssembly.Stop();
             _inputTimerAssembly.Start();
-            mkBox.IsReadOnly = true;
         }
 
         private void OnInputTimerAssemblyElapsed(object source, EventArgs e) {
             TextBox assemblerBox = TextBox_Assembler;
-            TextBox mkBox = TextBox_MK;
             
             _inputTimerAssembly.Stop();
-            mkBox.Clear();
 
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
                 Bit12 bits = new Bit12(0);
-                string mkStr = "";
-
-                if (!_assemblerModel.checkSyntaxAssembly(assemblyStr)) {
-                    if (i != assemblerBox.LineCount - 1) {
-                        mkBox.AppendText("\n");
-                    }
-                    continue;
-                }
 
                 if (!string.IsNullOrWhiteSpace(assemblyStr)) {
                     char[] trimChars = new char[2] { '\r', '\n' };
                     _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
-                    mkStr = Convert.ToString(bits.value(), 2).PadLeft(12, '0');
-
-                    if (mkStr.Length > 12) {
-                        mkStr = mkStr.Substring(mkStr.Length - 12);
-                    }
                 }
-
-                short val = 0;
-                short.TryParse(mkStr, out val);
-                Bit12 bit12Val = new Bit12(val);
 
                 MemoryRow row = getMMRowOfPosition(255 - i);
-                
-                row.ShowMemoryAdress(bit12Val);
 
-                if (assemblyStr.Length > 0 && assemblyStr[assemblyStr.Length - 1] == '\n') {
-                    mkStr += '\n';
-                }
-                mkBox.AppendText(mkStr);
+                row.ShowMemoryAdress(bits);
             }
 
             // Update deleted lines memory aswell
@@ -284,7 +159,6 @@ namespace GUIProjekt
             updateGUIMemory((byte)0, (byte)(assemblerBox.LineCount - 1));
 
             _previousLineCount = (byte)assemblerBox.LineCount;
-            mkBox.IsReadOnly = false;
         }
 
         // TODO: Enkel tillfällig funktion för att markera rader
@@ -311,7 +185,6 @@ namespace GUIProjekt
 
             if (opr == Operations.RETURN && _assemblerModel.stack().size() == 0) {
                 _runTimer.Stop();
-                TextBox_MK.IsReadOnly = false;
                 TextBox_Assembler.IsReadOnly = false;
                 errorCode("Error: Attempted Return on an empty stack");
                 return;
@@ -410,7 +283,6 @@ namespace GUIProjekt
             }
 
             TextBox_Assembler.IsReadOnly = true;
-            TextBox_MK.IsReadOnly = true;
 
             clearUserMsg();
 
@@ -446,7 +318,6 @@ namespace GUIProjekt
             programTick();
 
             TextBox_Assembler.IsReadOnly = false;
-            TextBox_MK.IsReadOnly = false;
         }
 
         /******************************************************
@@ -465,10 +336,8 @@ namespace GUIProjekt
             for (int i = 0; i < 12; i++) {
                 lightOff(i);
             }
-            TextBox textBox = TextBox_MK;
-            TextBox textBoxAssembler = TextBox_Assembler;
-            textBoxAssembler.IsReadOnly = false;
-            textBox.IsReadOnly = false;
+
+            TextBox_Assembler.IsReadOnly = false;
 
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
@@ -595,11 +464,8 @@ namespace GUIProjekt
                input in the textboxes again.
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e) {
-            TextBox textBoxMK = TextBox_MK;
-            TextBox textBoxAssembler = TextBox_Assembler;
             _runTimer.Stop();
-            textBoxMK.IsReadOnly = false;
-            textBoxAssembler.IsReadOnly = false;
+            TextBox_Assembler.IsReadOnly = false;
         }
 
         
