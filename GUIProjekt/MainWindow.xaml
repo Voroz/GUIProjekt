@@ -166,8 +166,8 @@
                             Minimum="-2048"
                             Maximum="2047"
                             Value="0"
-                            TickPlacement="BottomRight"
-                            TickFrequency="256"
+                            TickPlacement="None"
+                            TickFrequency="1"
                             IsSnapToTickEnabled="True"
                             ValueChanged="Slider_Input_ValueChanged"
                             />
