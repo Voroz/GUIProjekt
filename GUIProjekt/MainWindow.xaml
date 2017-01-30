@@ -536,7 +536,7 @@
                         <Grid Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="200" MaxHeight="130">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="300" />
+                                <ColumnDefinition Width="200" />
                             </Grid.ColumnDefinitions>
                             <ScrollViewer Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                                 <Viewbox VerticalAlignment="Top">
