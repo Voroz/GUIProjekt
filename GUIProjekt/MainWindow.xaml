@@ -169,6 +169,7 @@
                             Minimum="-2048"
                             Maximum="2047"
                             Value="0"
+                            ToolTip="Increment / Decrement input"
                             TickPlacement="None"
                             TickFrequency="1"
                             IsSnapToTickEnabled="True"

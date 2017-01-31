@@ -317,7 +317,8 @@ namespace GUIProjekt
             if (!InitProgramStart()) {
                 return;
             }
-            _runTimer.Start();          
+            _runTimer.Start();
+            clearUserMsg();
         }
 
         private void OnInputTimerRunElapsed(object source, EventArgs e) {
@@ -334,6 +335,7 @@ namespace GUIProjekt
             if (!InitProgramStart()) {
                 return;
             }
+            clearUserMsg();
             programTick();
 
             TextBox_Assembler.IsReadOnly = false;
