@@ -380,10 +380,8 @@ namespace GUIProjekt
          TASK: displays msg on screen in TextBoxError
          *****************************************************/
         void errorCode(String errorMsg)
-        {
-            SolidColorBrush br = new SolidColorBrush(Colors.Red);
-            TextBlock_MessageBox.Foreground = br;
-            TextBlock_MessageBox.Text += (errorMsg + "\n");
+        {                      
+            TextBlock_MessageBox.Inlines.Add(new Run(errorMsg +"\n") { Foreground = Brushes.Red });
             ScrollViewer_MessageBox.ScrollToEnd();
         }
 
@@ -392,10 +390,8 @@ namespace GUIProjekt
          TASK: displays msg on screen in TextBoxMsg
          *****************************************************/
         void userMsg(String userMsg)
-        {
-            SolidColorBrush br = new SolidColorBrush(Colors.Blue);
-            TextBlock_MessageBox.Foreground = br;
-            TextBlock_MessageBox.Text += (userMsg + "\n");
+        {            
+            TextBlock_MessageBox.Inlines.Add(new Run(userMsg + "\n") { Foreground = Brushes.Blue });
             ScrollViewer_MessageBox.ScrollToEnd();
         }
 
