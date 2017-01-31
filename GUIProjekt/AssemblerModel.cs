@@ -575,6 +575,7 @@ namespace GUIProjekt
         private Bit12[] _memory;
         private MyStack<Bit12> _memoryStack;
         private Stack<UndoStorage> _undoStack;
+        private Dictionary<string, byte> _labels = new Dictionary<string, byte>();
         private byte _instructionPtr;
         private Bit12 _workingRegister;
         private Bit12 _input;

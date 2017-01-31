@@ -142,6 +142,8 @@ namespace GUIProjekt
                 return;
             }
 
+            storeLabels();
+
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
                 Bit12 bits = new Bit12(0);
@@ -165,6 +167,18 @@ namespace GUIProjekt
 
             _previousLineCount = (byte)assemblerBox.LineCount;
         }
+
+
+        void storeLabels() 
+        {
+            TextBox assemblerBox = TextBox_Assembler;
+            for(byte i = 0; i < assemblerBox.LineCount; i++) {
+                string label;
+                //if(_assemblerModel.containsLabel(assemblerBox.GetLineText(i), out label))
+                    // _assemblerModel.addLabel(label, i);
+            }
+        }
+
 
         // TODO: Enkel tillfällig funktion för att markera rader
         void markRow(MemoryRow row) {
@@ -336,7 +350,7 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
-           
+
                 lightOff();
             
 
@@ -558,25 +572,20 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
 
-        
-        private AssemblerModel _assemblerModel;
-        private byte _previousLineCount;
-        private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
-
-        private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
-        private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
-
-        private void Slider_Input_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+        private void Slider_Input_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
             Slider slider = sender as Slider;
             _assemblerModel.setInput(new Bit12((short)slider.Value));
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
         }
 
-        private void Button_FastForward_Checked(object sender, RoutedEventArgs e) {
+        private void Button_FastForward_Checked(object sender, RoutedEventArgs e)
+        {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.FastExecutionDelay);
         }
 
-        private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e) {
+        private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e)
+        {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
         }
 
