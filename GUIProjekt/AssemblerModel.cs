@@ -114,7 +114,7 @@ namespace GUIProjekt
             return (byte)extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
         }
 
-        LabelStatus containsLabel(string str, out string label)
+        public LabelStatus containsLabel(string str, out string label)
         {
 
             label = "";
@@ -139,18 +139,6 @@ namespace GUIProjekt
                 return LabelStatus.SyntaxError;
             }
 
-            for (int i = 1; i < str.Length; i++)
-            {
-                label += str[i];
-            }
-
-            Operations opr = Operations.LOAD;
-
-            if (!Enum.TryParse(label, out opr))
-            {
-                return LabelStatus.Blacklisted;
-            }
-
             label = "";
             for (int i = 1; i < str.Length; i++)
             {
@@ -160,6 +148,14 @@ namespace GUIProjekt
                 }
                 label += str[i];
             }
+
+            Operations opr = Operations.LOAD;
+
+            if (Enum.TryParse(label, out opr))
+            {
+                return LabelStatus.Blacklisted;
+            }
+
 
             return LabelStatus.Success;
         }
@@ -173,13 +169,22 @@ namespace GUIProjekt
                 return false;
             }
 
-            string[] splitString = label.Split(' ');
+            string[] splitString = str.Split(' ');
             string possibleLabel = splitString[splitString.Length-1];
 
-            return _labels.ContainsKey(possibleLabel);
+            if(!_labels.ContainsKey(possibleLabel))
+                return false;
+
+            label = possibleLabel;
+            return true;
         }
 
 
+        public bool addLabel(string str, byte row)
+        {
+            _labels[str] = row;
+            return true;
+        }
 
 
         /******************************************************
@@ -260,6 +265,15 @@ namespace GUIProjekt
                 return false;
             }
 
+            
+            string label = "";
+            if (containsLabel(assemblyString, out label) == LabelStatus.Success) {
+                assemblyString = assemblyString.Replace(label, "");
+                assemblyString = assemblyString.TrimStart(':');
+                if(assemblyString.Length != 0)
+                    assemblyString =  assemblyString.TrimStart(' ');
+            }
+
             // Empty lines to create space are fine
             if (assemblyString == "\r\n" || assemblyString == "\r" || assemblyString == "\n" || string.IsNullOrWhiteSpace(assemblyString)) {
                 machineCode = new Bit12(0);
@@ -286,13 +300,17 @@ namespace GUIProjekt
 
             Operations opr = Operations.LOAD;
             byte addr = 0;
+            label = "";
             if (splitString.Length == 2
                 && Enum.TryParse(splitString[0], false, out opr)
-                && byte.TryParse(splitString[1], out addr)
+                && (byte.TryParse(splitString[1], out addr) || referencesLabel(assemblyString, out label))
                 && !(splitString[0] == "IN"
                 || splitString[0] == "OUT"
                 || splitString[0] == "RETURN")
-                ) {                
+                ) {
+
+                if(label.Length > 0)
+                    addr = _labels[label];
 
                 machineCode = new Bit12((short)opr);
                 machineCode = new Bit12((short)(machineCode.value() << Constants.StartOprBit));

@@ -174,8 +174,10 @@ namespace GUIProjekt
             TextBox assemblerBox = TextBox_Assembler;
             for(byte i = 0; i < assemblerBox.LineCount; i++) {
                 string label;
-                //if(_assemblerModel.containsLabel(assemblerBox.GetLineText(i), out label))
-                    // _assemblerModel.addLabel(label, i);
+                if (_assemblerModel.containsLabel(assemblerBox.GetLineText(i), out label) == LabelStatus.Success)
+                {
+                    _assemblerModel.addLabel(label, i);
+                }
             }
         }
 
