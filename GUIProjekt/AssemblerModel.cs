@@ -141,24 +141,18 @@ namespace GUIProjekt
 
             for (int i = 1; i < str.Length; i++)
             {
-                label += str[i];
-            }
-
-            Operations opr = Operations.LOAD;
-
-            if (!Enum.TryParse(label, out opr))
-            {
-                return LabelStatus.Blacklisted;
-            }
-
-            label = "";
-            for (int i = 1; i < str.Length; i++)
-            {
                 if (str[i] == ' ')
                 {
                     break;
                 }
                 label += str[i];
+            }
+
+            Operations opr = Operations.LOAD;
+
+            if (Enum.TryParse(label, out opr))
+            {
+                return LabelStatus.Blacklisted;
             }
 
             return LabelStatus.Success;
