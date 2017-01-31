@@ -137,6 +137,11 @@ namespace GUIProjekt
             
             _inputTimerAssembly.Stop();
 
+            if (assemblerBox.LineCount > 256) {
+                errorCode("Error: Exceeded maximum lines in assembler editor.");
+                return;
+            }
+
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
                 Bit12 bits = new Bit12(0);
