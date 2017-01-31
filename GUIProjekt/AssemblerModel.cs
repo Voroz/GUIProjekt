@@ -290,10 +290,12 @@ namespace GUIProjekt
                 short val = 0;
                 if (short.TryParse(splitString[0], out val)
                 ) {
-                    machineCode = new Bit12(val);
-                    if (val < -2048 || val > 2047) {
+                    if (val < -2048 || val > 2047)
+                    {
+                        machineCode = new Bit12(0);
                         return false;
-                    }                    
+                    } 
+                    machineCode = new Bit12(val);                                       
                     return true;
                 }
             }
