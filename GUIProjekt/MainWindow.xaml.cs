@@ -222,31 +222,31 @@ namespace GUIProjekt
 
 
             // TODO: Lamptest
-            for (byte i = 0; i < 12; i++) {
-                short lightup = _assemblerModel.extractValFromBits((byte)(11 - i), (byte)(11 - i), _assemblerModel.output().value());
+           
+                short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
                 if (lightup > 0)
-                    lightOn(i);
+                    lightOn();
                 else
-                    lightOff(i);
-            }
+                    lightOff();
+            
             ////////////////////////////////////////////////////            
         }
 
         //TODO Test för lampan
-        void lightOn(int index)
+        void lightOn()
         {
-            Debug.Assert(index >= 0 && index < 12);
-            var uriSource = new Uri(@"/GUIProjekt;component/images/light-on.png", UriKind.Relative);
-            Image image = UniformGrid_Lights.Children[index] as Image;
-            image.Source = new BitmapImage(uriSource);
+            
+            var uriSource = new Uri(@"/GUIProjekt;component/images/bulbon.png", UriKind.Relative);
+            
+            bulb.Source = new BitmapImage(uriSource);
         }
         //TODO Test för lampan
-        void lightOff(int index)
+        void lightOff()
         {
-            Debug.Assert(index >= 0 && index < 12);
-            var uriSource = new Uri(@"/GUIProjekt;component/images/light-off.png", UriKind.Relative);
-            Image image = UniformGrid_Lights.Children[index] as Image;
-            image.Source = new BitmapImage(uriSource);
+            
+            var uriSource = new Uri(@"/GUIProjekt;component/images/bulboff.png", UriKind.Relative);
+           
+            bulb.Source = new BitmapImage(uriSource);
         }
         
         bool assemblyTextToModel(TextBox textBoxAssembler) {
@@ -336,9 +336,9 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
-            for (int i = 0; i < 12; i++) {
-                lightOff(i);
-            }
+           
+                lightOff();
+            
 
             TextBox_Assembler.IsReadOnly = false;
 
@@ -516,13 +516,13 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             //TODO testade att tända lampan om output är över 0
-            for (byte i = 0; i < 12; i++) {
-                short lightup = _assemblerModel.extractValFromBits((byte)(11 - i), (byte)(11 - i), _assemblerModel.output().value());
+           
+                short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
                 if (lightup > 0)
-                    lightOn(i);
+                    lightOn();
                 else
-                    lightOff(i);
-            }
+                    lightOff();
+            
             ////////////////////////////////////////////////////
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
         }
@@ -578,6 +578,41 @@ namespace GUIProjekt
 
         private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e) {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = sender as MenuItem;
+
+           
+                Default.IsChecked = false;
+                Orange.IsChecked = false;
+                Visual.IsChecked = false;
+                item.IsChecked = true;
+                
+            
+
+            Skins selected;
+            Enum.TryParse(item.Header.ToString(), out selected);
+            
+            ResourceDictionary selectedDictionary = SkinManager.GetSkin(selected);
+            this.Resources.MergedDictionaries.Add(selectedDictionary);
+
+
+            for (int i = 0; i <= 255; i++)
+            {
+                getMMRowOfPosition(255 - i).ChangeSkin(selectedDictionary);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                getStackRowOfPosition(i).ChangeSkin(selectedDictionary);
+            }
+
+            ValueRow_InstructionPointer.ChangeSkin(selectedDictionary);
+            ValueRow_Input.ChangeSkin(selectedDictionary);
+            ValueRow_Output.ChangeSkin(selectedDictionary);
+            ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
     }
 }
