@@ -137,6 +137,13 @@ namespace GUIProjekt
             
             _inputTimerAssembly.Stop();
 
+            if (assemblerBox.LineCount > 256) {
+                errorCode("Error: Exceeded maximum lines in assembler editor.");
+                return;
+            }
+
+            storeLabels();
+
             for (int i = 0; i < assemblerBox.LineCount; i++) {
                 string assemblyStr = assemblerBox.GetLineText(i);
                 Bit12 bits = new Bit12(0);
@@ -160,6 +167,18 @@ namespace GUIProjekt
 
             _previousLineCount = (byte)assemblerBox.LineCount;
         }
+
+
+        void storeLabels() 
+        {
+            TextBox assemblerBox = TextBox_Assembler;
+            for(byte i = 0; i < assemblerBox.LineCount; i++) {
+                string label;
+                //if(_assemblerModel.containsLabel(assemblerBox.GetLineText(i), out label))
+                    // _assemblerModel.addLabel(label, i);
+            }
+        }
+
 
         // TODO: Enkel tillfällig funktion för att markera rader
         void markRow(MemoryRow row) {
@@ -217,31 +236,31 @@ namespace GUIProjekt
 
 
             // TODO: Lamptest
-            for (byte i = 0; i < 12; i++) {
-                short lightup = _assemblerModel.extractValFromBits((byte)(11 - i), (byte)(11 - i), _assemblerModel.output().value());
+           
+                short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
                 if (lightup > 0)
-                    lightOn(i);
+                    lightOn();
                 else
-                    lightOff(i);
-            }
+                    lightOff();
+            
             ////////////////////////////////////////////////////            
         }
 
         //TODO Test för lampan
-        void lightOn(int index)
+        void lightOn()
         {
-            Debug.Assert(index >= 0 && index < 12);
-            var uriSource = new Uri(@"/GUIProjekt;component/images/light-on.png", UriKind.Relative);
-            Image image = UniformGrid_Lights.Children[index] as Image;
-            image.Source = new BitmapImage(uriSource);
+            
+            var uriSource = new Uri(@"/GUIProjekt;component/images/bulbon.png", UriKind.Relative);
+            
+            bulb.Source = new BitmapImage(uriSource);
         }
         //TODO Test för lampan
-        void lightOff(int index)
+        void lightOff()
         {
-            Debug.Assert(index >= 0 && index < 12);
-            var uriSource = new Uri(@"/GUIProjekt;component/images/light-off.png", UriKind.Relative);
-            Image image = UniformGrid_Lights.Children[index] as Image;
-            image.Source = new BitmapImage(uriSource);
+            
+            var uriSource = new Uri(@"/GUIProjekt;component/images/bulboff.png", UriKind.Relative);
+           
+            bulb.Source = new BitmapImage(uriSource);
         }
         
         bool assemblyTextToModel(TextBox textBoxAssembler) {
@@ -331,9 +350,9 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
-            for (int i = 0; i < 12; i++) {
-                lightOff(i);
-            }
+
+                lightOff();
+            
 
             TextBox_Assembler.IsReadOnly = false;
 
@@ -511,13 +530,13 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             //TODO testade att tända lampan om output är över 0
-            for (byte i = 0; i < 12; i++) {
-                short lightup = _assemblerModel.extractValFromBits((byte)(11 - i), (byte)(11 - i), _assemblerModel.output().value());
+           
+                short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
                 if (lightup > 0)
-                    lightOn(i);
+                    lightOn();
                 else
-                    lightOff(i);
-            }
+                    lightOff();
+            
             ////////////////////////////////////////////////////
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
         }
@@ -553,26 +572,62 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
 
-        
+        private void Slider_Input_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider slider = sender as Slider;
+            _assemblerModel.setInput(new Bit12((short)slider.Value));
+            ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
+        }
+
+        private void Button_FastForward_Checked(object sender, RoutedEventArgs e)
+        {
+            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.FastExecutionDelay);
+        }
+
+        private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = sender as MenuItem;
+
+           
+                Default.IsChecked = false;
+                Orange.IsChecked = false;
+                Visual.IsChecked = false;
+                item.IsChecked = true;
+                
+            
+
+            Skins selected;
+            Enum.TryParse(item.Header.ToString(), out selected);
+            
+            ResourceDictionary selectedDictionary = SkinManager.GetSkin(selected);
+            this.Resources.MergedDictionaries.Add(selectedDictionary);
+
+
+            for (int i = 0; i <= 255; i++)
+            {
+                getMMRowOfPosition(255 - i).ChangeSkin(selectedDictionary);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                getStackRowOfPosition(i).ChangeSkin(selectedDictionary);
+            }
+
+            ValueRow_InstructionPointer.ChangeSkin(selectedDictionary);
+            ValueRow_Input.ChangeSkin(selectedDictionary);
+            ValueRow_Output.ChangeSkin(selectedDictionary);
+            ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
+        }
         private AssemblerModel _assemblerModel;
         private byte _previousLineCount;
         private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
 
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
-
-        private void Slider_Input_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            Slider slider = sender as Slider;
-            _assemblerModel.setInput(new Bit12((short)slider.Value));
-            ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
-        }
-
-        private void Button_FastForward_Checked(object sender, RoutedEventArgs e) {
-            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.FastExecutionDelay);
-        }
-
-        private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e) {
-            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
-        }
     }
 }
