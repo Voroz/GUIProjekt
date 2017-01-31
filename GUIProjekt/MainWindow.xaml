@@ -91,17 +91,18 @@
         <!-- LABEL ROW START -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48.5*" />
+                <ColumnDefinition Width="48*" />
                 <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="10.6*" />
-                <ColumnDefinition Width="22*" />           
-                <ColumnDefinition Width="51*" />
+                <ColumnDefinition Width="12.4*" />
+                <ColumnDefinition Width="24*" />           
+                <ColumnDefinition Width="46*" />
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="0"></Label>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="1"></Label>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="2"></Label>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="3"></Label>
+            <Label Background="{DynamicResource MenuColor2}" Grid.Column="4"></Label>
             <!-- Visar vad som är Operationer / Värde i minnet -->
             <Viewbox Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Center">
                 <Label Style="{StaticResource Labels}" FontSize="25">Row</Label>
@@ -112,7 +113,9 @@
             <Viewbox Grid.Column="3" Stretch="Uniform" HorizontalAlignment="Center">
                 <Label Style="{StaticResource Labels}" Grid.Column="3" FontSize="25">Value</Label>
             </Viewbox>
-            <Label Grid.Column="4" Style="{StaticResource Labels}"></Label>
+            <Viewbox Grid.Column="4" Stretch="Uniform" HorizontalAlignment="Center">
+                <Label Style="{StaticResource Labels}" Grid.Column="4" FontSize="25">Assembler</Label>
+            </Viewbox>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="5" /> <!-- För att fylla ut tomrummet -->
         </Grid>
         <!-- LABEL ROW END -->
