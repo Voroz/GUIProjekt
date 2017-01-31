@@ -19,12 +19,6 @@
         <Setter Property="Foreground" Value="{DynamicResource fontColorFileMenu}"/>
     </Style>
     
-    <!-- Combo Box SKINS -->
-    <Style x:Key="ComboBoxSkins" TargetType="ComboBox">
-        <Setter Property="SelectedIndex" Value="0" />
-        <Setter Property="Background" Value="{DynamicResource MenuColor1}" />
-        <Setter Property="RenderTransformOrigin" Value="0.636,0.636" />
-    </Style>
     
     <!-- Menu Button -->
     <Style x:Key="MenuButton" TargetType="{x:Type Button}">
