@@ -30,6 +30,14 @@ namespace GUIProjekt
         RETURN,
     }
 
+    enum LabelStatus : byte
+    {
+        Success,
+        NoLabel,
+        SyntaxError,
+        Blacklisted,
+    }
+
     struct UndoStorage {
         public UndoStorage(Bit12[] memory
             , MyStack<Bit12> memoryStack
@@ -70,6 +78,7 @@ namespace GUIProjekt
             _workingRegister = new Bit12(0);
             _input = new Bit12(0);
             _output = new Bit12(0);
+            _labels = new Dictionary<string, byte>();
 
             resetMemory();
         }
@@ -104,6 +113,73 @@ namespace GUIProjekt
         public byte extractVal(short bits) {
             return (byte)extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
         }
+
+        LabelStatus containsLabel(string str, out string label)
+        {
+
+            label = "";
+
+            if (str.Length == 0)
+            {
+                return LabelStatus.NoLabel;
+            }
+
+            if (str.Length > 0 && str[0] != ':')
+            {
+                return LabelStatus.NoLabel;
+            }
+
+            if (str.Length == 1 && str[0] == ':')
+            {
+                return LabelStatus.SyntaxError;
+            }
+
+            if (str[0] != ':' || string.IsNullOrWhiteSpace(str[1].ToString()) || char.IsDigit(str[1]))
+            {
+                return LabelStatus.SyntaxError;
+            }
+
+            for (int i = 1; i < str.Length; i++)
+            {
+                label += str[i];
+            }
+
+            Operations opr = Operations.LOAD;
+
+            if (!Enum.TryParse(label, out opr))
+            {
+                return LabelStatus.Blacklisted;
+            }
+
+            label = "";
+            for (int i = 1; i < str.Length; i++)
+            {
+                if (str[i] == ' ')
+                {
+                    break;
+                }
+                label += str[i];
+            }
+
+            return LabelStatus.Success;
+        }
+
+        bool referencesLabel(string str, out string label)
+        {
+            label = "";
+
+            if (str.Length == 0)
+            {
+                return false;
+            }
+
+            string[] splitString = label.Split(' ');
+            string possibleLabel = splitString[splitString.Length-1];
+
+            return _labels.ContainsKey(possibleLabel);
+        }
+
+
 
 
         /******************************************************
@@ -575,7 +651,7 @@ namespace GUIProjekt
         private Bit12[] _memory;
         private MyStack<Bit12> _memoryStack;
         private Stack<UndoStorage> _undoStack;
-        private Dictionary<string, byte> _labels = new Dictionary<string, byte>();
+        private Dictionary<string, byte> _labels;
         private byte _instructionPtr;
         private Bit12 _workingRegister;
         private Bit12 _input;
