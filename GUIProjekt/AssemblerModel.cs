@@ -268,8 +268,8 @@ namespace GUIProjekt
             
             string label = "";
             if (containsLabel(assemblyString, out label) == LabelStatus.Success) {
+                label = ":" + label;
                 assemblyString = assemblyString.Replace(label, "");
-                assemblyString = assemblyString.TrimStart(':');
                 if(assemblyString.Length != 0)
                     assemblyString =  assemblyString.TrimStart(' ');
             }

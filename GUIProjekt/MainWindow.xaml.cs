@@ -19,6 +19,12 @@ using System.IO;
 using System.Timers;
 using System.Windows.Controls.Primitives;
 
+// TODO: Fixa problem efter step back att programmet ej läser in minnet från modellen
+// utan istället från textbox (updateGUIMemory() omskrivning).
+// Se även till att uppdatera grafiska minnet efter step back (med updateGUIMemory() funktionen).
+// Gör också så att när man startar / steppar programmet igen så läser programmet om raden vi är på för tillfället
+// från textrutan och in i modellen.
+
 namespace GUIProjekt
 {
     /// <summary>
@@ -135,7 +141,7 @@ namespace GUIProjekt
         private void OnInputTimerAssemblyElapsed(object source, EventArgs e) {
             TextBox assemblerBox = TextBox_Assembler;
             
-            _inputTimerAssembly.Stop();
+            _inputTimerAssembly.Stop();            
 
             if (assemblerBox.LineCount > 256) {
                 errorCode("Error: Exceeded maximum lines in assembler editor.");
@@ -267,28 +273,22 @@ namespace GUIProjekt
         
         bool assemblyTextToModel(TextBox textBoxAssembler) {
 
+            storeLabels();
+
             if (!checkSyntaxAssemblyTextBox(textBoxAssembler))
             {
                 return false;
             }
-
-            // Adds users text input to the model
+            
             for (byte i = 0; i < textBoxAssembler.LineCount; i++)
             {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBoxAssembler.GetLineText(i).TrimEnd(trimChars);
                 Bit12 bits = new Bit12(0);
 
-                // Empty lines to create space are fine
-                if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str))
-                {
-                    _assemblerModel.setAddr(i, new Bit12(0));
-                    continue;
-                }
-
                 bool success = _assemblerModel.stringToMachine(str, out bits);
                 Debug.Assert(success);
-
+                
                 _assemblerModel.setAddr(i, bits);
             }
             return true;
