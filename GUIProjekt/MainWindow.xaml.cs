@@ -38,10 +38,13 @@ namespace GUIProjekt
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
             showMemoryRowNumbers();
+            _currentTextBox = TextBox_Assembler;
+            updateGUIMemory(0, 255);
             _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
             _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
             _runTimer = new System.Windows.Threading.DispatcherTimer();
             updateGUIMemory(0, 255, TextBox_Assembler);
+
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerAssembly.Tick += OnInputTimerAssemblyElapsed;
@@ -442,8 +445,8 @@ namespace GUIProjekt
 
             if(ofd.ShowDialog() == true) {
                 string filename = ofd.FileName;
-                TextBox_Assembler.Focus();
-                TextBox_Assembler.Text = File.ReadAllText(filename);
+                _currentTextBox.Focus();
+                _currentTextBox.Text = File.ReadAllText(filename);
                 userMsg("Open file " + filename);                
             }
             else
@@ -463,7 +466,7 @@ namespace GUIProjekt
             sfd.AddExtension = true;      
      
             if(sfd.ShowDialog() == true) {
-                File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
+                File.WriteAllText(sfd.FileName, _currentTextBox.Text);               
                 String time = DateTime.Now.ToString();
                 userMsg("Saved successfully " + time);
             }
@@ -653,11 +656,18 @@ namespace GUIProjekt
             ValueRow_Output.ChangeSkin(selectedDictionary);
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
+        private AssemblerModel _assemblerModel;
+        private byte _previousLineCount;
+        private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
+
+        private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
+        private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
 
         private void Assembler_Click(object sender, RoutedEventArgs e)
         {
             if (Assembler.IsChecked)
                 return;
+            _currentTextBox = TextBox_Assembler;
             label_txtBox_header.Content = "Assembly";
             Assembler.IsChecked = true;
             MachineCode.IsChecked = false;
@@ -669,6 +679,7 @@ namespace GUIProjekt
         {
             if (MachineCode.IsChecked)
                 return;
+            _currentTextBox = TextBox_MK;
             label_txtBox_header.Content = "Machine Code";
             MachineCode.IsChecked = true;
             Assembler.IsChecked = false;
@@ -677,6 +688,7 @@ namespace GUIProjekt
         }
 
         private AssemblerModel _assemblerModel;
+        private TextBox _currentTextBox;
         private byte _previousLineCount;
         private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
         private System.Windows.Threading.DispatcherTimer _runTimer;
