@@ -275,7 +275,6 @@ namespace GUIProjekt
 
             if (opr == Operations.RETURN && _assemblerModel.stack().size() == 0) {
                 _runTimer.Stop();
-                TextBox_Assembler.IsReadOnly = false;
                 errorCode("Attempted Return on an empty stack");
                 return;
             }
