@@ -177,10 +177,11 @@ namespace GUIProjekt
 
         void storeLabels() 
         {
-            TextBox assemblerBox = TextBox_Assembler;
-            for(byte i = 0; i < assemblerBox.LineCount; i++) {
+            _assemblerModel.clearLabels();
+            for (byte i = 0; i < TextBox_Assembler.LineCount; i++)
+            {
                 string label;
-                if (_assemblerModel.containsLabel(assemblerBox.GetLineText(i), out label) == LabelStatus.Success)
+                if (_assemblerModel.containsLabel(TextBox_Assembler.GetLineText(i), out label) == LabelStatus.Success)
                 {
                     _assemblerModel.addLabel(label, i);
                 }
