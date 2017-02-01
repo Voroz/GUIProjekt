@@ -122,6 +122,27 @@ namespace GUIProjekt
             return true;
         }
 
+        /******************************************************
+        CALL: When writing in the machine code section.
+        TASK: Updates the assembler section.
+       *****************************************************/
+        private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // TODO: Intellisens stuff
+            // (use struct from checkSyntax functions with error code and line number to create highlighting and error information for user)
+
+            //TextBox mkBox = sender as TextBox;
+            //TextBox assemblerBox = TextBox_Assembler;
+
+            //if (!mkBox.IsFocused || mkBox.IsReadOnly)
+            //{
+            //    return;
+            //}
+
+            //_inputTimerMK.Stop();
+            //_inputTimerMK.Start();
+            //assemblerBox.IsReadOnly = true;
+        }
 
         /******************************************************
          CALL: When writing in the assembler section.
@@ -630,5 +651,21 @@ namespace GUIProjekt
 
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+
+        private void Assembler_Click(object sender, RoutedEventArgs e)
+        {
+            if (Assembler.IsChecked)
+                return;
+            Assembler.IsChecked = true;
+            MachineCode.IsChecked = false;
+        }
+
+        private void MachineCode_Click(object sender, RoutedEventArgs e)
+        {
+            if (MachineCode.IsChecked)
+                return;
+            MachineCode.IsChecked = true;
+            Assembler.IsChecked = false;
+        }
     }
 }
