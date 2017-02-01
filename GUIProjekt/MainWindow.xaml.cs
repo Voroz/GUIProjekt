@@ -131,7 +131,7 @@ namespace GUIProjekt
         private bool checkSyntaxMKTextBox(TextBox textBox) {
             // TODO: Add error code as return value instead of boolean
             // Maybe a struct with error code + line number
-            for (byte i = 0; i < textBox.LineCount; i++) {
+            for (int i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
@@ -154,7 +154,7 @@ namespace GUIProjekt
         private bool checkSyntaxAssemblyTextBox(TextBox textBox) {
             // TODO: Add error code as return value instead of boolean
             // Maybe a struct with error code + line number
-            for (byte i = 0; i < textBox.LineCount; i++) {
+            for (int i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
@@ -241,12 +241,11 @@ namespace GUIProjekt
 
         void storeLabels() {
             _assemblerModel.clearLabels();
-            for (byte i = 0; i < TextBox_Assembler.LineCount; i++)
-        {
+            for (int i = 0; i < TextBox_Assembler.LineCount; i++) {
                 string label;
                 if (_assemblerModel.containsLabel(TextBox_Assembler.GetLineText(i), out label) == LabelStatus.Success)
                 {
-                    _assemblerModel.addLabel(label, i);
+                    _assemblerModel.addLabel(label, (byte)i);
                 }
             }
         }
@@ -346,7 +345,7 @@ namespace GUIProjekt
                 return false;
             }
             
-            for (byte i = 0; i < textBox.LineCount; i++)
+            for (int i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
@@ -355,7 +354,7 @@ namespace GUIProjekt
                 bool success = _assemblerModel.stringToMachine(str, out bits);
                 Debug.Assert(success);
                 
-                _assemblerModel.setAddr(i, bits);
+                _assemblerModel.setAddr((byte)i, bits);
             }
             return true;
         }
