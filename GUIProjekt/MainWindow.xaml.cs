@@ -52,6 +52,7 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
+            ValueRow_InstructionPointer.RemoveChildElements();
         }
 
 
@@ -114,7 +115,7 @@ namespace GUIProjekt
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.assemblyToMachine(str, out val)) {
-                    errorCode("Syntax error row "+ i +" " + str +" not a valid command");
+                    errorCode("Syntax error: Row "+ i +", " + str +" not a valid command.");
                     return false;
                 }             
             }
@@ -235,7 +236,7 @@ namespace GUIProjekt
             if (opr == Operations.RETURN && _assemblerModel.stack().size() == 0) {
                 _runTimer.Stop();
                 TextBox_Assembler.IsReadOnly = false;
-                errorCode("Error: Attempted Return on an empty stack");
+                errorCode("Error: Attempted Return on an empty stack.");
                 return;
             }
 
@@ -400,7 +401,7 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: errorCode("I want to display this to the user");
-         TASK: displays msg on screen in TextBoxError
+         TASK: Displays msg on screen in TextBoxError.
          *****************************************************/
         void errorCode(String errorMsg)
         {                      
@@ -410,7 +411,7 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: userMsg("I want to display this to the user");
-         TASK: displays msg on screen in TextBoxMsg
+         TASK: Displays msg on screen in TextBoxMsg.
          *****************************************************/
         void userMsg(String userMsg)
         {            
@@ -419,8 +420,8 @@ namespace GUIProjekt
         }
 
         /******************************************************
-         CALL: clearUserMsg()
-         TASK: Empty user message screen
+         CALL: clearUserMsg();
+         TASK: Empty user message screen.
          *****************************************************/
         void clearUserMsg()
         {
@@ -465,7 +466,7 @@ namespace GUIProjekt
             }
             else
             {
-                errorCode("Could not save the file");
+                errorCode("Could not save the file.");
             }
         }
 
@@ -515,7 +516,7 @@ namespace GUIProjekt
         private void Button_StepBack_Click(object sender, RoutedEventArgs e) {
             if (_runTimer.IsEnabled) {
                
-                errorCode("Error cannot do this while running the application");
+                errorCode("Error: Cannot do this while running the application.");
                 return;
             }
 
