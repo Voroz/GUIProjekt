@@ -53,7 +53,7 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
-            ValueRow_InstructionPointer.RemoveChildElements();
+            ValueRow_InstructionPointer.HideChildElements();
         }
 
 
@@ -137,7 +137,7 @@ namespace GUIProjekt
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.binaryStringToMachine(str, out val)) {
-                    errorCode("Syntax error, row " + i + " " + str + " not a valid command");
+                    errorCode("Syntax error, row " + i + " " + "(" + str + ")" + " not a valid command");
                     return false;
                 }
             }
@@ -160,7 +160,7 @@ namespace GUIProjekt
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.assemblyToMachine(str, out val)) {
-                    errorCode("Syntax error, row "+ i +" " + str +" not a valid command");
+                    errorCode("Syntax error, row "+ i +" " + "(" + str + ")" +" not a valid command");
                     return false;
                 }
             }
@@ -487,7 +487,7 @@ namespace GUIProjekt
             else
             {
                 string filename = ofd.FileName;
-                errorCode("Could not open file " + filename);
+                errorCode("Could not open file. /Cancel requested by user. " + filename);
             }
         }
 
@@ -507,7 +507,7 @@ namespace GUIProjekt
             }
             else
             {
-                errorCode("Could not save the file.");
+                errorCode("Could not save file. /Cancel requested by user.");
             }
         }
 
