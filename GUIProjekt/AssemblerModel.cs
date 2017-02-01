@@ -511,8 +511,10 @@ namespace GUIProjekt
         public bool addrIdxToUpdate(Bit12 command, out byte idx) {
             byte val = (byte)extractVal(command.value());
             Operations opr = Operations.LOAD;
-            bool success = extractOperation(command.value(), out opr);
-            Debug.Assert(success);
+            if (!extractOperation(command.value(), out opr)) {
+                idx = 0;
+                return false;
+            }
 
             switch (opr) {
                 case Operations.STORE: {
@@ -548,8 +550,9 @@ namespace GUIProjekt
             Operations opr = Operations.LOAD;            
             byte addr = (byte)extractVal(current.value());
 
-            bool success = extractOperation(current.value(), out opr);
-            Debug.Assert(success);
+            if (!extractOperation(current.value(), out opr)) {
+                return false;
+            }
 
             _undoStack.Push(new UndoStorage(_memory, _memoryStack, _instructionPtr, _workingRegister, _input, _output));
 
@@ -613,10 +616,6 @@ namespace GUIProjekt
                     _instructionPtr = (byte)_memoryStack.top().value();                    
                     _memoryStack.pop();
                 } break;
-
-                default: {
-                    return false;
-                }
             }
 
             return true;

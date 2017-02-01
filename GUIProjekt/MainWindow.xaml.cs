@@ -172,6 +172,12 @@ namespace GUIProjekt
 
         private void OnInputTimerMKElapsed(object source, EventArgs e) {
             _inputTimerMK.Stop();
+
+            if (TextBox_MK.LineCount > 256) {
+                errorCode("Exceeded maximum lines in assembler editor.");
+                return;
+            }
+
             updateGUIMemory((byte)0, (byte)(TextBox_MK.LineCount - 1), TextBox_MK);
 
             // Update deleted lines memory aswell
@@ -202,7 +208,7 @@ namespace GUIProjekt
         private void OnInputTimerAssemblyElapsed(object source, EventArgs e) {
             _inputTimerAssembly.Stop();            
 
-            if (assemblerBox.LineCount > 256) {
+            if (TextBox_Assembler.LineCount > 256) {
                 errorCode("Exceeded maximum lines in assembler editor.");
                 return;
             }
