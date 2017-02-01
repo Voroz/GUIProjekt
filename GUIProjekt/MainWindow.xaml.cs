@@ -658,6 +658,8 @@ namespace GUIProjekt
                 return;
             Assembler.IsChecked = true;
             MachineCode.IsChecked = false;
+            TextBox_Assembler.Visibility = Visibility.Visible;
+            TextBox_MK.Visibility = Visibility.Collapsed;
         }
 
         private void MachineCode_Click(object sender, RoutedEventArgs e)
@@ -666,6 +668,8 @@ namespace GUIProjekt
                 return;
             MachineCode.IsChecked = true;
             Assembler.IsChecked = false;
+            TextBox_MK.Visibility = Visibility.Visible;
+            TextBox_Assembler.Visibility = Visibility.Collapsed;
         }
     }
 }

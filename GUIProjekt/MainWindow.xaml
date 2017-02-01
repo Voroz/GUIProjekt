@@ -212,7 +212,7 @@
                             Style="{StaticResource TextBoxMK}"
                             Name="TextBox_MK"
                             TextChanged="TextBox_MK_TextChanged"
-                            Visibility="Visible"/>
+                            Visibility="Collapsed"/>
 
                         <Viewbox Grid.Column="0">
                             <UniformGrid Name="theMemory" Rows="256" Columns="1" MinWidth="280" MinHeight="5000" HorizontalAlignment="Right">
