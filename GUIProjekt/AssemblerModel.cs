@@ -30,8 +30,7 @@ namespace GUIProjekt
         RETURN,
     }
 
-    enum LabelStatus : byte
-    {
+    enum LabelStatus : byte {
         Success,
         NoLabel,
         SyntaxError,
@@ -86,7 +85,7 @@ namespace GUIProjekt
 
 
         // (stolen) function for extracting an interval of bits from a 16 bit integer
-        short createMask(short a, short b) {
+        private short createMask(short a, short b) {
             short r = 0;
             for (short i = a; i <= b; i++)
                 r |= (short)(1 << i);
@@ -114,9 +113,7 @@ namespace GUIProjekt
             return (byte)extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
         }
 
-        public LabelStatus containsLabel(string str, out string label)
-        {
-
+        public LabelStatus containsLabel(string str, out string label) {
             label = "";
 
             if (str.Length == 0)
@@ -160,8 +157,7 @@ namespace GUIProjekt
             return LabelStatus.Success;
         }
 
-        bool referencesLabel(string str, out string label)
-        {
+        private bool referencesLabel(string str, out string label) {
             label = "";
 
             if (str.Length == 0)
@@ -180,14 +176,12 @@ namespace GUIProjekt
         }
 
 
-        public bool addLabel(string str, byte row)
-        {
+        public bool addLabel(string str, byte row) {
             _labels[str] = row;
             return true;
         }
 
-        public void clearLabels()
-        {
+        public void clearLabels() {
             _labels.Clear();
         }
 
@@ -197,7 +191,7 @@ namespace GUIProjekt
          TASK: Returns true if the inputted string only consists 
                of ones and zeros.
          *****************************************************/
-        bool isBinary(string str) {
+        private bool isBinary(string str) {
             bool binary = true;
             foreach (char ch in str) {
                 if (!(ch == '0' || ch == '1')) {
@@ -640,9 +634,7 @@ namespace GUIProjekt
               method in the class and returns true if no bug could 
               be found. 
        *****************************************************/
-        public bool SelfTest()
-        {
-            // Onödig test
+        public bool SelfTest() {
             bool ok = false;
             ok = (_size == _memory.GetLength(0));
 
