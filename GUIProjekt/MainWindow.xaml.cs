@@ -137,7 +137,7 @@ namespace GUIProjekt
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.binaryStringToMachine(str, out val)) {
-                    errorCode("Syntax error, row " + i + " " + str + " not a valid command");
+                    errorCode("Syntax error, row " + i + " " + "(" + str + ")" + " not a valid command");
                     return false;
                 }
             }
@@ -160,7 +160,7 @@ namespace GUIProjekt
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.assemblyToMachine(str, out val)) {
-                    errorCode("Syntax error, row "+ i +" " + str +" not a valid command");
+                    errorCode("Syntax error, row "+ i +" " + "(" + str + ")" +" not a valid command");
                     return false;
                 }
             }
@@ -488,7 +488,7 @@ namespace GUIProjekt
             else
             {
                 string filename = ofd.FileName;
-                errorCode("Could not open file " + filename);
+                errorCode("Could not open file. /Cancel requested by user. " + filename);
             }
         }
 
@@ -508,7 +508,7 @@ namespace GUIProjekt
             }
             else
             {
-                errorCode("Could not save the file.");
+                errorCode("Could not save file. /Cancel requested by user.");
             }
         }
 
