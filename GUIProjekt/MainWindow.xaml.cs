@@ -53,7 +53,7 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
-            ValueRow_InstructionPointer.RemoveChildElements();
+            ValueRow_InstructionPointer.HideChildElements();
         }
 
 
