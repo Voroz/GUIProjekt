@@ -39,7 +39,7 @@ namespace GUIProjekt
             _assemblerModel.SelfTest();
             showMemoryRowNumbers();
             _currentTextBox = TextBox_Assembler;
-            updateGUIMemory(0, 255);
+            updateGUIMemory(0, 255, _currentTextBox);
             _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
             _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
             _runTimer = new System.Windows.Threading.DispatcherTimer();
@@ -656,12 +656,6 @@ namespace GUIProjekt
             ValueRow_Output.ChangeSkin(selectedDictionary);
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
-        private AssemblerModel _assemblerModel;
-        private byte _previousLineCount;
-        private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
-
-        private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
-        private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
 
         private void Assembler_Click(object sender, RoutedEventArgs e)
         {
