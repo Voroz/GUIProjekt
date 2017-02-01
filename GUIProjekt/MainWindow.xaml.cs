@@ -126,6 +126,7 @@ namespace GUIProjekt
                 Bit12 temp;
                 if (!_assemblerModel.stringToMachine(str, out temp))
                 {
+                    errorCode("Syntax error, row " + i + " " + str + " not a valid command");
                     return false;
                 }
             }
@@ -149,7 +150,7 @@ namespace GUIProjekt
                 if (!_assemblerModel.assemblyToMachine(str, out val)) {
                     errorCode("Syntax error, row "+ i +" " + str +" not a valid command");
                     return false;
-                }             
+                }
             }
             
             return true;
