@@ -538,7 +538,7 @@ namespace GUIProjekt
          TASK: Interprets the current address and runs the 
                corresponding function.
         *****************************************************/
-        public void processCurrentAddr() {
+        public bool processCurrentAddr() {
             Bit12 current = _memory[_instructionPtr];
             Operations opr = Operations.LOAD;            
             byte addr = (byte)extractVal(current.value());
@@ -610,9 +610,11 @@ namespace GUIProjekt
                 } break;
 
                 default: {
-                    Debug.Assert(false);
-                } break;
-            } 
+                    return false;
+                }
+            }
+
+            return true;
         }
 
 

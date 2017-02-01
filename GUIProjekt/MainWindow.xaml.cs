@@ -19,12 +19,6 @@ using System.IO;
 using System.Timers;
 using System.Windows.Controls.Primitives;
 
-// TODO: Fixa problem efter step back att programmet ej läser in minnet från modellen
-// utan istället från textbox (updateGUIMemory() omskrivning).
-// Se även till att uppdatera grafiska minnet efter step back (med updateGUIMemory() funktionen).
-// Gör också så att när man startar / steppar programmet igen så läser programmet om raden vi är på för tillfället
-// från textrutan och in i modellen.
-
 namespace GUIProjekt
 {
     /// <summary>
@@ -114,7 +108,7 @@ namespace GUIProjekt
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.assemblyToMachine(str, out val)) {
-                    errorCode("Syntax error row "+ i +" " + str +" not a valid command");
+                    errorCode("Syntax error, row "+ i +" " + str +" not a valid command");
                     return false;
                 }             
             }
@@ -144,7 +138,7 @@ namespace GUIProjekt
             _inputTimerAssembly.Stop();            
 
             if (assemblerBox.LineCount > 256) {
-                errorCode("Error: Exceeded maximum lines in assembler editor.");
+                errorCode("Exceeded maximum lines in assembler editor.");
                 return;
             }
 
@@ -213,11 +207,13 @@ namespace GUIProjekt
             if (opr == Operations.RETURN && _assemblerModel.stack().size() == 0) {
                 _runTimer.Stop();
                 TextBox_Assembler.IsReadOnly = false;
-                errorCode("Error: Attempted Return on an empty stack");
+                errorCode("Attempted Return on an empty stack");
                 return;
             }
 
-            _assemblerModel.processCurrentAddr();
+            if (!_assemblerModel.processCurrentAddr()) {
+                errorCode("Invalid operation");
+            }
 
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
@@ -495,7 +491,7 @@ namespace GUIProjekt
         private void Button_StepBack_Click(object sender, RoutedEventArgs e) {
             if (_runTimer.IsEnabled) {
                
-                errorCode("Error cannot do this while running the application");
+                errorCode("Cannot do this while running the application");
                 return;
             }
 
