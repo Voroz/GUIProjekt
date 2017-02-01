@@ -108,6 +108,19 @@ namespace GUIProjekt
                 rad.ShowMemoryAdress(val);
             }
         }
+        
+        private bool checkSyntaxActiveTextbox()
+        {
+            if (_currentTextBox == TextBox_Assembler) {
+                return checkSyntaxAssemblyTextBox(_currentTextBox);
+            }
+            else if (_currentTextBox == TextBox_MK) {
+                return checkSyntaxMKTextBox(_currentTextBox);
+            }
+            
+            Debug.Assert(true);
+            return false;
+        }
 
 
         /******************************************************
@@ -115,21 +128,20 @@ namespace GUIProjekt
          TASK: Checks if any line entered in the machine code 
                section contains unapproved characters.
         *****************************************************/
-        private bool checkSyntaxTextbox(TextBox textBox)
-        {
+        private bool checkSyntaxMKTextBox(TextBox textBox) {
             // TODO: Add error code as return value instead of boolean
             // Maybe a struct with error code + line number
-            for (byte i = 0; i < textBox.LineCount; i++)
-            {
+            for (byte i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
-                Bit12 temp;
-                if (!_assemblerModel.stringToMachine(str, out temp))
-                {
+
+                Bit12 val = new Bit12(0);
+                if (!_assemblerModel.binaryStringToMachine(str, out val)) {
                     errorCode("Syntax error, row " + i + " " + str + " not a valid command");
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -329,7 +341,7 @@ namespace GUIProjekt
 
             storeLabels();
 
-            if (!checkSyntaxTextbox(textBox))
+            if (!checkSyntaxActiveTextbox())
             {
                 return false;
             }

@@ -209,6 +209,23 @@ namespace GUIProjekt
             return binary;
         }
 
+        public bool binaryStringToMachine(string str, out Bit12 machineCode) {            
+            if (string.IsNullOrWhiteSpace(str)) {
+                machineCode = new Bit12(0);
+                return true;
+            }
+
+            bool binary = isBinary(str);
+
+            if (!binary || str.Length != 12) {
+                machineCode = new Bit12(0);
+                return false;
+            }
+
+            machineCode = new Bit12(Convert.ToInt16(str, 2));
+            return true;
+        }
+
         /******************************************************
          CALL: bool ok = stringToMachine(string, out Bit12);
          TASK: Converts the string to machine code and returns
