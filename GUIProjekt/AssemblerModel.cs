@@ -186,6 +186,11 @@ namespace GUIProjekt
             return true;
         }
 
+        public void clearLabels()
+        {
+            _labels.Clear();
+        }
+
 
         /******************************************************
          CALL: bool ok = isBinary(string);
@@ -625,7 +630,7 @@ namespace GUIProjekt
             _output = undoValues._output;
 
             return undoValues;
-        }
+        }        
 
 
         /******************************************************
