@@ -43,7 +43,6 @@ namespace GUIProjekt
             _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
             _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
             _runTimer = new System.Windows.Threading.DispatcherTimer();
-            updateGUIMemory(0, 255, TextBox_Assembler);
 
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -96,7 +95,14 @@ namespace GUIProjekt
 
                 Bit12 val = new Bit12(0);
                 if (!string.IsNullOrWhiteSpace(str)) {
-                    _assemblerModel.stringToMachine(str, out val);
+                    if (textBox == TextBox_Assembler)
+                        _assemblerModel.assemblyToMachine(str, out val);
+                    else {
+                        if (_assemblerModel.checkSyntaxMachine(str)) {
+                            short tempval = Convert.ToInt16(str, 2);
+                            val = new Bit12(tempval);
+                        }
+                    }
                 }
 
                 if (i > 250) {
@@ -107,6 +113,29 @@ namespace GUIProjekt
                 MemoryRow rad = getMMRowOfPosition(255 - i);
                 rad.ShowMemoryAdress(val);
             }
+        }
+
+
+        /******************************************************
+         CALL: bool ok = checkSyntaxMachineTextBox(TextBox);
+         TASK: Checks if any line entered in the machine code 
+               section contains unapproved characters.
+        *****************************************************/
+        private bool checkSyntaxTextbox(TextBox textBox)
+        {
+            // TODO: Add error code as return value instead of boolean
+            // Maybe a struct with error code + line number
+            for (byte i = 0; i < textBox.LineCount; i++)
+            {
+                char[] trimChars = new char[2] { '\r', '\n' };
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
+                Bit12 temp;
+                if (!_assemblerModel.stringToMachine(str, out temp))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
 
@@ -148,7 +177,17 @@ namespace GUIProjekt
         }
 
         private void OnInputTimerMKElapsed(object source, EventArgs e) {
+            _inputTimerMK.Stop();
             updateGUIMemory((byte)0, (byte)(TextBox_MK.LineCount - 1), TextBox_MK);
+
+            // Update deleted lines memory aswell
+            int nrOfDeletedLines = _previousLineCount - TextBox_MK.LineCount;
+            if (nrOfDeletedLines >= 0)
+            {
+                updateGUIMemory((byte)(TextBox_MK.LineCount - 1), (byte)(TextBox_MK.LineCount - 1 + nrOfDeletedLines), TextBox_MK);
+            }
+            updateGUIMemory((byte)0, (byte)(TextBox_MK.LineCount - 1), TextBox_MK);
+            _previousLineCount = (byte)TextBox_MK.LineCount;
         }
 
         /******************************************************
@@ -167,44 +206,28 @@ namespace GUIProjekt
         }
 
         private void OnInputTimerAssemblyElapsed(object source, EventArgs e) {
-            TextBox assemblerBox = TextBox_Assembler;
-            
-            _inputTimerAssembly.Stop();            
+            _inputTimerAssembly.Stop();
 
-            if (assemblerBox.LineCount > 256) {
+            if (TextBox_Assembler.LineCount > 256)
+            {
                 errorCode("Error: Exceeded maximum lines in assembler editor.");
                 return;
             }
 
             storeLabels();
-
-            for (int i = 0; i < assemblerBox.LineCount; i++) {
-                string assemblyStr = assemblerBox.GetLineText(i);
-                Bit12 bits = new Bit12(0);
-
-                if (!string.IsNullOrWhiteSpace(assemblyStr)) {
-                    char[] trimChars = new char[2] { '\r', '\n' };
-                    _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
-                }
-
-                MemoryRow row = getMMRowOfPosition(255 - i);
-
-                row.ShowMemoryAdress(bits);
-            }
+            updateGUIMemory((byte)0, (byte)TextBox_Assembler.LineCount, TextBox_Assembler);
 
             // Update deleted lines memory aswell
-            int nrOfDeletedLines = _previousLineCount - assemblerBox.LineCount;
+            int nrOfDeletedLines = _previousLineCount - TextBox_Assembler.LineCount;
             if (nrOfDeletedLines >= 0) {
-                updateGUIMemory((byte)(assemblerBox.LineCount - 1), (byte)(assemblerBox.LineCount - 1 + nrOfDeletedLines), TextBox_Assembler);
+                updateGUIMemory((byte)(TextBox_Assembler.LineCount - 1), (byte)(TextBox_Assembler.LineCount - 1 + nrOfDeletedLines), TextBox_Assembler);
             }
-            updateGUIMemory((byte)0, (byte)(assemblerBox.LineCount - 1), TextBox_Assembler);
-
-            _previousLineCount = (byte)assemblerBox.LineCount;
+            updateGUIMemory((byte)0, (byte)(TextBox_Assembler.LineCount - 1), TextBox_Assembler);
+            _previousLineCount = (byte)TextBox_Assembler.LineCount;
         }
 
 
-        void storeLabels() 
-        {
+        void storeLabels() {
             _assemblerModel.clearLabels();
             for (byte i = 0; i < TextBox_Assembler.LineCount; i++)
             {
@@ -300,19 +323,19 @@ namespace GUIProjekt
             bulb.Source = new BitmapImage(uriSource);
         }
         
-        bool assemblyTextToModel(TextBox textBoxAssembler) {
+        bool textToModel(TextBox textBox) {
 
             storeLabels();
 
-            if (!checkSyntaxAssemblyTextBox(textBoxAssembler))
+            if (!checkSyntaxTextbox(textBox))
             {
                 return false;
             }
-            
-            for (byte i = 0; i < textBoxAssembler.LineCount; i++)
+
+            for (byte i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[2] { '\r', '\n' };
-                string str = textBoxAssembler.GetLineText(i).TrimEnd(trimChars);
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
                 Bit12 bits = new Bit12(0);
 
                 bool success = _assemblerModel.stringToMachine(str, out bits);
@@ -324,11 +347,11 @@ namespace GUIProjekt
         }
 
         bool InitProgramStart() {
-            if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled) {
+            if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled) {
                 return false;
             }
 
-            if (!assemblyTextToModel(TextBox_Assembler)) {
+            if (!textToModel(_currentTextBox)) {
                 return false;
             }
 
@@ -376,7 +399,7 @@ namespace GUIProjekt
         private void Button_Stop_Click(object sender, RoutedEventArgs e) {
             _runTimer.Stop();
             _assemblerModel.reset();
-            updateGUIMemory(0, 255, TextBox_Assembler);
+            updateGUIMemory(0, 255, _currentTextBox);
 
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
@@ -662,6 +685,8 @@ namespace GUIProjekt
             if (Assembler.IsChecked)
                 return;
             _currentTextBox = TextBox_Assembler;
+            updateGUIMemory(0, 255, _currentTextBox);
+            _assemblerModel.reset();
             label_txtBox_header.Content = "Assembly";
             Assembler.IsChecked = true;
             MachineCode.IsChecked = false;
@@ -674,6 +699,8 @@ namespace GUIProjekt
             if (MachineCode.IsChecked)
                 return;
             _currentTextBox = TextBox_MK;
+            updateGUIMemory(0, 255, _currentTextBox);
+            _assemblerModel.reset();
             label_txtBox_header.Content = "Machine Code";
             MachineCode.IsChecked = true;
             Assembler.IsChecked = false;
