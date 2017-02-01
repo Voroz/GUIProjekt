@@ -32,10 +32,17 @@ namespace GUIProjekt
             _assemblerModel = new AssemblerModel();
             _assemblerModel.SelfTest();
             showMemoryRowNumbers();
-            updateGUIMemory(0, 255);
+            _currentTextBox = TextBox_Assembler;
+            updateGUIMemory(0, 255, _currentTextBox);
+            _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+            _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
+            _runTimer = new System.Windows.Threading.DispatcherTimer();
+
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerAssembly.Tick += OnInputTimerAssemblyElapsed;
+            _inputTimerMK.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            _inputTimerMK.Tick += OnInputTimerMKElapsed;
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
             _runTimer.Tick += OnInputTimerRunElapsed;
 
@@ -46,6 +53,7 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
+            ValueRow_InstructionPointer.RemoveChildElements();
         }
 
 
@@ -67,20 +75,28 @@ namespace GUIProjekt
             }
         }
 
-        private void updateGUIMemory(byte from, byte to) {
+
+        private void updateGUIMemory(byte from, byte to, TextBox textBox) {
 
             for (int i = from; i <= to; i++) {
-                string assStr = "";
-                if (i < TextBox_Assembler.LineCount) {
-                    assStr = TextBox_Assembler.GetLineText(i);
+                string str = "";
+                if (i < textBox.LineCount) {
+                    str = textBox.GetLineText(i);
                 }
 
                 char[] trimChars = new char[2] { '\r', '\n' };
-                assStr = assStr.TrimEnd(trimChars);
+                str = str.TrimEnd(trimChars);
 
                 Bit12 val = new Bit12(0);
-                if (!string.IsNullOrWhiteSpace(assStr)) {
-                    _assemblerModel.assemblyToMachine(assStr, out val);
+                if (!string.IsNullOrWhiteSpace(str)) {
+                    if (textBox == TextBox_Assembler)
+                        _assemblerModel.assemblyToMachine(str, out val);
+                    else {
+                        if (_assemblerModel.checkSyntaxMachine(str)) {
+                            short tempval = Convert.ToInt16(str, 2);
+                            val = new Bit12(tempval);
+                        }
+                    }
                 }
 
                 if (i > 250) {
@@ -91,6 +107,29 @@ namespace GUIProjekt
                 MemoryRow rad = getMMRowOfPosition(255 - i);
                 rad.ShowMemoryAdress(val);
             }
+        }
+
+
+        /******************************************************
+         CALL: bool ok = checkSyntaxMachineTextBox(TextBox);
+         TASK: Checks if any line entered in the machine code 
+               section contains unapproved characters.
+        *****************************************************/
+        private bool checkSyntaxTextbox(TextBox textBox)
+        {
+            // TODO: Add error code as return value instead of boolean
+            // Maybe a struct with error code + line number
+            for (byte i = 0; i < textBox.LineCount; i++)
+            {
+                char[] trimChars = new char[2] { '\r', '\n' };
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
+                Bit12 temp;
+                if (!_assemblerModel.stringToMachine(str, out temp))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
 
@@ -116,6 +155,34 @@ namespace GUIProjekt
             return true;
         }
 
+        /******************************************************
+        CALL: When writing in the machine code section.
+        TASK: Updates the assembler section.
+       *****************************************************/
+        private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e) {
+            TextBox mkBox = sender as TextBox;
+
+            if (!mkBox.IsFocused || mkBox.IsReadOnly) {
+                return;
+            }
+
+            _inputTimerMK.Stop();
+            _inputTimerMK.Start();
+        }
+
+        private void OnInputTimerMKElapsed(object source, EventArgs e) {
+            _inputTimerMK.Stop();
+            updateGUIMemory((byte)0, (byte)(TextBox_MK.LineCount - 1), TextBox_MK);
+
+            // Update deleted lines memory aswell
+            int nrOfDeletedLines = _previousLineCount - TextBox_MK.LineCount;
+            if (nrOfDeletedLines >= 0)
+            {
+                updateGUIMemory((byte)(TextBox_MK.LineCount - 1), (byte)(TextBox_MK.LineCount - 1 + nrOfDeletedLines), TextBox_MK);
+            }
+            updateGUIMemory((byte)0, (byte)(TextBox_MK.LineCount - 1), TextBox_MK);
+            _previousLineCount = (byte)TextBox_MK.LineCount;
+        }
 
         /******************************************************
          CALL: When writing in the assembler section.
@@ -133,8 +200,6 @@ namespace GUIProjekt
         }
 
         private void OnInputTimerAssemblyElapsed(object source, EventArgs e) {
-            TextBox assemblerBox = TextBox_Assembler;
-            
             _inputTimerAssembly.Stop();            
 
             if (assemblerBox.LineCount > 256) {
@@ -143,38 +208,24 @@ namespace GUIProjekt
             }
 
             storeLabels();
-
-            for (int i = 0; i < assemblerBox.LineCount; i++) {
-                string assemblyStr = assemblerBox.GetLineText(i);
-                Bit12 bits = new Bit12(0);
-
-                if (!string.IsNullOrWhiteSpace(assemblyStr)) {
-                    char[] trimChars = new char[2] { '\r', '\n' };
-                    _assemblerModel.assemblyToMachine(assemblyStr.TrimEnd(trimChars), out bits);
-                }
-
-                MemoryRow row = getMMRowOfPosition(255 - i);
-
-                row.ShowMemoryAdress(bits);
-            }
+            updateGUIMemory((byte)0, (byte)TextBox_Assembler.LineCount, TextBox_Assembler);
 
             // Update deleted lines memory aswell
-            int nrOfDeletedLines = _previousLineCount - assemblerBox.LineCount;
+            int nrOfDeletedLines = _previousLineCount - TextBox_Assembler.LineCount;
             if (nrOfDeletedLines >= 0) {
-                updateGUIMemory((byte)(assemblerBox.LineCount - 1), (byte)(assemblerBox.LineCount - 1 + nrOfDeletedLines));
+                updateGUIMemory((byte)(TextBox_Assembler.LineCount - 1), (byte)(TextBox_Assembler.LineCount - 1 + nrOfDeletedLines), TextBox_Assembler);
             }
-            updateGUIMemory((byte)0, (byte)(assemblerBox.LineCount - 1));
-
-            _previousLineCount = (byte)assemblerBox.LineCount;
+            updateGUIMemory((byte)0, (byte)(TextBox_Assembler.LineCount - 1), TextBox_Assembler);
+            _previousLineCount = (byte)TextBox_Assembler.LineCount;
         }
 
 
-        void storeLabels() 
+        void storeLabels() {
+            _assemblerModel.clearLabels();
+            for (byte i = 0; i < TextBox_Assembler.LineCount; i++)
         {
-            TextBox assemblerBox = TextBox_Assembler;
-            for(byte i = 0; i < assemblerBox.LineCount; i++) {
                 string label;
-                if (_assemblerModel.containsLabel(assemblerBox.GetLineText(i), out label) == LabelStatus.Success)
+                if (_assemblerModel.containsLabel(TextBox_Assembler.GetLineText(i), out label) == LabelStatus.Success)
                 {
                     _assemblerModel.addLabel(label, i);
                 }
@@ -267,19 +318,19 @@ namespace GUIProjekt
             bulb.Source = new BitmapImage(uriSource);
         }
         
-        bool assemblyTextToModel(TextBox textBoxAssembler) {
+        bool textToModel(TextBox textBox) {
 
             storeLabels();
 
-            if (!checkSyntaxAssemblyTextBox(textBoxAssembler))
+            if (!checkSyntaxTextbox(textBox))
             {
                 return false;
             }
             
-            for (byte i = 0; i < textBoxAssembler.LineCount; i++)
+            for (byte i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[2] { '\r', '\n' };
-                string str = textBoxAssembler.GetLineText(i).TrimEnd(trimChars);
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
                 Bit12 bits = new Bit12(0);
 
                 bool success = _assemblerModel.stringToMachine(str, out bits);
@@ -291,11 +342,11 @@ namespace GUIProjekt
         }
 
         bool InitProgramStart() {
-            if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled) {
+            if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled) {
                 return false;
             }
 
-            if (!assemblyTextToModel(TextBox_Assembler)) {
+            if (!textToModel(_currentTextBox)) {
                 return false;
             }
 
@@ -331,10 +382,9 @@ namespace GUIProjekt
             if (!InitProgramStart()) {
                 return;
             }
+            
             clearUserMsg();
             programTick();
-
-            TextBox_Assembler.IsReadOnly = false;
         }
 
         /******************************************************
@@ -344,7 +394,7 @@ namespace GUIProjekt
         private void Button_Stop_Click(object sender, RoutedEventArgs e) {
             _runTimer.Stop();
             _assemblerModel.reset();
-            updateGUIMemory(0, 255);
+            updateGUIMemory(0, 255, _currentTextBox);
 
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
@@ -375,7 +425,7 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: errorCode("I want to display this to the user");
-         TASK: displays msg on screen in TextBoxError
+         TASK: Displays msg on screen in TextBoxError.
          *****************************************************/
         void errorCode(String errorMsg)
         {                      
@@ -385,7 +435,7 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: userMsg("I want to display this to the user");
-         TASK: displays msg on screen in TextBoxMsg
+         TASK: Displays msg on screen in TextBoxMsg.
          *****************************************************/
         void userMsg(String userMsg)
         {            
@@ -394,8 +444,8 @@ namespace GUIProjekt
         }
 
         /******************************************************
-         CALL: clearUserMsg()
-         TASK: Empty user message screen
+         CALL: clearUserMsg();
+         TASK: Empty user message screen.
          *****************************************************/
         void clearUserMsg()
         {
@@ -413,8 +463,8 @@ namespace GUIProjekt
 
             if(ofd.ShowDialog() == true) {
                 string filename = ofd.FileName;
-                TextBox_Assembler.Focus();
-                TextBox_Assembler.Text = File.ReadAllText(filename);
+                _currentTextBox.Focus();
+                _currentTextBox.Text = File.ReadAllText(filename);
                 userMsg("Open file " + filename);                
             }
             else
@@ -434,13 +484,13 @@ namespace GUIProjekt
             sfd.AddExtension = true;      
      
             if(sfd.ShowDialog() == true) {
-                File.WriteAllText(sfd.FileName, TextBox_Assembler.Text);
+                File.WriteAllText(sfd.FileName, _currentTextBox.Text);               
                 String time = DateTime.Now.ToString();
                 userMsg("Saved successfully " + time);
             }
             else
             {
-                errorCode("Could not save the file");
+                errorCode("Could not save the file.");
             }
         }
 
@@ -479,7 +529,6 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e) {
             _runTimer.Stop();
-            TextBox_Assembler.IsReadOnly = false;
         }
 
         
@@ -496,7 +545,13 @@ namespace GUIProjekt
             }
 
             if (_assemblerModel.undoStack().Count == 0) {
+                errorCode("Error cannot do this with an empty return stack");
                 return;
+            }
+
+            if (_assemblerModel.undoStack().Count == 1)
+            {
+                TextBox_Assembler.IsReadOnly = false;
             }
 
             UndoStorage undoValues = _assemblerModel.undo();
@@ -619,11 +674,41 @@ namespace GUIProjekt
             ValueRow_Output.ChangeSkin(selectedDictionary);
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
+
+        private void Assembler_Click(object sender, RoutedEventArgs e)
+        {
+            if (Assembler.IsChecked)
+                return;
+            _currentTextBox = TextBox_Assembler;
+            updateGUIMemory(0, 255, _currentTextBox);
+            _assemblerModel.reset();
+            label_txtBox_header.Content = "Assembly";
+            Assembler.IsChecked = true;
+            MachineCode.IsChecked = false;
+            TextBox_Assembler.Visibility = Visibility.Visible;
+            TextBox_MK.Visibility = Visibility.Collapsed;
+        }
+
+        private void MachineCode_Click(object sender, RoutedEventArgs e)
+        {
+            if (MachineCode.IsChecked)
+                return;
+            _currentTextBox = TextBox_MK;
+            updateGUIMemory(0, 255, _currentTextBox);
+            _assemblerModel.reset();
+            label_txtBox_header.Content = "Machine Code";
+            MachineCode.IsChecked = true;
+            Assembler.IsChecked = false;
+            TextBox_MK.Visibility = Visibility.Visible;
+            TextBox_Assembler.Visibility = Visibility.Collapsed;
+        }
+
         private AssemblerModel _assemblerModel;
+        private TextBox _currentTextBox;
         private byte _previousLineCount;
         private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
-
-        private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
-        private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+        private System.Windows.Threading.DispatcherTimer _runTimer;
+        private System.Windows.Threading.DispatcherTimer _inputTimerAssembly;
+        private System.Windows.Threading.DispatcherTimer _inputTimerMK;
     }
 }

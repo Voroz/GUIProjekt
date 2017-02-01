@@ -63,5 +63,22 @@ namespace GUIProjekt
             Label lab = rowNumbers.Children[0] as Label;
             lab.Content = val.ToString();
         }
+
+        /******************************************************
+         CALL: RemoveChildElements();
+         TASK: Removes certain elements of the Memory Row.
+         NOTE: Only used by the instruction pointer to reduce 
+               the number of bits to 8. Made to avoid having to
+               make an entirely new control class just for this.
+         *****************************************************/
+        public void RemoveChildElements()
+        {
+            UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
+
+            for (int i = 0; i < 4; i++)
+            {
+                memoryGrid.Children[i].Visibility = Visibility.Hidden;
+            }
+        }
     }
 }

@@ -30,6 +30,10 @@
                 <MenuItem Name="Save" Header="Save" Click="Save_Click" Style="{StaticResource MenuItem}"></MenuItem>
                 <MenuItem Name="Exit" Header="Exit" Click="Exit_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
+            <MenuItem Header="Mode">
+                <MenuItem Name="Assembler" Header="Assembly" Click="Assembler_Click" IsChecked="True" Style="{StaticResource MenuItem}"> </MenuItem>
+                <MenuItem Name="MachineCode" Header="MachineCode" Click="MachineCode_Click" Style="{StaticResource MenuItem}"></MenuItem>
+            </MenuItem>
             <MenuItem Header="Skins">
                 <MenuItem Name="Default" Header="Default" Click="MenuItem_Click" IsChecked="True" Style="{StaticResource MenuItem}"></MenuItem>
                 <MenuItem Name="Orange" Header="Orange" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}" ></MenuItem>
@@ -114,7 +118,7 @@
                 <Label Style="{StaticResource Labels}" Grid.Column="3" FontSize="25">Value</Label>
             </Viewbox>
             <Viewbox Grid.Column="4" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Style="{StaticResource Labels}" Grid.Column="4" FontSize="25">Assembler</Label>
+                <Label Name="label_txtBox_header" Style="{StaticResource Labels}" Grid.Column="4" FontSize="25">Assembly</Label>
             </Viewbox>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="5" /> <!-- För att fylla ut tomrummet -->
         </Grid>
@@ -202,6 +206,13 @@
                             Style="{StaticResource TextBoxAssembler}"
                             Name="TextBox_Assembler"
                             TextChanged="TextBox_Assembler_TextChanged" />
+
+                        <TextBox
+                            Grid.Column="1"
+                            Style="{StaticResource TextBoxMK}"
+                            Name="TextBox_MK"
+                            TextChanged="TextBox_MK_TextChanged"
+                            Visibility="Collapsed"/>
 
                         <Viewbox Grid.Column="0">
                             <UniformGrid Name="theMemory" Rows="256" Columns="1" MinWidth="280" MinHeight="5000" HorizontalAlignment="Right">

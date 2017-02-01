@@ -62,9 +62,6 @@
       <DependentUpon>RowMarker.xaml</DependentUpon>
     </Compile>
     <Compile Include="SkinManager.cs" />
-    <Compile Include="ValueRow.xaml.cs">
-      <DependentUpon>ValueRow.xaml</DependentUpon>
-    </Compile>
     <Page Include="About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -104,10 +101,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Skins\OrangeSkin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ValueRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

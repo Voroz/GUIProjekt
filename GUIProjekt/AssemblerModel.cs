@@ -186,6 +186,11 @@ namespace GUIProjekt
             return true;
         }
 
+        public void clearLabels()
+        {
+            _labels.Clear();
+        }
+
 
         /******************************************************
          CALL: bool ok = isBinary(string);
@@ -217,7 +222,7 @@ namespace GUIProjekt
 
             bool binary = isBinary(str);
 
-            if (binary) {
+            if (binary && str.Length == 12) {
                 machineCode = new Bit12(Convert.ToInt16(str, 2));
                 return true;
             }
@@ -627,7 +632,7 @@ namespace GUIProjekt
             _output = undoValues._output;
 
             return undoValues;
-        }
+        }        
 
 
         /******************************************************
