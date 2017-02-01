@@ -336,10 +336,9 @@ namespace GUIProjekt
             if (!InitProgramStart()) {
                 return;
             }
+            
             clearUserMsg();
             programTick();
-
-            TextBox_Assembler.IsReadOnly = false;
         }
 
         /******************************************************
@@ -484,7 +483,6 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e) {
             _runTimer.Stop();
-            TextBox_Assembler.IsReadOnly = false;
         }
 
         
@@ -501,7 +499,13 @@ namespace GUIProjekt
             }
 
             if (_assemblerModel.undoStack().Count == 0) {
+                errorCode("Error cannot do this with an empty return stack");
                 return;
+            }
+
+            if (_assemblerModel.undoStack().Count == 1)
+            {
+                TextBox_Assembler.IsReadOnly = false;
             }
 
             UndoStorage undoValues = _assemblerModel.undo();
