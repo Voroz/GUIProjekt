@@ -661,6 +661,7 @@ namespace GUIProjekt
         {
             if (Assembler.IsChecked)
                 return;
+            label_txtBox_header.Content = "Assembly";
             Assembler.IsChecked = true;
             MachineCode.IsChecked = false;
             TextBox_Assembler.Visibility = Visibility.Visible;
@@ -671,6 +672,7 @@ namespace GUIProjekt
         {
             if (MachineCode.IsChecked)
                 return;
+            label_txtBox_header.Content = "Machine Code";
             MachineCode.IsChecked = true;
             Assembler.IsChecked = false;
             TextBox_MK.Visibility = Visibility.Visible;

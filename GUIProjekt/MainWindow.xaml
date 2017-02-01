@@ -31,7 +31,7 @@
                 <MenuItem Name="Exit" Header="Exit" Click="Exit_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Mode">
-                <MenuItem Name="Assembler" Header="Assembler" Click="Assembler_Click" IsChecked="True" Style="{StaticResource MenuItem}"> </MenuItem>
+                <MenuItem Name="Assembler" Header="Assembly" Click="Assembler_Click" IsChecked="True" Style="{StaticResource MenuItem}"> </MenuItem>
                 <MenuItem Name="MachineCode" Header="MachineCode" Click="MachineCode_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Skins">
@@ -118,7 +118,7 @@
                 <Label Style="{StaticResource Labels}" Grid.Column="3" FontSize="25">Value</Label>
             </Viewbox>
             <Viewbox Grid.Column="4" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Style="{StaticResource Labels}" Grid.Column="4" FontSize="25">Assembler</Label>
+                <Label Name="label_txtBox_header" Style="{StaticResource Labels}" Grid.Column="4" FontSize="25">Assembly</Label>
             </Viewbox>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="5" /> <!-- För att fylla ut tomrummet -->
         </Grid>
