@@ -222,7 +222,7 @@ namespace GUIProjekt
 
             bool binary = isBinary(str);
 
-            if (binary) {
+            if (binary && str.Length == 12) {
                 machineCode = new Bit12(Convert.ToInt16(str, 2));
                 return true;
             }
