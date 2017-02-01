@@ -123,6 +123,27 @@ namespace GUIProjekt
             return true;
         }
 
+        /******************************************************
+        CALL: When writing in the machine code section.
+        TASK: Updates the assembler section.
+       *****************************************************/
+        private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // TODO: Intellisens stuff
+            // (use struct from checkSyntax functions with error code and line number to create highlighting and error information for user)
+
+            //TextBox mkBox = sender as TextBox;
+            //TextBox assemblerBox = TextBox_Assembler;
+
+            //if (!mkBox.IsFocused || mkBox.IsReadOnly)
+            //{
+            //    return;
+            //}
+
+            //_inputTimerMK.Stop();
+            //_inputTimerMK.Start();
+            //assemblerBox.IsReadOnly = true;
+        }
 
         /******************************************************
          CALL: When writing in the assembler section.
@@ -337,10 +358,9 @@ namespace GUIProjekt
             if (!InitProgramStart()) {
                 return;
             }
+            
             clearUserMsg();
             programTick();
-
-            TextBox_Assembler.IsReadOnly = false;
         }
 
         /******************************************************
@@ -485,7 +505,6 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e) {
             _runTimer.Stop();
-            TextBox_Assembler.IsReadOnly = false;
         }
 
         
@@ -502,7 +521,13 @@ namespace GUIProjekt
             }
 
             if (_assemblerModel.undoStack().Count == 0) {
+                errorCode("Error cannot do this with an empty return stack");
                 return;
+            }
+
+            if (_assemblerModel.undoStack().Count == 1)
+            {
+                TextBox_Assembler.IsReadOnly = false;
             }
 
             UndoStorage undoValues = _assemblerModel.undo();
@@ -631,5 +656,25 @@ namespace GUIProjekt
 
         private System.Windows.Threading.DispatcherTimer _runTimer = new System.Windows.Threading.DispatcherTimer();
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
+
+        private void Assembler_Click(object sender, RoutedEventArgs e)
+        {
+            if (Assembler.IsChecked)
+                return;
+            Assembler.IsChecked = true;
+            MachineCode.IsChecked = false;
+            TextBox_Assembler.Visibility = Visibility.Visible;
+            TextBox_MK.Visibility = Visibility.Collapsed;
+        }
+
+        private void MachineCode_Click(object sender, RoutedEventArgs e)
+        {
+            if (MachineCode.IsChecked)
+                return;
+            MachineCode.IsChecked = true;
+            Assembler.IsChecked = false;
+            TextBox_MK.Visibility = Visibility.Visible;
+            TextBox_Assembler.Visibility = Visibility.Collapsed;
+        }
     }
 }

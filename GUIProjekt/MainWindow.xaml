@@ -30,6 +30,10 @@
                 <MenuItem Name="Save" Header="Save" Click="Save_Click" Style="{StaticResource MenuItem}"></MenuItem>
                 <MenuItem Name="Exit" Header="Exit" Click="Exit_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
+            <MenuItem Header="Mode">
+                <MenuItem Name="Assembler" Header="Assembler" Click="Assembler_Click" IsChecked="True" Style="{StaticResource MenuItem}"> </MenuItem>
+                <MenuItem Name="MachineCode" Header="MachineCode" Click="MachineCode_Click" Style="{StaticResource MenuItem}"></MenuItem>
+            </MenuItem>
             <MenuItem Header="Skins">
                 <MenuItem Name="Default" Header="Default" Click="MenuItem_Click" IsChecked="True" Style="{StaticResource MenuItem}"></MenuItem>
                 <MenuItem Name="Orange" Header="Orange" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}" ></MenuItem>
@@ -202,6 +206,13 @@
                             Style="{StaticResource TextBoxAssembler}"
                             Name="TextBox_Assembler"
                             TextChanged="TextBox_Assembler_TextChanged" />
+
+                        <TextBox
+                            Grid.Column="1"
+                            Style="{StaticResource TextBoxMK}"
+                            Name="TextBox_MK"
+                            TextChanged="TextBox_MK_TextChanged"
+                            Visibility="Collapsed"/>
 
                         <Viewbox Grid.Column="0">
                             <UniformGrid Name="theMemory" Rows="256" Columns="1" MinWidth="280" MinHeight="5000" HorizontalAlignment="Right">
