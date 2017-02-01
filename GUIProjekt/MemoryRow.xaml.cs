@@ -71,7 +71,7 @@ namespace GUIProjekt
                the number of bits to 8. Made to avoid having to
                make an entirely new control class just for this.
          *****************************************************/
-        public void RemoveChildElements()
+        public void HideChildElements()
         {
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 

@@ -53,7 +53,7 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
-            ValueRow_InstructionPointer.RemoveChildElements();
+            ValueRow_InstructionPointer.HideChildElements();
         }
 
 
@@ -275,7 +275,6 @@ namespace GUIProjekt
 
             if (opr == Operations.RETURN && _assemblerModel.stack().size() == 0) {
                 _runTimer.Stop();
-                TextBox_Assembler.IsReadOnly = false;
                 errorCode("Attempted Return on an empty stack");
                 return;
             }
