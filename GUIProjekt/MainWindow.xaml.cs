@@ -109,8 +109,7 @@ namespace GUIProjekt
             }
         }
         
-        private bool checkSyntaxActiveTextbox()
-        {
+        private bool checkSyntaxActiveTextbox() {
             if (_currentTextBox == TextBox_Assembler) {
                 return checkSyntaxAssemblyTextBox(_currentTextBox);
             }
@@ -195,10 +194,10 @@ namespace GUIProjekt
 
             // Update deleted lines memory aswell
             int nrOfDeletedLines = _previousLineCount - TextBox_MK.LineCount;
-            if (nrOfDeletedLines >= 0)
-            {
+            if (nrOfDeletedLines >= 0) {
                 updateGUIMemory((byte)(TextBox_MK.LineCount - 1), (byte)(TextBox_MK.LineCount - 1 + nrOfDeletedLines), TextBox_MK);
             }
+
             updateGUIMemory((byte)0, (byte)(TextBox_MK.LineCount - 1), TextBox_MK);
             _previousLineCount = (byte)TextBox_MK.LineCount;
         }
@@ -234,17 +233,17 @@ namespace GUIProjekt
             if (nrOfDeletedLines >= 0) {
                 updateGUIMemory((byte)(TextBox_Assembler.LineCount - 1), (byte)(TextBox_Assembler.LineCount - 1 + nrOfDeletedLines), TextBox_Assembler);
             }
+
             updateGUIMemory((byte)0, (byte)(TextBox_Assembler.LineCount - 1), TextBox_Assembler);
             _previousLineCount = (byte)TextBox_Assembler.LineCount;
         }
 
 
-        void storeLabels() {
+        private void storeLabels() {
             _assemblerModel.clearLabels();
             for (int i = 0; i < TextBox_Assembler.LineCount; i++) {
                 string label;
-                if (_assemblerModel.containsLabel(TextBox_Assembler.GetLineText(i), out label) == LabelStatus.Success)
-                {
+                if (_assemblerModel.containsLabel(TextBox_Assembler.GetLineText(i), out label) == LabelStatus.Success) {
                     _assemblerModel.addLabel(label, (byte)i);
                 }
             }
@@ -252,7 +251,7 @@ namespace GUIProjekt
 
 
         // TODO: Enkel tillfällig funktion för att markera rader
-        void markRow(MemoryRow row) {
+        private void markRow(MemoryRow row) {
             if (_previousInstructionPtr != -1) {                
                 MemoryRow previousRow = getMMRowOfPosition((byte)(255 - _previousInstructionPtr));
                 previousRow.MemoryRow_Border.Visibility = System.Windows.Visibility.Hidden;
@@ -265,7 +264,7 @@ namespace GUIProjekt
             _previousInstructionPtr = _assemblerModel.instructionPtr();
         }
 
-        void programTick() {
+        private void programTick() {
 
             Bit12 currentAddr = _assemblerModel.getAddr(_assemblerModel.instructionPtr());
             Operations opr;
@@ -309,43 +308,39 @@ namespace GUIProjekt
 
             // TODO: Lamptest
            
-                short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
-                if (lightup > 0)
-                    lightOn();
-                else
-                    lightOff();
+            short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
+            if (lightup > 0)
+                lightOn();
+            else
+                lightOff();
             
             ////////////////////////////////////////////////////            
         }
 
         //TODO Test för lampan
-        void lightOn()
-        {
+        private void lightOn() {
             
             var uriSource = new Uri(@"/GUIProjekt;component/images/bulbon.png", UriKind.Relative);
             
             bulb.Source = new BitmapImage(uriSource);
         }
         //TODO Test för lampan
-        void lightOff()
-        {
+        private void lightOff() {
             
             var uriSource = new Uri(@"/GUIProjekt;component/images/bulboff.png", UriKind.Relative);
            
             bulb.Source = new BitmapImage(uriSource);
         }
         
-        bool textToModel(TextBox textBox) {
+        private bool textToModel(TextBox textBox) {
 
             storeLabels();
 
-            if (!checkSyntaxActiveTextbox())
-            {
+            if (!checkSyntaxActiveTextbox()) {
                 return false;
             }
             
-            for (int i = 0; i < textBox.LineCount; i++)
-            {
+            for (int i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
                 Bit12 bits = new Bit12(0);
@@ -358,7 +353,7 @@ namespace GUIProjekt
             return true;
         }
 
-        bool InitProgramStart() {
+        private bool InitProgramStart() {
             if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled) {
                 return false;
             }
@@ -418,7 +413,7 @@ namespace GUIProjekt
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
 
-                lightOff();
+            lightOff();
             
 
             TextBox_Assembler.IsReadOnly = false;
@@ -444,8 +439,7 @@ namespace GUIProjekt
          CALL: errorCode("I want to display this to the user");
          TASK: Displays msg on screen in TextBoxError.
          *****************************************************/
-        void errorCode(String errorMsg)
-        {                      
+        private void errorCode(String errorMsg) {                      
             TextBlock_MessageBox.Inlines.Add(new Run(errorMsg +"\n") { Foreground = Brushes.Red });
             ScrollViewer_MessageBox.ScrollToEnd();
         }
@@ -454,8 +448,7 @@ namespace GUIProjekt
          CALL: userMsg("I want to display this to the user");
          TASK: Displays msg on screen in TextBoxMsg.
          *****************************************************/
-        void userMsg(String userMsg)
-        {            
+        private void userMsg(String userMsg) {            
             TextBlock_MessageBox.Inlines.Add(new Run(userMsg + "\n") { Foreground = Brushes.Blue });
             ScrollViewer_MessageBox.ScrollToEnd();
         }
@@ -464,8 +457,7 @@ namespace GUIProjekt
          CALL: clearUserMsg();
          TASK: Empty user message screen.
          *****************************************************/
-        void clearUserMsg()
-        {
+        private void clearUserMsg() {
             TextBlock_MessageBox.Text = "";
         }
 
@@ -484,8 +476,8 @@ namespace GUIProjekt
                 _currentTextBox.Text = File.ReadAllText(filename);
                 userMsg("Open file " + filename);                
             }
-            else
-            {
+
+            else {
                 string filename = ofd.FileName;
                 errorCode("Could not open file. /Cancel requested by user. " + filename);
             }
@@ -505,8 +497,8 @@ namespace GUIProjekt
                 String time = DateTime.Now.ToString();
                 userMsg("Saved successfully " + time);
             }
-            else
-            {
+
+            else {
                 errorCode("Could not save file. /Cancel requested by user.");
             }
         }
@@ -566,8 +558,7 @@ namespace GUIProjekt
                 return;
             }
 
-            if (_assemblerModel.undoStack().Count == 1)
-            {
+            if (_assemblerModel.undoStack().Count == 1) {
                 TextBox_Assembler.IsReadOnly = false;
             }
 
@@ -599,11 +590,11 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             //TODO testade att tända lampan om output är över 0
            
-                short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
-                if (lightup > 0)
-                    lightOn();
-                else
-                    lightOff();
+            short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
+            if (lightup > 0)
+                lightOn();
+            else
+                lightOff();
             
             ////////////////////////////////////////////////////
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
@@ -640,44 +631,21 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
 
-        /******************************************************
-        CALL: Changing the slider.
-        TASK: Updates the input depending on how the user
-              interacted with the slider.
-        *****************************************************/
-        private void Slider_Input_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
+        private void Slider_Input_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             Slider slider = sender as Slider;
             _assemblerModel.setInput(new Bit12((short)slider.Value));
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
         }
 
-        /******************************************************
-        CALL: Toggling the fast forward button on.
-        TASK: Increases the execution speed of the run through 
-              of the program.
-        *****************************************************/
-        private void Button_FastForward_Checked(object sender, RoutedEventArgs e)
-        {
+        private void Button_FastForward_Checked(object sender, RoutedEventArgs e) {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.FastExecutionDelay);
         }
 
-        /******************************************************
-        CALL: Toggling the fast forward button off.
-        TASK: Sets the execution speed to it's usual setting.
-        *****************************************************/
-        private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e)
-        {
+        private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e) {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
         }
 
-        /******************************************************
-        CALL: Clicking one of the options in the Skins header.
-        TASK: Changes the colors of the application depending on
-              which option was chosen.
-        *****************************************************/
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
+        private void MenuItem_Click(object sender, RoutedEventArgs e) {
             MenuItem item = sender as MenuItem;
 
            
@@ -686,6 +654,8 @@ namespace GUIProjekt
             Visual.IsChecked = false;
             item.IsChecked = true;
                 
+            
+
             Skins selected;
             Enum.TryParse(item.Header.ToString(), out selected);
             
@@ -693,13 +663,11 @@ namespace GUIProjekt
             this.Resources.MergedDictionaries.Add(selectedDictionary);
 
 
-            for (int i = 0; i <= 255; i++)
-            {
+            for (int i = 0; i <= 255; i++) {
                 getMMRowOfPosition(255 - i).ChangeSkin(selectedDictionary);
             }
 
-            for (int i = 0; i < 5; i++)
-            {
+            for (int i = 0; i < 5; i++) {
                 getStackRowOfPosition(i).ChangeSkin(selectedDictionary);
             }
 
@@ -709,12 +677,7 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
 
-        /******************************************************
-        CALL: Clicking Assembly in the Mode header.
-        TASK: Changes the program to assembly mode.
-        *****************************************************/
-        private void Assembler_Click(object sender, RoutedEventArgs e)
-        {
+        private void Assembler_Click(object sender, RoutedEventArgs e) {
             if (Assembler.IsChecked)
                 return;
             _currentTextBox = TextBox_Assembler;
@@ -727,12 +690,7 @@ namespace GUIProjekt
             TextBox_MK.Visibility = Visibility.Collapsed;
         }
 
-        /******************************************************
-        CALL: Clicking Machine Code in the Mode header.
-        TASK: Changes the program to machine code mode.
-        *****************************************************/
-        private void MachineCode_Click(object sender, RoutedEventArgs e)
-        {
+        private void MachineCode_Click(object sender, RoutedEventArgs e) {
             if (MachineCode.IsChecked)
                 return;
             _currentTextBox = TextBox_MK;
