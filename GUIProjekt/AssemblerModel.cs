@@ -642,7 +642,7 @@ namespace GUIProjekt
             _output = undoValues._output;
 
             return undoValues;
-        }        
+        }
 
 
         /******************************************************
