@@ -83,7 +83,6 @@ namespace GUIProjekt
         }
 
 
-
         // (stolen) function for extracting an interval of bits from a 16 bit integer
         private short createMask(short a, short b) {
             short r = 0;
@@ -93,12 +92,21 @@ namespace GUIProjekt
             return r;
         }
 
+        /******************************************************
+        CALL: byte val = extractValFromBits(byte, byte, short);
+        TASK: Returns the machine code operation from a series of bits.
+        *****************************************************/
         public short extractValFromBits(byte a, byte b, short bits) {
             short mask = (short)(createMask(a, b) & bits);
             short val = (short)(mask >> a);
             return val;
         }
 
+        /******************************************************
+        CALL: bool true = extractOperation(short, out Operations opr);
+        TASK: Sets the parameter opr from bits. Returns true if 
+              the bits include a valid operation.
+        *****************************************************/
         public bool extractOperation(short bits, out Operations opr) {
             byte oprVal = (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits);
             if (!Enum.IsDefined(typeof(Operations), oprVal)) {
@@ -109,10 +117,21 @@ namespace GUIProjekt
             return true;
         }
 
+        /******************************************************
+         CALL: byte val = extractVal(short);
+         NOTE: Uses extractValFromBits.
+         *****************************************************/
         public byte extractVal(short bits) {
             return (byte)extractValFromBits(Constants.StartValBit, Constants.EndValBit, bits);
         }
 
+
+        /******************************************************
+         CALL: LabelStatus labStat = containsLabel(string, out string);
+         TASK: Checks if the (assembly) string contains characters
+               which indicates that it is supposed to be 
+               interpreted as a label. 
+         *****************************************************/
         public LabelStatus containsLabel(string str, out string label) {
             label = "";
 
@@ -157,6 +176,10 @@ namespace GUIProjekt
             return LabelStatus.Success;
         }
 
+        /******************************************************
+         CALL: bool yes = referencesLabel(string, out string);
+         TASK: Returns true if the label exists. 
+         *****************************************************/
         private bool referencesLabel(string str, out string label) {
             label = "";
 
@@ -175,12 +198,21 @@ namespace GUIProjekt
             return true;
         }
 
-
+        /******************************************************
+         CALL: bool ok = addLabel(string, byte);
+         TASK: Adds a new key/value pair to the label dictionary
+               which maps the label string to its row.
+         *****************************************************/
         public bool addLabel(string str, byte row) {
             _labels[str] = row;
             return true;
         }
 
+        /******************************************************
+         CALL: clearLabels();
+         TASK: Removes all keys and values from the label 
+               dictionary. 
+         *****************************************************/
         public void clearLabels() {
             _labels.Clear();
         }
@@ -203,6 +235,11 @@ namespace GUIProjekt
             return binary;
         }
 
+        /******************************************************
+         CALL: bool ok = binaryStringToMachine(string, out Bit12);
+         TASK: Returns true if the parameter string was converted 
+               to Bit12 machine code successfully.
+         *****************************************************/
         public bool binaryStringToMachine(string str, out Bit12 machineCode) {            
             if (string.IsNullOrWhiteSpace(str)) {
                 machineCode = new Bit12(0);

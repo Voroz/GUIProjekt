@@ -640,6 +640,11 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
 
+        /******************************************************
+        CALL: Changing the slider.
+        TASK: Updates the input depending on how the user
+              interacted with the slider.
+        *****************************************************/
         private void Slider_Input_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = sender as Slider;
@@ -647,28 +652,40 @@ namespace GUIProjekt
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
         }
 
+        /******************************************************
+        CALL: Toggling the fast forward button on.
+        TASK: Increases the execution speed of the run through 
+              of the program.
+        *****************************************************/
         private void Button_FastForward_Checked(object sender, RoutedEventArgs e)
         {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.FastExecutionDelay);
         }
 
+        /******************************************************
+        CALL: Toggling the fast forward button off.
+        TASK: Sets the execution speed to it's usual setting.
+        *****************************************************/
         private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e)
         {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
         }
 
+        /******************************************************
+        CALL: Clicking one of the options in the Skins header.
+        TASK: Changes the colors of the application depending on
+              which option was chosen.
+        *****************************************************/
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             MenuItem item = sender as MenuItem;
 
            
-                Default.IsChecked = false;
-                Orange.IsChecked = false;
-                Visual.IsChecked = false;
-                item.IsChecked = true;
+            Default.IsChecked = false;
+            Orange.IsChecked = false;
+            Visual.IsChecked = false;
+            item.IsChecked = true;
                 
-            
-
             Skins selected;
             Enum.TryParse(item.Header.ToString(), out selected);
             
@@ -692,6 +709,10 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
 
+        /******************************************************
+        CALL: Clicking Assembly in the Mode header.
+        TASK: Changes the program to assembly mode.
+        *****************************************************/
         private void Assembler_Click(object sender, RoutedEventArgs e)
         {
             if (Assembler.IsChecked)
@@ -706,6 +727,10 @@ namespace GUIProjekt
             TextBox_MK.Visibility = Visibility.Collapsed;
         }
 
+        /******************************************************
+        CALL: Clicking Machine Code in the Mode header.
+        TASK: Changes the program to machine code mode.
+        *****************************************************/
         private void MachineCode_Click(object sender, RoutedEventArgs e)
         {
             if (MachineCode.IsChecked)
