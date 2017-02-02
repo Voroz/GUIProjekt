@@ -34,7 +34,7 @@ namespace GUIProjekt
         }
 
         /******************************************************
-         CALL: ShowMemoryAdress()
+         CALL: ShowMemoryAdress();
          TASK: Prints a row of ones and zeros in the memory.
          *****************************************************/
         public void ShowMemoryAdress(Bit12 val) {
@@ -71,12 +71,10 @@ namespace GUIProjekt
                the number of bits to 8. Made to avoid having to
                make an entirely new control class just for this.
          *****************************************************/
-        public void HideChildElements()
-        {
+        public void HideChildElements() {
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
-            for (int i = 0; i < 4; i++)
-            {
+            for (int i = 0; i < 4; i++) {
                 memoryGrid.Children[i].Visibility = Visibility.Hidden;
             }
         }
