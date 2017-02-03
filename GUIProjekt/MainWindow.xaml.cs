@@ -43,7 +43,7 @@ namespace GUIProjekt
             _inputTimerAssembly.Tick += OnInputTimerAssemblyElapsed;
             _inputTimerMK.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerMK.Tick += OnInputTimerMKElapsed;
-            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
+            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)Slider_FastForward.Value);
             _runTimer.Tick += OnInputTimerRunElapsed;
 
             // Mark current row
@@ -664,17 +664,26 @@ namespace GUIProjekt
        TASK: Increases the execution speed of the run through 
              of the program.
        *****************************************************/
+        private void Slider_FastForward_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider slider = sender as Slider;
+            _runTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)slider.Value);
+        }
+        /*
         private void Button_FastForward_Checked(object sender, RoutedEventArgs e) {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.FastExecutionDelay);
         }
+        */
 
         /******************************************************
         CALL: Toggling the fast forward button off.
         TASK: Sets the execution speed to it's usual setting.
         *****************************************************/
+        /*
         private void Button_FastForward_Unchecked(object sender, RoutedEventArgs e) {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.SlowExecutionDelay);
         }
+        /*
 
         /******************************************************
         CALL: Clicking one of the options in the Skins header.

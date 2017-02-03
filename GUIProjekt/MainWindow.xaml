@@ -77,13 +77,37 @@
                 </Button>                
             </Viewbox>
             <Viewbox>
-                <ToggleButton Name="Button_FastForward"
-                              Checked="Button_FastForward_Checked"
-                              Unchecked="Button_FastForward_Unchecked"
-                              Style="{StaticResource MenuToggleButton}"
-                              ToolTip="Fast">
-                              <Image Source="images/fast-forward-button.png" />
-                </ToggleButton>
+                <DockPanel 
+                            Grid.Column="1"
+                            Margin="20,0,0,0"
+                            LastChildFill="True"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch" Width="140">
+                    <Label>Delay</Label>
+                    <TextBox Text="{Binding ElementName=Slider_FastForward, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                DockPanel.Dock="Right"
+                                TextAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                 VerticalContentAlignment="Center"
+                                Height="25"
+                                Width="40"
+                                />
+                    <Slider Name="Slider_FastForward"
+                                Minimum="0"
+                                Maximum="1000"
+                                Value="0"
+                                Width="Auto"
+                                Height="22"
+                                VerticalAlignment="Bottom" 
+                                HorizontalAlignment="Stretch"
+                                ToolTip="Increment / Decrement input"
+                                TickPlacement="None"
+                                TickFrequency="1"
+                                IsSnapToTickEnabled="True"
+                                ValueChanged="Slider_FastForward_ValueChanged"
+                                />
+
+                </DockPanel>
             </Viewbox>            
         </StackPanel>
         
