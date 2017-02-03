@@ -544,14 +544,26 @@ namespace GUIProjekt
          *****************************************************/
         private void About_Click(object sender, RoutedEventArgs e) {
             About aboutWin = new About();
-
+           
             double mainLeft = Application.Current.MainWindow.Left;
-            double mainTop = Application.Current.MainWindow.Top;
-
+            double mainTop = Application.Current.MainWindow.Top;          
             aboutWin.Left = mainLeft + 60;
             aboutWin.Top = mainTop + 60;
-
+            
             aboutWin.Show();
+        }
+
+
+        /***********************************************************
+         CALL: When clicking the Commands button in the menu.
+         TASK: Displays leagal Commands supported by the application.
+         ************************************************************/
+        private void Commands_Click(object sender, RoutedEventArgs e)
+        {
+            Commands commandWindow = new Commands();
+            commandWindow.Left = Application.Current.MainWindow.Left;
+            commandWindow.Top = Application.Current.MainWindow.Top;
+            commandWindow.Show();
         }
        
         /******************************************************
@@ -774,5 +786,8 @@ namespace GUIProjekt
         private System.Windows.Threading.DispatcherTimer _runTimer;
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly;
         private System.Windows.Threading.DispatcherTimer _inputTimerMK;
+
+        
+       
     }
 }

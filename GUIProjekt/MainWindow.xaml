@@ -41,6 +41,7 @@
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" Click="About_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Header="Commands" Click="Commands_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
         </Menu>
         <!-- Top menu    END -->
