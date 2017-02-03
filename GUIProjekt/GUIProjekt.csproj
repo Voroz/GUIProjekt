@@ -57,12 +57,19 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bit12.cs" />
+    <Compile Include="Commands.xaml.cs">
+      <DependentUpon>Commands.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyStack.cs" />
     <Compile Include="RowMarker.xaml.cs">
       <DependentUpon>RowMarker.xaml</DependentUpon>
     </Compile>
     <Compile Include="SkinManager.cs" />
     <Page Include="About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Commands.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
