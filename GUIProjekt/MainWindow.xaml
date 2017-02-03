@@ -134,59 +134,91 @@
             <!-- IP, IN, OUT, WR    START -->
             <Grid Grid.Column="0" Grid.Row="1" Margin="0, 0, 10, 0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="10*" />
                     <RowDefinition Height="20*" />
+                    <RowDefinition Height="10*" />
                     <RowDefinition Height="20*" />
+                    <RowDefinition Height="10*" />
                     <RowDefinition Height="20*" />
+                    <RowDefinition Height="10*" />
                     <RowDefinition Height="20*" />
                 </Grid.RowDefinitions>
 
-                <!--<Viewbox>-->
-                    <Label Grid.Row="0">Instruction Pointer</Label>
-                <!--</Viewbox>-->
-                <Viewbox Grid.Row="0">
+                <!-- Insttruction pointer START -->
+                <Viewbox HorizontalAlignment="Left" Grid.Row="0">
+                    <Label>Instruction Pointer</Label>
+                </Viewbox>
+                <Viewbox Grid.Row="1">
                     <local:MemoryRow x:Name="ValueRow_InstructionPointer"></local:MemoryRow>
                 </Viewbox>
-
-                <Label Grid.Row="1">Working Register</Label>
-                <Viewbox Grid.Row="1">
+                <!-- Insttruction pointer END -->
+                
+                <!-- Working Register START -->
+                <Viewbox HorizontalAlignment="Left" Grid.Row="2">
+                    <Label Grid.Row="2">Working Register</Label>
+                </Viewbox>
+                <Viewbox Grid.Row="3">
                     <local:MemoryRow x:Name="ValueRow_WorkingRegister"></local:MemoryRow>
                 </Viewbox>
+                <!-- Working Register END -->
+
                 
-                <Label Grid.Row="2">Input</Label>
-                <Viewbox Grid.Row="2">
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <Viewbox HorizontalAlignment="Left">
+                        <Label HorizontalContentAlignment="Left">Input</Label>
+                    </Viewbox>
+                    <DockPanel 
+                            Grid.Column="1"
+                            Margin="0,0,0,0"
+                            LastChildFill="True"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch">
+
+                        <TextBox Text="{Binding ElementName=Slider_Input, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                DockPanel.Dock="Right"
+                                TextAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                 VerticalContentAlignment="Center"
+                                Height="25"
+                                Width="40"
+                                />
+                        <Slider Name="Slider_Input"
+                                Minimum="-2048"
+                                Maximum="2047"
+                                Value="0"
+                                Width="Auto"
+                                Height="22"
+                                VerticalAlignment="Bottom" 
+                                HorizontalAlignment="Stretch"
+                                ToolTip="Increment / Decrement input"
+                                TickPlacement="None"
+                                TickFrequency="1"
+                                IsSnapToTickEnabled="True"
+                                ValueChanged="Slider_Input_ValueChanged"
+                                />
+
+                    </DockPanel>
+                </Grid>
+                
+                <Viewbox Grid.Row="5">
                     <local:MemoryRow x:Name="ValueRow_Input"></local:MemoryRow>
                 </Viewbox>
 
-                <DockPanel Grid.Row="2"
-                           Margin="0,0,0,0"
-                           Height="25"
-                           VerticalAlignment="Top"
-                           HorizontalAlignment="Right"
-                           Width="200">
-                    <TextBox Text="{Binding ElementName=Slider_Input, Path=Value, UpdateSourceTrigger=PropertyChanged}"
-                             DockPanel.Dock="Right"
-                             TextAlignment="Right"
-                             Width="40"
-                             />
-                    <Slider Name="Slider_Input"
-                            Minimum="-2048"
-                            Maximum="2047"
-                            Value="0"
-                            ToolTip="Increment / Decrement input"
-                            TickPlacement="None"
-                            TickFrequency="1"
-                            IsSnapToTickEnabled="True"
-                            ValueChanged="Slider_Input_ValueChanged"
-                            />
-                </DockPanel>
 
-                <Label Grid.Row="3">Output</Label>
-                    
-                    <Viewbox Grid.Row="3">
-                            <local:MemoryRow x:Name="ValueRow_Output"></local:MemoryRow>
-                        </Viewbox>
-                       
-                          
+                <!-- Output START -->
+                <Viewbox HorizontalAlignment="Left" Grid.Row="6">
+                    <Label Grid.Row="6">Output</Label>
+                </Viewbox>
+                <Viewbox Grid.Row="7">
+                    <local:MemoryRow x:Name="ValueRow_Output"></local:MemoryRow>
+                </Viewbox>
+                <!-- Output END -->
+
+
             </Grid>
             <!-- IP, IN, OUT, WR    END -->
 
