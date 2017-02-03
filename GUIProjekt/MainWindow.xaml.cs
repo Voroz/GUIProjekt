@@ -67,8 +67,7 @@ namespace GUIProjekt
                 row.ShowMemoryRowNumber((byte)i);
             }
 
-            // TODO: Fixa grafisk stack så den bara visar översta 5 adresser i stacken
-            // TODO: Denna for loopen kommer inte visa korrekta radnummer efter det.
+            
             for (int i = 0; i < 5; i++) {
                 MemoryRow stackRow = getStackRowOfPosition(i);
                 stackRow.ShowMemoryRowNumber((byte)(255-i));
@@ -133,8 +132,7 @@ namespace GUIProjekt
                section contains unapproved characters.
         *****************************************************/
         private bool checkSyntaxMKTextBox(TextBox textBox) {
-            // TODO: Add error code as return value instead of boolean
-            // Maybe a struct with error code + line number
+            
             for (int i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
@@ -156,8 +154,7 @@ namespace GUIProjekt
                section contains unapproved characters.
          *****************************************************/
         private bool checkSyntaxAssemblyTextBox(TextBox textBox) {
-            // TODO: Add error code as return value instead of boolean
-            // Maybe a struct with error code + line number
+            
             for (int i = 0; i < textBox.LineCount; i++) {
                 char[] trimChars = new char[2] { '\r', '\n' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
@@ -258,7 +255,10 @@ namespace GUIProjekt
         }
 
 
-        // TODO: Enkel tillfällig funktion för att markera rader
+        /******************************************************
+         CALL: markRow(MemoryRow row);
+         TASK: Marks which row to be executed in runtime.
+        *****************************************************/
         private void markRow(MemoryRow row) {
             if (_previousInstructionPtr != -1) {                
                 MemoryRow previousRow = getMMRowOfPosition((byte)(255 - _previousInstructionPtr));
@@ -313,23 +313,27 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
+            //First bit on output sets the light
+            lightIfOutputIsOn();                        
+        }
 
-            // TODO: Lamptest
-           
+        /******************************************************
+         CALL: lightIfOutputIsRight();
+         TASK: Lights bulb if output is ON.
+        *****************************************************/
+        void lightIfOutputIsOn()
+        {
             short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
             if (lightup > 0)
                 lightOn();
             else
-                lightOff();
-            
-            ////////////////////////////////////////////////////            
+                lightOff();         
         }
 
         /******************************************************
          CALL: lightOn();
          TASK: Makes the light bulb light up.
         *****************************************************/
-        //TODO Test för lampan
         private void lightOn() {
             
             var uriSource = new Uri(@"/GUIProjekt;component/images/bulbon.png", UriKind.Relative);
@@ -340,8 +344,7 @@ namespace GUIProjekt
         /******************************************************
          CALL: lightOff();
          TASK: Turns the light bulb off.
-        *****************************************************/
-        //TODO Test för lampan
+        *****************************************************/       
         private void lightOff() {
             
             var uriSource = new Uri(@"/GUIProjekt;component/images/bulboff.png", UriKind.Relative);
@@ -626,15 +629,9 @@ namespace GUIProjekt
 
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
-            //TODO testade att tända lampan om output är över 0
-           
-            short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
-            if (lightup > 0)
-                lightOn();
-            else
-                lightOff();
-            
-            ////////////////////////////////////////////////////
+
+            lightIfOutputIsOn();
+                      
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
         }
 
@@ -780,7 +777,7 @@ namespace GUIProjekt
         private AssemblerModel _assemblerModel;
         private TextBox _currentTextBox;
         private byte _previousLineCount;
-        private int _previousInstructionPtr = -1; // TODO: Remove this. Temporary until we have stack for step back.
+        private int _previousInstructionPtr = -1;
         private System.Windows.Threading.DispatcherTimer _runTimer;
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly;
         private System.Windows.Threading.DispatcherTimer _inputTimerMK;
