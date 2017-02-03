@@ -314,11 +314,20 @@ namespace GUIProjekt
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
             //First bit on output sets the light
+            lightIfOutputIsOn();                        
+        }
+
+        /******************************************************
+         CALL: lightIfOutputIsRight();
+         TASK: Lights bulb if output is ON.
+        *****************************************************/
+        void lightIfOutputIsOn()
+        {
             short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
             if (lightup > 0)
                 lightOn();
             else
-                lightOff();                                 
+                lightOff();         
         }
 
         /******************************************************
@@ -622,15 +631,9 @@ namespace GUIProjekt
 
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
-            
-           
-            short lightup = _assemblerModel.extractValFromBits((byte)(0), (byte)(0), _assemblerModel.output().value());
-            if (lightup > 0)
-                lightOn();
-            else
-                lightOff();
-            
-            ////////////////////////////////////////////////////
+
+            lightIfOutputIsOn();
+                      
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
         }
 
