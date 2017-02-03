@@ -722,8 +722,6 @@ namespace GUIProjekt
                  && LabelStatus.NoLabel == containsLabel("MUL 420", out labelStr)
                  && LabelStatus.SyntaxError == containsLabel(":", out labelStr)
                  && LabelStatus.SyntaxError == containsLabel(":5", out labelStr)
-                 && LabelStatus.Blacklisted == containsLabel(":RETURN", out labelStr)
-                 && LabelStatus.Blacklisted == containsLabel(":ADD 60", out labelStr)
                  && LabelStatus.Success == containsLabel(":HEJ 42", out labelStr)
                  && LabelStatus.Success == containsLabel(":VARMT 255", out labelStr);
             System.Diagnostics.Debug.WriteLine("containsLabel: " + ok);
@@ -734,6 +732,14 @@ namespace GUIProjekt
                  && isBinary("0")
                  && isBinary("1");
             System.Diagnostics.Debug.WriteLine("isBinary: " + ok);
+
+            ok = ok && checkSyntaxMachine("000011111111")
+                 && checkSyntaxMachine("001101011111")
+                 && checkSyntaxMachine("100111111111")
+                 && checkSyntaxMachine("111100000000")
+                 && checkSyntaxMachine(" ")
+                 && checkSyntaxMachine("\n");
+            System.Diagnostics.Debug.WriteLine("checkSyntaxMachine: " + ok);
 
             Bit12 machineCode = new Bit12(0);
             ok = ok && stringToMachine("000100010001", out machineCode)
@@ -746,38 +752,6 @@ namespace GUIProjekt
                  && binaryStringToMachine("011111111110", out machineCode)
                  && binaryStringToMachine("100000000001", out machineCode);
             System.Diagnostics.Debug.WriteLine("binaryStringToMachine: " + ok);
-
-            string assemCode = "";
-            Bit12 val1 = new Bit12(1024);
-            Bit12 val2 = new Bit12(2048);
-            Bit12 val3 = new Bit12(2560);
-            Bit12 val4 = new Bit12(1500);
-            Bit12 val5 = new Bit12(666);
-            Bit12 val6 = new Bit12(1);
-            ok = ok && machineToAssembly(val1, out assemCode)
-                 && machineToAssembly(val2, out assemCode)
-                 && machineToAssembly(val3, out assemCode)
-                 && machineToAssembly(val4, out assemCode)
-                 && machineToAssembly(val5, out assemCode)
-                 && machineToAssembly(val6, out assemCode);
-            System.Diagnostics.Debug.WriteLine("machineToAssembly: " + ok);
-
-            Bit12 bit = new Bit12(0);
-            ok = ok && assemblyToMachine(" ", out bit)
-                 && assemblyToMachine("\n", out bit)
-                 && assemblyToMachine(":VARMT 100", out bit)
-                 && assemblyToMachine("IN", out bit)
-                 && assemblyToMachine("OUT", out bit)
-                 && assemblyToMachine("PJUMP 200", out bit);
-            System.Diagnostics.Debug.WriteLine("assemblyToMachine: " + ok);
-
-            ok = ok && checkSyntaxMachine("000011111111")
-                 && checkSyntaxMachine("001101011111")
-                 && checkSyntaxMachine("100111111111")
-                 && checkSyntaxMachine("111100000000")
-                 && checkSyntaxMachine(" ")
-                 && checkSyntaxMachine("\n");
-            System.Diagnostics.Debug.WriteLine("checkSyntaxMachine: " + ok);
 
             return ok;
         }
