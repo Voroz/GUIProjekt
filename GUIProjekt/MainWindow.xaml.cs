@@ -380,7 +380,9 @@ namespace GUIProjekt
             }
 
             TextBox_Assembler.IsReadOnly = true;
-
+            _currentTextBox.Foreground = Brushes.LightGray;
+            clearUserMsg();
+            userMsg("Running...");
             return true;
         }
 
@@ -394,8 +396,7 @@ namespace GUIProjekt
                 return;
             }
             _runTimer.Start();
-            clearUserMsg();
-            userMsg("Running...");
+            
         }
 
         private void OnInputTimerRunElapsed(object source, EventArgs e) {
@@ -412,8 +413,7 @@ namespace GUIProjekt
             if (_assemblerModel.undoStack().Count == 0 && !InitProgramStart()) {
                 return;
             }
-            
-            clearUserMsg();
+                       
             programTick();
         }
 
@@ -422,6 +422,10 @@ namespace GUIProjekt
          TASK: Stops execution and makes the input fields changeable again.
          *****************************************************/
         private void Button_Stop_Click(object sender, RoutedEventArgs e) {
+            
+            if (_assemblerModel.undoStack().Count == 0)
+                return;
+
             _runTimer.Stop();
             _assemblerModel.reset();
             updateGUIMemory(0, 255, _currentTextBox);
@@ -431,8 +435,9 @@ namespace GUIProjekt
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
 
-            lightOff();           
-            userMsg("Stop");
+            lightOff();
+            _currentTextBox.Foreground = Brushes.Black;
+            clearUserMsg();           
 
             TextBox_Assembler.IsReadOnly = false;
 
@@ -555,8 +560,10 @@ namespace GUIProjekt
                input in the textboxes again.
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e) {
-            _runTimer.Stop();
-            userMsg("Pause");
+            if (_assemblerModel.undoStack().Count == 0)
+                return;
+
+            _runTimer.Stop();            
         }
 
         
