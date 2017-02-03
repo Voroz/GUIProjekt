@@ -527,9 +527,7 @@ namespace GUIProjekt
          CALL: bool ok = checkSyntaxMachine(string);
          TASK: Checks if parameter is approved machine code.
         *****************************************************/ 
-        public bool checkSyntaxMachine(string str) {
-            // TODO: Add error code as return value instead of boolean
-            // Maybe a struct with error code + line number
+        public bool checkSyntaxMachine(string str) {           
             
             // Empty lines to create space are fine
             if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
