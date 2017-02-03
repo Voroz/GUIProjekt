@@ -391,7 +391,7 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_StepForward_Click(object sender, RoutedEventArgs e)
         {
-            if (!InitProgramStart()) {
+            if (_assemblerModel.undoStack().Count == 0 && !InitProgramStart()) {
                 return;
             }
             
