@@ -104,6 +104,7 @@
         <Setter Property="FontSize" Value="20.262"/>
         <Setter Property="MaxLines" Value="256"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="MaxWidth" Value="300"/>
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
@@ -118,6 +119,7 @@
         <Setter Property="FontSize" Value="20.262"/>
         <Setter Property="MaxLines" Value="256"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="MaxWidth" Value="300"/>
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
