@@ -374,12 +374,11 @@ namespace GUIProjekt
             if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled) {
                 return false;
             }
-
             if (!textToModel(_currentTextBox)) {
                 return false;
             }
 
-            TextBox_Assembler.IsReadOnly = true;
+            _currentTextBox.IsReadOnly = true;
             _currentTextBox.Foreground = Brushes.LightGray;
             clearUserMsg();
             userMsg("Running...");
@@ -412,8 +411,7 @@ namespace GUIProjekt
         {
             if (_assemblerModel.undoStack().Count == 0 && !InitProgramStart()) {
                 return;
-            }
-                       
+            } 
             programTick();
         }
 
@@ -439,7 +437,7 @@ namespace GUIProjekt
             _currentTextBox.Foreground = Brushes.Black;
             clearUserMsg();           
 
-            TextBox_Assembler.IsReadOnly = false;
+            _currentTextBox.IsReadOnly = false;
 
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
@@ -599,7 +597,7 @@ namespace GUIProjekt
             if (_assemblerModel.undoStack().Count == 1) {
                 _currentTextBox.Foreground = Brushes.Black;
                 clearUserMsg();
-                TextBox_Assembler.IsReadOnly = false;
+                _currentTextBox.IsReadOnly = false;
             }
 
             UndoStorage undoValues = _assemblerModel.undo();
