@@ -395,6 +395,7 @@ namespace GUIProjekt
             }
             _runTimer.Start();
             clearUserMsg();
+            userMsg("Running...");
         }
 
         private void OnInputTimerRunElapsed(object source, EventArgs e) {
@@ -430,8 +431,8 @@ namespace GUIProjekt
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
 
-            lightOff();
-            
+            lightOff();           
+            userMsg("Stop");
 
             TextBox_Assembler.IsReadOnly = false;
 
@@ -555,6 +556,7 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e) {
             _runTimer.Stop();
+            userMsg("Pause");
         }
 
         
