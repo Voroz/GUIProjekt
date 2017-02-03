@@ -172,7 +172,6 @@ namespace GUIProjekt
                 return LabelStatus.Blacklisted;
             }
 
-
             return LabelStatus.Success;
         }
 
@@ -696,6 +695,37 @@ namespace GUIProjekt
                     + ", expected " + _size + "\n");
             }
 
+            Operations opr;
+            ok = ok && extractOperation(2800, out opr)
+                 && extractOperation(256, out opr)
+                 && extractOperation(0, out opr)
+                 && extractOperation(1, out opr)
+                 && extractOperation(1337, out opr);
+            System.Diagnostics.Debug.WriteLine("extractOperation: " + ok);
+
+            short bits1 = 400;
+            short bits2 = 255;
+            short bits3 = 600;
+            short bits4 = 800;
+            short bits5 = 1028;
+            short bits6 = 2950;
+            ok = ok && 1 == (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits1)
+                 && 0 == (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits2)
+                 && 2 == (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits3)
+                 && 3 == (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits4)
+                 && 4 == (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits5)
+                 && 11 == (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits6);
+            System.Diagnostics.Debug.WriteLine("extractValFromBits: " + ok);
+
+            string labelStr = "";
+            ok = ok && LabelStatus.NoLabel == containsLabel("", out labelStr)
+                 && LabelStatus.NoLabel == containsLabel("MUL 420", out labelStr)
+                 && LabelStatus.SyntaxError == containsLabel(":", out labelStr)
+                 && LabelStatus.SyntaxError == containsLabel(":5", out labelStr)
+                 && LabelStatus.Success == containsLabel(":HEJ 42", out labelStr)
+                 && LabelStatus.Success == containsLabel(":VARMT 255", out labelStr);
+            System.Diagnostics.Debug.WriteLine("containsLabel: " + ok);
+
             ok = ok && isBinary("00000000")
                  && isBinary("11111111")
                  && isBinary("01010110")
@@ -717,7 +747,6 @@ namespace GUIProjekt
                  && stringToMachine("011011110000", out machineCode)
                  && stringToMachine(" ", out machineCode);
             System.Diagnostics.Debug.WriteLine("stringToMachine: " + ok);
-
 
             ok = ok && binaryStringToMachine(" ", out machineCode)
                  && binaryStringToMachine("011111111110", out machineCode)
