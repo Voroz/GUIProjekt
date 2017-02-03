@@ -585,6 +585,8 @@ namespace GUIProjekt
             }
 
             if (_assemblerModel.undoStack().Count == 1) {
+                _currentTextBox.Foreground = Brushes.Black;
+                clearUserMsg();
                 TextBox_Assembler.IsReadOnly = false;
             }
 

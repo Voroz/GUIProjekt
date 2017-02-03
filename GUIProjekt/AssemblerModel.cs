@@ -637,7 +637,7 @@ namespace GUIProjekt
 
                 case Operations.PJUMP: {
                     if (_workingRegister > new Bit12(0)) {
-                        _instructionPtr += 2;
+                        _instructionPtr = addr;
                     }
                     else {
                         _instructionPtr++;
