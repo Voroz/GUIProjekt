@@ -14,7 +14,7 @@
                 <Label Foreground="BurlyWood">CALL [addr]</Label>
                 <Label Foreground="BurlyWood">LOAD [addr]</Label>
                 <Label Foreground="BurlyWood">STORE [addr]</Label>
-                <Label Foreground="BurlyWood">PJUMP</Label>
+                <Label Foreground="BurlyWood">PJUMP [addr]</Label>
                 <Label Foreground="BurlyWood">RETURN</Label>
                 <Label Foreground="BurlyWood" FontStyle="Italic">:nameOfLabel</Label>
             </UniformGrid>            
