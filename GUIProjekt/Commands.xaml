@@ -4,34 +4,20 @@
         Title="Commands" Height="300" Width="100" Icon="images/memIcon.png">
     <Grid>
         <Viewbox HorizontalAlignment="Left">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="30*"/>
-                </Grid.RowDefinitions>
-
-
-                <Label Grid.Row="0" Foreground="BurlyWood">IN</Label>
-                <Label Grid.Row="1" Foreground="BurlyWood">OUT</Label>
-                <Label Grid.Row="2" Foreground="BurlyWood">ADD</Label>
-                <Label Grid.Row="3" Foreground="BurlyWood">SUB</Label>
-                <Label Grid.Row="4" Foreground="BurlyWood">JUMP</Label>
-                <Label Grid.Row="5" Foreground="BurlyWood">CALL</Label>                
-                <Label Grid.Row="6" Foreground="BurlyWood">LOAD</Label>
-                <Label Grid.Row="7" Foreground="BurlyWood">STORE</Label>
-                <Label Grid.Row="8" Foreground="BurlyWood">PJUMP</Label>
-                <Label Grid.Row="9" Foreground="BurlyWood">RETURN</Label>
-                <Label Grid.Row="10" Foreground="BurlyWood" FontStyle="Italic">:nameOfVariable</Label>
-            </Grid>
+            <UniformGrid Rows="12">
+                <Label Foreground="BurlyWood">IN</Label>
+                <Label Foreground="BurlyWood">OUT</Label>
+                <Label Foreground="BurlyWood">ADD [addr]</Label>
+                <Label Foreground="BurlyWood">SUB [addr]</Label>
+                <Label Foreground="BurlyWood">MUL [addr]</Label>
+                <Label Foreground="BurlyWood">JUMP [addr]</Label>
+                <Label Foreground="BurlyWood">CALL [addr]</Label>
+                <Label Foreground="BurlyWood">LOAD [addr]</Label>
+                <Label Foreground="BurlyWood">STORE [addr]</Label>
+                <Label Foreground="BurlyWood">PJUMP</Label>
+                <Label Foreground="BurlyWood">RETURN</Label>
+                <Label Foreground="BurlyWood" FontStyle="Italic">:nameOfLabel</Label>
+            </UniformGrid>            
         </Viewbox>
     </Grid>
 </Window>

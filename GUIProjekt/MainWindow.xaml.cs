@@ -139,7 +139,7 @@ namespace GUIProjekt
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.binaryStringToMachine(str, out val)) {
-                    errorCode("Syntax error, row " + i + " " + "(" + str + ")" + " not a valid command");
+                    errorCode("Syntax error, row " + i + ": " + "\"" + str + "\"");
                     return false;
                 }
             }
@@ -161,7 +161,7 @@ namespace GUIProjekt
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.assemblyToMachine(str, out val)) {
-                    errorCode("Syntax error, row "+ i +" " + "(" + str + ")" +" not a valid command");
+                    errorCode("Syntax error, row " + i + ": " + "\"" + str + "\"");
                     return false;
                 }
             }
@@ -593,7 +593,7 @@ namespace GUIProjekt
             }
 
             if (_assemblerModel.undoStack().Count == 0) {
-                errorCode("Error cannot do this with an empty return stack");
+                errorCode("Cannot do this with an empty return stack");
                 return;
             }
 
