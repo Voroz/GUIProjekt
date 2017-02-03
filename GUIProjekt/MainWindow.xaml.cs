@@ -108,7 +108,12 @@ namespace GUIProjekt
                 rad.ShowMemoryAdress(val);
             }
         }
-        
+
+        /******************************************************
+         CALL: bool syntaxOK = checkSyntaxActiveTextbox();
+         TASK: Checks if the inputted text in the currently
+               active textbox is valid.
+        *****************************************************/
         private bool checkSyntaxActiveTextbox() {
             if (_currentTextBox == TextBox_Assembler) {
                 return checkSyntaxAssemblyTextBox(_currentTextBox);
@@ -238,7 +243,10 @@ namespace GUIProjekt
             _previousLineCount = (byte)TextBox_Assembler.LineCount;
         }
 
-
+        /******************************************************
+         CALL: storeLabels();
+         TASK: Stores every label added in the assembly textbox.
+        *****************************************************/
         private void storeLabels() {
             _assemblerModel.clearLabels();
             for (int i = 0; i < TextBox_Assembler.LineCount; i++) {
@@ -317,6 +325,10 @@ namespace GUIProjekt
             ////////////////////////////////////////////////////            
         }
 
+        /******************************************************
+         CALL: lightOn();
+         TASK: Makes the light bulb light up.
+        *****************************************************/
         //TODO Test för lampan
         private void lightOn() {
             
@@ -324,6 +336,11 @@ namespace GUIProjekt
             
             bulb.Source = new BitmapImage(uriSource);
         }
+
+        /******************************************************
+         CALL: lightOff();
+         TASK: Turns the light bulb off.
+        *****************************************************/
         //TODO Test för lampan
         private void lightOff() {
             

@@ -700,21 +700,31 @@ namespace GUIProjekt
 
             ok = ok && isBinary("00000000")
                  && isBinary("11111111")
-                 && isBinary("01010110");
+                 && isBinary("01010110")
+                 && isBinary("0")
+                 && isBinary("1");
             System.Diagnostics.Debug.WriteLine("isBinary: " + ok);
 
             ok = ok && checkSyntaxMachine("000011111111")
                  && checkSyntaxMachine("001101011111")
                  && checkSyntaxMachine("100111111111")
-                 && checkSyntaxMachine("111100000000");
+                 && checkSyntaxMachine("111100000000")
+                 && checkSyntaxMachine(" ")
+                 && checkSyntaxMachine("\n");
             System.Diagnostics.Debug.WriteLine("checkSyntaxMachine: " + ok);
 
             Bit12 machineCode = new Bit12(0);
             ok = ok && stringToMachine("000100010001", out machineCode)
                  && stringToMachine("101011101110", out machineCode)
-                 && stringToMachine("011011110000", out machineCode);
+                 && stringToMachine("011011110000", out machineCode)
+                 && stringToMachine(" ", out machineCode);
             System.Diagnostics.Debug.WriteLine("stringToMachine: " + ok);
 
+
+            ok = ok && binaryStringToMachine(" ", out machineCode)
+                 && binaryStringToMachine("011111111110", out machineCode)
+                 && binaryStringToMachine("100000000001", out machineCode);
+            System.Diagnostics.Debug.WriteLine("binaryStringToMachine: " + ok);
 
             return ok;
         }
