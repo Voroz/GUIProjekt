@@ -18,6 +18,7 @@ using Microsoft.Win32;
 using System.IO;
 using System.Timers;
 using System.Windows.Controls.Primitives;
+using System.ComponentModel;
 
 namespace GUIProjekt
 {
@@ -37,6 +38,9 @@ namespace GUIProjekt
             _inputTimerAssembly = new System.Windows.Threading.DispatcherTimer();
             _inputTimerMK = new System.Windows.Threading.DispatcherTimer();
             _runTimer = new System.Windows.Threading.DispatcherTimer();
+            _commandWindow = new Commands();
+            _aboutWin = new About();
+            Closing += OnClosing;
 
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -546,14 +550,12 @@ namespace GUIProjekt
          *****************************************************/
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            About aboutWin = new About();
-           
-            double mainLeft = Application.Current.MainWindow.Left;
-            double mainTop = Application.Current.MainWindow.Top;          
-            aboutWin.Left = mainLeft + 60;
-            aboutWin.Top = mainTop + 60;
-            
-            aboutWin.Show();
+            _aboutWin.Close();
+            _aboutWin = new About();
+            _aboutWin.Left = Application.Current.MainWindow.Left + 60;
+            _aboutWin.Top = Application.Current.MainWindow.Top + 60;
+
+            _aboutWin.Show();
         }
 
 
@@ -563,10 +565,16 @@ namespace GUIProjekt
          ************************************************************/
         private void Commands_Click(object sender, RoutedEventArgs e)
         {
-            Commands commandWindow = new Commands();
-            commandWindow.Left = Application.Current.MainWindow.Left;
-            commandWindow.Top = Application.Current.MainWindow.Top;
-            commandWindow.Show();
+            _commandWindow.Close();
+            _commandWindow = new Commands();
+            _commandWindow.Left = Application.Current.MainWindow.Left;
+            _commandWindow.Top = Application.Current.MainWindow.Top;
+            _commandWindow.Show();
+        }
+
+        private void OnClosing(object sender, CancelEventArgs e) {
+            _aboutWin.Close();
+            _commandWindow.Close();
         }
        
         /******************************************************
@@ -865,8 +873,8 @@ namespace GUIProjekt
         private System.Windows.Threading.DispatcherTimer _runTimer;
         private System.Windows.Threading.DispatcherTimer _inputTimerAssembly;
         private System.Windows.Threading.DispatcherTimer _inputTimerMK;
-
-        
+        private Commands _commandWindow;
+        private About _aboutWin;
        
     }
 }
