@@ -391,7 +391,7 @@ namespace GUIProjekt
                 return false;
             }
 
-            TextBox_Assembler.IsReadOnly = true;
+            _currentTextBox.IsReadOnly = true;
             _currentTextBox.Foreground = Brushes.LightGray;
             clearUserMsg();
             userMsg("Running...");
@@ -619,7 +619,7 @@ namespace GUIProjekt
             _currentTextBox.Foreground = Brushes.Black;
             clearUserMsg();
 
-            TextBox_Assembler.IsReadOnly = false;
+            _currentTextBox.IsReadOnly = false;
 
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
@@ -648,7 +648,7 @@ namespace GUIProjekt
             {
                 _currentTextBox.Foreground = Brushes.Black;
                 clearUserMsg();
-                TextBox_Assembler.IsReadOnly = false;
+                _currentTextBox.IsReadOnly = false;
             }
 
             UndoStorage undoValues = _assemblerModel.undo();
