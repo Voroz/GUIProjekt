@@ -238,6 +238,35 @@ namespace GUIProjekt
         }
 
         /******************************************************
+         CALL: bool ok = checkSyntaxMachine(string);
+         TASK: Checks if parameter is approved machine code.
+        *****************************************************/
+        public bool checkSyntaxMachine(string str) {
+            // Empty lines to create space are fine
+            if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
+                return true;
+            }
+
+            char[] trimChars = new char[2] { '\r', '\n' };
+            str = str.TrimEnd(trimChars);
+
+            if (!isBinary(str)) {
+                return false;
+            }
+
+            if (str.Length != 12) {
+                return false;
+            }
+
+            Bit12 bits;
+            if (!stringToMachine(str, out bits)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        /******************************************************
          CALL: bool ok = binaryStringToMachine(string, out Bit12);
          TASK: Returns true if the parameter string was converted 
                to Bit12 machine code successfully.
@@ -525,36 +554,6 @@ namespace GUIProjekt
             _memory[idx] = val;
         }
 
-
-        /******************************************************
-         CALL: bool ok = checkSyntaxMachine(string);
-         TASK: Checks if parameter is approved machine code.
-        *****************************************************/ 
-        public bool checkSyntaxMachine(string str) {           
-            
-            // Empty lines to create space are fine
-            if (str == "\r\n" || str == "\r" || str == "\n" || string.IsNullOrWhiteSpace(str)) {
-                return true;
-            }
-
-            char[] trimChars = new char[2] { '\r', '\n' };
-            str = str.TrimEnd(trimChars);
-
-            if (!isBinary(str)) {
-                return false;
-            }
-
-            if (str.Length != 12) {
-                return false;
-            }
-
-            Bit12 bits;
-            if (!stringToMachine(str, out bits)) {
-                return false;
-            }
-
-            return true;
-        }
 
         public bool addrIdxToUpdate(Bit12 command, out byte idx) {
             byte val = (byte)extractVal(command.value());
