@@ -101,7 +101,7 @@
                                 Height="22"
                                 VerticalAlignment="Bottom" 
                                 HorizontalAlignment="Stretch"
-                                ToolTip="Increment / Decrement input"
+                                ToolTip="Increase / Decrease execution speed"
                                 TickPlacement="None"
                                 TickFrequency="1"
                                 IsSnapToTickEnabled="True"
@@ -169,14 +169,14 @@
                     <RowDefinition Height="20*" />
                 </Grid.RowDefinitions>
 
-                <!-- Insttruction pointer START -->
+                <!-- Instruction pointer START -->
                 <Viewbox HorizontalAlignment="Left" Grid.Row="0">
                     <Label>Instruction Pointer</Label>
                 </Viewbox>
                 <Viewbox Grid.Row="1">
                     <local:MemoryRow x:Name="ValueRow_InstructionPointer"></local:MemoryRow>
                 </Viewbox>
-                <!-- Insttruction pointer END -->
+                <!-- Instruction pointer END -->
                 
                 <!-- Working Register START -->
                 <Viewbox HorizontalAlignment="Left" Grid.Row="2">

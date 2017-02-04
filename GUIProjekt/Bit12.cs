@@ -8,11 +8,12 @@ namespace GUIProjekt
 {
     /******************************************************
      A class containing a set of operator overloads to
-     enable usage of 12 bit object in the project.
+     enable usage of 12 bit objects in the project.
      *****************************************************/
     public class Bit12
     {
-        public Bit12(short val) {
+        public Bit12(short val) 
+        {
             _bit12Val = convertTo12Bit(val);
         }
 
@@ -28,12 +29,14 @@ namespace GUIProjekt
             return newBit12;
         }
 
-        public static Bit12 operator *(Bit12 a, Bit12 b) {
+        public static Bit12 operator *(Bit12 a, Bit12 b)
+        {
             Bit12 newBit12 = new Bit12((short)(a.value() * b.value()));
             return newBit12;
         }
 
-        public static Bit12 operator /(Bit12 a, Bit12 b) {
+        public static Bit12 operator /(Bit12 a, Bit12 b)
+        {
             Bit12 newBit12 = new Bit12((short)(a.value() / b.value()));
             return newBit12;
         }
@@ -68,7 +71,8 @@ namespace GUIProjekt
             return lhs.value() <= rhs.value();
         }
 
-        public short value()        {
+        public short value()        
+        {
             return _bit12Val;
         }
 

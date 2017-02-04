@@ -65,8 +65,8 @@ namespace GUIProjekt
         }
 
         /******************************************************
-         CALL: RemoveChildElements();
-         TASK: Removes certain elements of the Memory Row.
+         CALL: HideChildElements();
+         TASK: Hides certain elements of the Memory Row.
          NOTE: Only used by the instruction pointer to reduce 
                the number of bits to 8. Made to avoid having to
                make an entirely new control class just for this.
