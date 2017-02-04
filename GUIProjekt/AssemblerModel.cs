@@ -247,7 +247,7 @@ namespace GUIProjekt
                 return true;
             }
 
-            char[] trimChars = new char[2] { '\r', '\n' };
+            char[] trimChars = new char[3] { '\r', '\n', ' ' };
             str = str.TrimEnd(trimChars);
 
             if (!isBinary(str)) {
@@ -364,7 +364,7 @@ namespace GUIProjekt
                 return true;
             }
 
-            char[] trimChars = new char[2] { '\r', '\n' };
+            char[] trimChars = new char[3] { '\r', '\n', ' ' };
             assemblyString = assemblyString.TrimEnd(trimChars);
 
             string[] splitString = assemblyString.Split(' ');

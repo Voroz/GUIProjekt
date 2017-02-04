@@ -93,7 +93,7 @@ namespace GUIProjekt
                     str = textBox.GetLineText(i);
                 }
 
-                char[] trimChars = new char[2] { '\r', '\n' };
+                char[] trimChars = new char[3] { '\r', '\n', ' ' };
                 str = str.TrimEnd(trimChars);
 
                 Bit12 val = new Bit12(0);
@@ -153,7 +153,7 @@ namespace GUIProjekt
             
             for (int i = 0; i < textBox.LineCount; i++)
             {
-                char[] trimChars = new char[2] { '\r', '\n' };
+                char[] trimChars = new char[3] { '\r', '\n', ' ' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
                 Bit12 val = new Bit12(0);
@@ -177,7 +177,7 @@ namespace GUIProjekt
             
             for (int i = 0; i < textBox.LineCount; i++)
             {
-                char[] trimChars = new char[2] { '\r', '\n' };
+                char[] trimChars = new char[3] { '\r', '\n', ' ' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
                 Bit12 val = new Bit12(0);
@@ -371,7 +371,7 @@ namespace GUIProjekt
             
             for (int i = 0; i < textBox.LineCount; i++)
             {
-                char[] trimChars = new char[2] { '\r', '\n' };
+                char[] trimChars = new char[3] { '\r', '\n', ' ' };
                 string str = textBox.GetLineText(i).TrimEnd(trimChars);
                 Bit12 bits = new Bit12(0);
 
