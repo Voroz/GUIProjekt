@@ -82,8 +82,11 @@ namespace GUIProjekt
             resetMemory();
         }
 
-
-        // (stolen) function for extracting an interval of bits from a 16 bit integer
+        /******************************************************
+        CALL: short mask = createMask(short, short);
+        TASK: Method for extracting an interval of bits from a 
+              16 bit integer.
+        *****************************************************/
         private short createMask(short a, short b) {
             short r = 0;
             for (short i = a; i <= b; i++)
@@ -695,6 +698,14 @@ namespace GUIProjekt
                     + ", expected " + _size + "\n");
             }
 
+            ok = ok && 255 == createMask(0, 7)
+                 && 63 == createMask(0, 5)
+                 && 2032 == createMask(4, 10)
+                 && 3840 == createMask(8, 11)
+                 && 4095 == createMask(0, 11)
+                 && 1020 == createMask(2, 9);
+            System.Diagnostics.Debug.WriteLine("createMask: " + ok);
+
             Operations opr;
             ok = ok && extractOperation(2800, out opr)
                  && extractOperation(256, out opr)
@@ -734,8 +745,6 @@ namespace GUIProjekt
                  && isBinary("0")
                  && isBinary("1");
             System.Diagnostics.Debug.WriteLine("isBinary: " + ok);
-
-
 
             Bit12 machineCode = new Bit12(0);
             ok = ok && stringToMachine("000100010001", out machineCode)
