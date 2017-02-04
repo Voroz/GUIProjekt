@@ -72,7 +72,7 @@ namespace GUIProjekt
                 _memory[i] = new Bit12(0);
             }
             _memoryStack = new MyStack<Bit12>(_memory);
-            _undoStack = new Stack<UndoStorage>();
+            _undoStack = new CircularStack<UndoStorage>(1000);
             _instructionPtr = 0;
             _workingRegister = new Bit12(0);
             _input = new Bit12(0);
@@ -464,8 +464,8 @@ namespace GUIProjekt
                 _memoryStack.pop();
             }
 
-            while (_undoStack.Count > 0) {
-                _undoStack.Pop();
+            while (_undoStack.size() > 0) {
+                _undoStack.pop();
             }
         }
 
@@ -530,7 +530,7 @@ namespace GUIProjekt
             return _memoryStack;
         }
 
-        public Stack<UndoStorage> undoStack() {
+        public CircularStack<UndoStorage> undoStack() {
             return _undoStack;
         }
 
@@ -601,7 +601,7 @@ namespace GUIProjekt
                 return false;
             }
 
-            _undoStack.Push(new UndoStorage(_memory, _memoryStack, _instructionPtr, _workingRegister, _input, _output));
+            _undoStack.push(new UndoStorage(_memory, _memoryStack, _instructionPtr, _workingRegister, _input, _output));
 
 
             switch (opr) {
@@ -670,7 +670,8 @@ namespace GUIProjekt
 
 
         public UndoStorage undo() {
-            UndoStorage undoValues = _undoStack.Pop();
+            UndoStorage undoValues = _undoStack.top();
+            _undoStack.pop();
             _memory = undoValues._memory;
             _memoryStack = undoValues._memoryStack;
             _instructionPtr = undoValues._instructionPtr;
@@ -795,7 +796,7 @@ namespace GUIProjekt
 
         private Bit12[] _memory;
         private MyStack<Bit12> _memoryStack;
-        private Stack<UndoStorage> _undoStack;
+        private CircularStack<UndoStorage> _undoStack;
         private Dictionary<string, byte> _labels;
         private byte _instructionPtr;
         private Bit12 _workingRegister;

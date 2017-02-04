@@ -598,7 +598,7 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e)
         {
-            if (_assemblerModel.undoStack().Count == 0)
+            if (_assemblerModel.undoStack().size() == 0)
                 return;
 
             _runTimer.Stop();            
@@ -610,8 +610,8 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_Stop_Click(object sender, RoutedEventArgs e)
         {
-        
-            if (_assemblerModel.undoStack().Count == 0)
+
+            if (_assemblerModel.undoStack().size() == 0)
                 return;
 
             _runTimer.Stop();
@@ -647,12 +647,12 @@ namespace GUIProjekt
                 return;
             }
 
-            if (_assemblerModel.undoStack().Count == 0) {
+            if (_assemblerModel.undoStack().size() == 0) {
                 errorCode("Cannot do this with an empty return stack");
                 return;
             }
 
-            if (_assemblerModel.undoStack().Count == 1)
+            if (_assemblerModel.undoStack().size() == 1)
             {
                 _currentTextBox.Foreground = Brushes.Black;
                 clearUserMsg();
@@ -700,7 +700,7 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_StepForward_Click(object sender, RoutedEventArgs e)
         {
-            if (_assemblerModel.undoStack().Count == 0 && !InitProgramStart())
+            if (_assemblerModel.undoStack().size() == 0 && !InitProgramStart())
             {
                 return;
             }

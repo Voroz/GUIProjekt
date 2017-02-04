@@ -57,6 +57,7 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bit12.cs" />
+    <Compile Include="CircularStack.cs" />
     <Compile Include="Commands.xaml.cs">
       <DependentUpon>Commands.xaml</DependentUpon>
     </Compile>
