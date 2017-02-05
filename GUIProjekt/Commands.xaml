@@ -5,16 +5,16 @@
     <Grid>
         <Viewbox HorizontalAlignment="Left">
             <UniformGrid Rows="12">
-                <Label Foreground="BurlyWood">IN</Label>
-                <Label Foreground="BurlyWood">OUT</Label>
+                <Label Foreground="BurlyWood">LOAD [addr]</Label>
+                <Label Foreground="BurlyWood">STORE [addr]</Label>
                 <Label Foreground="BurlyWood">ADD [addr]</Label>
                 <Label Foreground="BurlyWood">SUB [addr]</Label>
                 <Label Foreground="BurlyWood">MUL [addr]</Label>
                 <Label Foreground="BurlyWood">JUMP [addr]</Label>
-                <Label Foreground="BurlyWood">CALL [addr]</Label>
-                <Label Foreground="BurlyWood">LOAD [addr]</Label>
-                <Label Foreground="BurlyWood">STORE [addr]</Label>
                 <Label Foreground="BurlyWood">PJUMP [addr]</Label>
+                <Label Foreground="BurlyWood">IN</Label>
+                <Label Foreground="BurlyWood">OUT</Label>
+                <Label Foreground="BurlyWood">CALL [addr]</Label>
                 <Label Foreground="BurlyWood">RETURN</Label>
                 <Label Foreground="BurlyWood" FontStyle="Italic">:nameOfLabel</Label>
             </UniformGrid>            

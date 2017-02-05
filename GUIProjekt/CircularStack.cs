@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace GUIProjekt {
     class CircularStack<T> {
         /******************************************************
-         CALL: MyStack<T> myStack;
+         CALL: CircularStack<T> myStack;
          TASK: Uses an array of a certain datatype.
          *****************************************************/
         public CircularStack(uint capacity) {
