@@ -19,4 +19,8 @@
     <Brush x:Key="rowNrColor">#ffffff</Brush>
     <Brush x:Key="zeroColor">#d6dbe9</Brush>
     <Brush x:Key="oneColor">#F7B32B</Brush>
+    
+    <!-- Message Box -->
+    <Brush x:Key="MessageBoxBackground">#FFFFFF</Brush>
+    <Brush x:Key="MessageBoxForeground">#FFFFFF</Brush>
 </ResourceDictionary>

@@ -23,4 +23,7 @@
     <Brush x:Key="zeroColor">#3A4866</Brush>
     <Brush x:Key="oneColor">#7F7062</Brush>
 
+    <!-- Message Box -->
+    <Brush x:Key="MessageBoxBackground">#FFFFFF</Brush>
+    <Brush x:Key="MessageBoxForeground">#FFFFFF</Brush>
 </ResourceDictionary>
