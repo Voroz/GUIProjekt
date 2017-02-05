@@ -75,7 +75,7 @@ namespace GUIProjekt
             UniformGrid memoryGrid = this.BinaryMemoryAdress as UniformGrid;
 
             for (int i = 0; i < 4; i++) {
-                memoryGrid.Children[i].Visibility = Visibility.Hidden;
+                memoryGrid.Children[i].Visibility = Visibility.Collapsed;
             }
         }
     }

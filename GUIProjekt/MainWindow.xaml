@@ -17,7 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30px" /> <!-- Meny -->
-            <RowDefinition Height="2*" />   <!-- Labels -->
+            <RowDefinition Height="3*" />   <!-- Labels -->
             <RowDefinition Height="50*" />  <!-- Content -->
             <RowDefinition Height="20*" />  <!--Stack-->
         </Grid.RowDefinitions>
@@ -119,32 +119,25 @@
         <!-- LABEL ROW START -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="48*" />
-                <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="12.4*" />
-                <ColumnDefinition Width="24*" />           
-                <ColumnDefinition Width="46*" />
-                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="7.2*" />
+                <ColumnDefinition Width="1.67*" />
+                <ColumnDefinition Width="3.4*" />           
+                <ColumnDefinition Width="6.7*" />
             </Grid.ColumnDefinitions>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="0"></Label>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="1"></Label>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="2"></Label>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="3"></Label>
-            <Label Background="{DynamicResource MenuColor2}" Grid.Column="4"></Label>
             <!-- Visar vad som är Operationer / Värde i minnet -->
-            <Viewbox Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Style="{StaticResource Labels}" FontSize="25">Row</Label>
+            <Viewbox Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Left">
+                <Label Style="{StaticResource Labels}" FontSize="25">Operation</Label>
             </Viewbox>
-            <Viewbox Grid.Column="2" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Style="{StaticResource Labels}" Grid.Column="2" FontSize="25">Operation</Label>
+            <Viewbox Grid.Column="2" Stretch="Uniform" HorizontalAlignment="Left">
+                <Label Style="{StaticResource Labels}" FontSize="25" Padding="20, 5, 5, 5" BorderThickness="1, 0, 0, 0" BorderBrush="{DynamicResource fontColor}">Value</Label>
             </Viewbox>
-            <Viewbox Grid.Column="3" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Style="{StaticResource Labels}" Grid.Column="3" FontSize="25">Value</Label>
+            <Viewbox Grid.Column="3" Stretch="Uniform" HorizontalAlignment="Left">
+                <Label Name="label_txtBox_header" Style="{StaticResource Labels}" FontSize="25">Assembly</Label>
             </Viewbox>
-            <Viewbox Grid.Column="4" Stretch="Uniform" HorizontalAlignment="Center">
-                <Label Name="label_txtBox_header" Style="{StaticResource Labels}" Grid.Column="4" FontSize="25">Assembly</Label>
-            </Viewbox>
-            <Label Background="{DynamicResource MenuColor2}" Grid.Column="5" /> <!-- För att fylla ut tomrummet -->
         </Grid>
         <!-- LABEL ROW END -->
         
@@ -171,7 +164,7 @@
 
                 <!-- Instruction pointer START -->
                 <Viewbox HorizontalAlignment="Left" Grid.Row="0">
-                    <Label>Instruction Pointer</Label>
+                    <Label Foreground="{DynamicResource programLabels}">Instruction Pointer</Label>
                 </Viewbox>
                 <Viewbox Grid.Row="1">
                     <local:MemoryRow x:Name="ValueRow_InstructionPointer"></local:MemoryRow>
@@ -180,7 +173,7 @@
                 
                 <!-- Working Register START -->
                 <Viewbox HorizontalAlignment="Left" Grid.Row="2">
-                    <Label Grid.Row="2">Working Register</Label>
+                    <Label Grid.Row="2" Foreground="{DynamicResource programLabels}">Working Register</Label>
                 </Viewbox>
                 <Viewbox Grid.Row="3">
                     <local:MemoryRow x:Name="ValueRow_WorkingRegister"></local:MemoryRow>
@@ -194,7 +187,7 @@
                         <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
                     <Viewbox HorizontalAlignment="Left">
-                        <Label HorizontalContentAlignment="Left">Input</Label>
+                        <Label HorizontalContentAlignment="Left" Foreground="{DynamicResource programLabels}">Input</Label>
                     </Viewbox>
                     <DockPanel 
                             Grid.Column="1"
@@ -236,7 +229,7 @@
 
                 <!-- Output START -->
                 <Viewbox HorizontalAlignment="Left" Grid.Row="6">
-                    <Label Grid.Row="6">Output</Label>
+                    <Label Grid.Row="6" Foreground="{DynamicResource programLabels}">Output</Label>
                 </Viewbox>
                 <Viewbox Grid.Row="7">
                     <local:MemoryRow x:Name="ValueRow_Output"></local:MemoryRow>

@@ -13,6 +13,9 @@
     <Brush x:Key="toggleClicked">#FFFFFF</Brush>
     <Brush x:Key="toggleFont">#000000</Brush>
     
+    <!-- IN, OUT, WR, IP Label Font color -->
+    <Brush x:Key="programLabels">#000000</Brush>
+    
     <!-- MEMORY ROW COLORS -->
     <Brush x:Key="zeroColor">#028482</Brush>
     <Brush x:Key="oneColor">#80FF00</Brush>
