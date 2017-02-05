@@ -417,18 +417,17 @@ namespace GUIProjekt
             ofd.DefaultExt = ".txt";
             ofd.Filter = "Text Document (.txt)|*.txt";
 
-            if (ofd.ShowDialog() == true)
+            if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled)
             {
-                string filename = ofd.FileName;
-                _currentTextBox.Focus();
-                _currentTextBox.Text = File.ReadAllText(filename);
-                userMsg("Open file " + filename);                
+                errorCode("Cannot open file right now");
+                return;
             }
 
-            else
+            if (ofd.ShowDialog() == true)
             {
-                string filename = ofd.FileName;
-                errorCode("Could not open file. /Cancel requested by user. " + filename);
+                _currentTextBox.Focus();
+                _currentTextBox.Text = File.ReadAllText(ofd.FileName);
+                userMsg("Opened file \"" + ofd.FileName + "\"");                
             }
         }
 
@@ -447,11 +446,6 @@ namespace GUIProjekt
                 File.WriteAllText(sfd.FileName, _currentTextBox.Text);               
                 String time = DateTime.Now.ToString();
                 userMsg("Saved successfully " + time);
-            }
-
-            else
-            {
-                errorCode("Could not save file. /Cancel requested by user.");
             }
         }
 
