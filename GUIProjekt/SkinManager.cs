@@ -10,7 +10,8 @@ namespace GUIProjekt
     public enum Skins {
         Default,
         Orange,
-        Visual
+        Visual,
+        DefaultAlt
     }
 
     class SkinManager
@@ -36,6 +37,8 @@ namespace GUIProjekt
                     return "Skins/OrangeSkin.xaml";
                 case Skins.Visual:
                      return "Skins/BlueSkin.xaml";
+                case Skins.DefaultAlt:
+                     return "Skins/DefaultAlt.xaml";
             }
         }
     }

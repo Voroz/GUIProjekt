@@ -38,6 +38,7 @@
                 <MenuItem Name="Default" Header="Default" Click="MenuItem_Click" IsChecked="True" Style="{StaticResource MenuItem}"></MenuItem>
                 <MenuItem Name="Orange" Header="Orange" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}" ></MenuItem>
                 <MenuItem Name="Visual" Header="Visual" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="DefaultAlt" Header="DefaultAlt" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" Click="About_Click" Style="{StaticResource MenuItem}"></MenuItem>
@@ -120,7 +121,7 @@
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7.2*" />
-                <ColumnDefinition Width="1.67*" />
+                <ColumnDefinition Width="1.66*" />
                 <ColumnDefinition Width="3.4*" />           
                 <ColumnDefinition Width="6.7*" />
             </Grid.ColumnDefinitions>

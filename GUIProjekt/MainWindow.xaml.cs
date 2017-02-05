@@ -513,13 +513,11 @@ namespace GUIProjekt
         {
             MenuItem item = sender as MenuItem;
 
-
             Default.IsChecked = false;
             Orange.IsChecked = false;
             Visual.IsChecked = false;
+            DefaultAlt.IsChecked = false;
             item.IsChecked = true;
-
-
 
             Skins selected;
             Enum.TryParse(item.Header.ToString(), out selected);
@@ -527,14 +525,11 @@ namespace GUIProjekt
             ResourceDictionary selectedDictionary = SkinManager.GetSkin(selected);
             this.Resources.MergedDictionaries.Add(selectedDictionary);
 
-
-            for (int i = 0; i <= 255; i++)
-            {
+            for (int i = 0; i <= 255; i++) {
                 getMMRowOfPosition(255 - i).ChangeSkin(selectedDictionary);
             }
 
-            for (int i = 0; i < 5; i++)
-            {
+            for (int i = 0; i < 5; i++) {
                 getStackRowOfPosition(i).ChangeSkin(selectedDictionary);
             }
 

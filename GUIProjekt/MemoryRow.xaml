@@ -31,7 +31,7 @@
 
         <!--RowNumbers grid-->
         <UniformGrid Name="AdressNumber" Rows="1" Columns="1" Grid.Column="0" Margin="0,0,5,0">
-            <Label HorizontalContentAlignment="Right" BorderThickness="0"></Label>
+            <Label HorizontalContentAlignment="Right" BorderThickness="0" Foreground="{DynamicResource rowNrColor}"></Label>
         </UniformGrid>
 
         <!--Memory grid 12 columns-->
