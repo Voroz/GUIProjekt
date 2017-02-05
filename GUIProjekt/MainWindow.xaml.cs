@@ -150,7 +150,7 @@ namespace GUIProjekt
         *****************************************************/
         private bool checkSyntaxMKTextBox(TextBox textBox)
         {
-            
+            bool ok = true;            
             for (int i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
@@ -159,11 +159,11 @@ namespace GUIProjekt
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.binaryStringToMachine(str, out val)) {
                     errorCode("Syntax error, row " + i + ": " + "\"" + str + "\"");
-                    return false;
+                    ok = false;
                 }
             }
 
-            return true;
+            return ok;
         }
 
 
@@ -174,7 +174,7 @@ namespace GUIProjekt
          *****************************************************/
         private bool checkSyntaxAssemblyTextBox(TextBox textBox)
         {
-            
+            bool ok = true;  
             for (int i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
@@ -183,11 +183,11 @@ namespace GUIProjekt
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.assemblyToMachine(str, out val)) {
                     errorCode("Syntax error, row " + i + ": " + "\"" + str + "\"");
-                    return false;
+                    ok = false;
                 }
             }
             
-            return true;
+            return ok;
         }
 
         /******************************************************
@@ -389,6 +389,7 @@ namespace GUIProjekt
             {
                 return false;
             }
+            clearUserMsg();
 
             if (!textToModel(_currentTextBox))
             {
@@ -396,8 +397,7 @@ namespace GUIProjekt
             }
 
             _currentTextBox.IsReadOnly = true;
-            _currentTextBox.Foreground = Brushes.LightGray;
-            clearUserMsg();
+            _currentTextBox.Foreground = Brushes.LightGray;            
             userMsg("Running...");
             return true;
         }
