@@ -412,7 +412,7 @@ namespace GUIProjekt
                 return false;
             }
             
-            string[] strArr = TextBox_Assembler.Text.Split('\n');
+            string[] strArr = textBox.Text.Split('\n');
             
             for (int i = 0; i < textBox.LineCount; i++)
             {
