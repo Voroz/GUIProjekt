@@ -675,6 +675,11 @@ namespace GUIProjekt
         }
 
 
+        /******************************************************
+         CALL: UndoStorage valuesUndone = undo();
+         TASK: Returns an object which contains the previous 
+               state of various objects.
+         *****************************************************/
         public UndoStorage undo() {
             UndoStorage undoValues = _undoStack.top();
             _undoStack.pop();
