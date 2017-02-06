@@ -53,8 +53,8 @@ namespace GUIProjekt
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)Slider_FastForward.Value);
             _runTimer.Tick += OnInputTimerRunElapsed;
 
-            // Mark current row
-            markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
+            markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr())); // Mark current row
+            Slider_FastForward.Value = 200; // Måste sättas här. Sätts den i XAML så uppstår en bug
 
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
