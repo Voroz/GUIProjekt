@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace GUIProjekt {
-    class CircularStack<T> {
+namespace GUIProjekt 
+{
+    class CircularStack<T> 
+    {
         /******************************************************
          CALL: CircularStack<T> myStack;
          TASK: Uses an array of a certain datatype.
