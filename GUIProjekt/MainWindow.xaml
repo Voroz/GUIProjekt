@@ -225,7 +225,7 @@
                     <Label Grid.Row="6" Foreground="{DynamicResource programLabels}">Output</Label>
                 </Viewbox>
                 <Viewbox Grid.Row="7">
-                    <local:MemoryRow x:Name="ValueRow_Output"></local:MemoryRow>
+                    <local:MemoryRow x:Name="ValueRow_Output" ToolTip="The first bit of the Output is connected to the lamp."></local:MemoryRow>
                 </Viewbox>
                 <!-- Output END -->
             </Grid>
