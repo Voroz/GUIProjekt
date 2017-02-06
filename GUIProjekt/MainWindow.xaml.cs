@@ -627,7 +627,11 @@ namespace GUIProjekt
             _commandWindow.Show();
         }
 
-        private void OnClosing(object sender, CancelEventArgs e) {
+
+
+
+        private void OnClosing(object sender, CancelEventArgs e) 
+        {
             _aboutWin.Close();
             _commandWindow.Close();
         }
@@ -797,8 +801,8 @@ namespace GUIProjekt
 
 
         /******************************************************
-       CALL: Toggling the fast forward button on.
-       TASK: Increases the execution speed of the run through 
+       CALL: Changing the slider.
+       TASK: Delays the execution speed of the run through 
              of the program.
        *****************************************************/
         private void Slider_FastForward_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -806,6 +810,16 @@ namespace GUIProjekt
             Slider slider = sender as Slider;
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)slider.Value);
         }
+
+
+
+
+        /******************************************************
+       CALL: Toggling the fast forward button on.
+       TASK: Increases the execution speed of the run through 
+             of the program.
+       *****************************************************/
+        
         /*
         private void Button_FastForward_Checked(object sender, RoutedEventArgs e) {
             _runTimer.Interval = new TimeSpan(0, 0, 0, 0, Constants.FastExecutionDelay);
