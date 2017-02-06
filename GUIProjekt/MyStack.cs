@@ -13,7 +13,8 @@ namespace GUIProjekt
          CALL: MyStack<T> myStack;
          TASK: Uses an array of a certain datatype.
          *****************************************************/
-        public MyStack(T[] arr) {
+        public MyStack(T[] arr) 
+        {
             _usedSize = 0;
 		    _arr = arr;
 	    }
@@ -22,7 +23,8 @@ namespace GUIProjekt
          CALL: push(T val);
          TASK: Pushes the parameter onto the stack.
          *****************************************************/
-        public void push(T val) {
+        public void push(T val) 
+        {
             Debug.Assert(_usedSize != _arr.Length);
             _usedSize++;
             _arr[_arr.Length - _usedSize] = val;
@@ -32,7 +34,8 @@ namespace GUIProjekt
          CALL: pop();
          TASK: The latest element added gets deleted.
          *****************************************************/
-        public void pop() {
+        public void pop() 
+        {
             Debug.Assert(_usedSize != 0);
             _usedSize--;
         }
@@ -41,7 +44,8 @@ namespace GUIProjekt
          CALL: T topVal = top();
          TASK: Returns the value on top of the stack.
          *****************************************************/
-        public T top() {
+        public T top() 
+        {
             Debug.Assert(_usedSize != 0);
             return _arr[_arr.Length - _usedSize];
         }
@@ -50,7 +54,8 @@ namespace GUIProjekt
          CALL: int size = size();
          TASK: Returns the number of elements on the stack.
          *****************************************************/
-        public int size() {
+        public int size() 
+        {
             return _usedSize;
         }
 
