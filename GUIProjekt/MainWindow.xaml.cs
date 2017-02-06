@@ -372,7 +372,7 @@ namespace GUIProjekt
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
 
-            // Uppdatera grafiskt minnet som ändrats
+            // Update graphics of changed memory
             byte index;
             if (_assemblerModel.addrIdxToUpdate(currentAddr, out index))
             {

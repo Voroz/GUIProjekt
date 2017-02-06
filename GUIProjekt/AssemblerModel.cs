@@ -341,6 +341,12 @@ namespace GUIProjekt
             return true;
         }
 
+
+        /******************************************************
+         CALL: bool ok = assemblyToMachine(string, out Bit12);
+         TASK: Converts the inputted assembly string to Bit12
+               machine code.
+         *****************************************************/
         public bool assemblyToMachine(string assemblyString, out Bit12 machineCode) {
             if (isBinary(assemblyString) && assemblyString.Length == 12) {
                 machineCode = new Bit12(0);
@@ -521,6 +527,10 @@ namespace GUIProjekt
             return _memoryStack;
         }
 
+        /******************************************************
+         CALL: CircularStack<UndoStorage> undoStack = undoStack();
+         TASK: Returns the _undoStack variable.
+         *****************************************************/
         public CircularStack<UndoStorage> undoStack() {
             return _undoStack;
         }
@@ -546,6 +556,11 @@ namespace GUIProjekt
         }
 
 
+        /******************************************************
+         CALL: bool ok = addrIdxToUpdate(Bit12, out byte);
+         TASK: Handles indexing of STORE, CALL and RETURN 
+               instructions.
+         *****************************************************/
         public bool addrIdxToUpdate(Bit12 command, out byte idx) {
             byte val = (byte)extractVal(command.value());
             Operations opr = Operations.LOAD;
