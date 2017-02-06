@@ -331,9 +331,7 @@ namespace GUIProjekt
             assemblyCode = opr.ToString();
 
             // Special case
-            if (assemblyCode == "IN"
-                || assemblyCode == "OUT"
-                || assemblyCode == "RETURN") {
+            if (assemblyCode == "IN" || assemblyCode == "OUT" || assemblyCode == "RETURN") {
                     return true;
             }
 
@@ -372,8 +370,7 @@ namespace GUIProjekt
             // Special case where length is 1 and is a constant(number)
             if (splitString.Length == 1){
                 short val = 0;
-                if (short.TryParse(splitString[0], out val)
-                ) {
+                if (short.TryParse(splitString[0], out val)) {
                     if (val < -2048 || val > 2047)
                     {
                         machineCode = new Bit12(0);
@@ -390,10 +387,7 @@ namespace GUIProjekt
             if (splitString.Length == 2
                 && Enum.TryParse(splitString[0], false, out opr)
                 && (byte.TryParse(splitString[1], out addr) || referencesLabel(assemblyString, out label))
-                && !(splitString[0] == "IN"
-                || splitString[0] == "OUT"
-                || splitString[0] == "RETURN")
-                ) {                
+                && !(splitString[0] == "IN" || splitString[0] == "OUT" || splitString[0] == "RETURN")) {                
 
                 if(label.Length > 0)
                     addr = _labels[label];
@@ -405,12 +399,9 @@ namespace GUIProjekt
                 return true;
             }
 
-            if (splitString.Length == 1
-                && (splitString[0] == "IN"
-                || splitString[0] == "OUT"
-                || splitString[0] == "RETURN")
-                && Enum.TryParse(splitString[0], false, out opr)
-                ) {
+            if (splitString.Length == 1 
+                && (splitString[0] == "IN" || splitString[0] == "OUT" || splitString[0] == "RETURN")
+                && Enum.TryParse(splitString[0], false, out opr)) {
                     machineCode = new Bit12((short)((short)opr << Constants.StartOprBit));
                     return true;
             }
