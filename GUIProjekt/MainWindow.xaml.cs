@@ -61,6 +61,9 @@ namespace GUIProjekt
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
             ValueRow_InstructionPointer.HideChildElements();
+
+            string testStr = "hej\n\n";
+            string[] splitStr = splitString(testStr, '\n', 5);
         }
 
 
@@ -91,13 +94,12 @@ namespace GUIProjekt
 
         private void updateGUIMemory(byte from, byte to, TextBox textBox)
         {
-            string[] strArr = textBox.Text.Split('\n');
             for (int i = from; i <= to; i++)
             {
                 string str = "";
                 if (i < textBox.LineCount)
                 {
-                    str = strArr[i];
+                    str = textBox.GetLineText(i);
                 }
 
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
@@ -162,13 +164,12 @@ namespace GUIProjekt
         *****************************************************/
         private bool checkSyntaxMKTextBox(TextBox textBox)
         {
-            bool ok = true;            
-            string[] strArr = textBox.Text.Split('\n');
+            bool ok = true;
 
             for (int i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
-                string str = strArr[i].TrimEnd(trimChars);
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.binaryStringToMachine(str, out val)) {
@@ -190,13 +191,12 @@ namespace GUIProjekt
          *****************************************************/
         private bool checkSyntaxAssemblyTextBox(TextBox textBox)
         {
-            bool ok = true;  
-            string[] strArr = textBox.Text.Split('\n');
+            bool ok = true;
 
             for (int i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
-                string str = strArr[i].TrimEnd(trimChars);
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.assemblyToMachine(str, out val)) {
@@ -311,12 +311,11 @@ namespace GUIProjekt
         private void storeLabels()
         {
             _assemblerModel.clearLabels();
-            string[] strArr = TextBox_Assembler.Text.Split('\n');
 
             for (int i = 0; i < TextBox_Assembler.LineCount; i++)
             {
                 string label;
-                if (_assemblerModel.containsLabel(strArr[i], out label) == LabelStatus.Success)
+                if (_assemblerModel.containsLabel(TextBox_Assembler.GetLineText(i), out label) == LabelStatus.Success)
                 {
                     _assemblerModel.addLabel(label, (byte)i);
                 }
@@ -324,6 +323,52 @@ namespace GUIProjekt
         }
 
 
+        /******************************************************
+         CALL: splitString(string str, char ch, int maxSplit);
+         TASK: Splits string when finding ch,
+               and if no ch is found before Count
+               reaches maxSplit, split anyway.
+        *****************************************************/
+        string[] splitString(string str, char ch, int maxSplit) {
+            List<string> strList = new List<string>();
+            bool addedEndOfStr = false;
+
+            for (int i = 0; i < str.Length; i++) {
+                if (str[i] == ch) {
+                    strList.Add(str.Remove(i, str.Length - i));
+                    str = str.Substring(i + 1);
+                    i = -1;
+                    continue;
+                }
+                if (maxSplit != 0) {
+                    if (i == maxSplit) {
+                        strList.Add(str.Remove(i, str.Length - i));
+                        str = str.Substring(i + 1);
+                        i = -1;
+                        continue;
+                    }
+                }
+                if (i == str.Length - 1 && str[i] != ch) {
+                    strList.Add(str);
+                    str = "";
+                    addedEndOfStr = true;
+                    continue;
+                }
+
+            }
+
+            if (!addedEndOfStr) {
+                strList.Add("");
+            }
+
+
+            string[] strArr = new string[strList.Count];
+            for (int i = 0; i < strList.Count; i++) {
+                strArr[i] = strList[i];
+            }
+
+            return strArr;
+        }
 
 
         /******************************************************
@@ -412,12 +457,10 @@ namespace GUIProjekt
                 return false;
             }
             
-            string[] strArr = textBox.Text.Split('\n');
-            
             for (int i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
-                string str = strArr[i].TrimEnd(trimChars);
+                string str = textBox.GetLineText(i).TrimEnd(trimChars);
                 Bit12 bits = new Bit12(0);
 
                 bool success = _assemblerModel.stringToMachine(str, out bits);
