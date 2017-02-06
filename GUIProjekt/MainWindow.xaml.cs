@@ -354,13 +354,13 @@ namespace GUIProjekt
             if (opr == Operations.RETURN && _assemblerModel.stack().size() == 0)
             {
                 _runTimer.Stop();
-                errorCode("Attempted Return on an empty stack");
+                errorCode("Attempted Return on an empty stack.");
                 return;
             }
 
             if (!_assemblerModel.processCurrentAddr())
             {
-                errorCode("Invalid operation");
+                errorCode("Invalid operation.");
             }
 
             // Mark current row
@@ -465,7 +465,7 @@ namespace GUIProjekt
 
             if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled)
             {
-                errorCode("Cannot open file right now");
+                errorCode("Cannot open file right now.");
                 return;
             }
 
@@ -488,7 +488,7 @@ namespace GUIProjekt
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.DefaultExt = ".txt";
-            sfd.AddExtension = true;      
+            sfd.AddExtension = true;
      
             if (sfd.ShowDialog() == true)
             {
@@ -650,11 +650,9 @@ namespace GUIProjekt
         private void Button_Run_Click(object sender, RoutedEventArgs e)
         {
             if (!InitProgramStart())
-            {
                 return;
-            }
-            _runTimer.Start();
 
+            _runTimer.Start();
         }
 
 
@@ -717,13 +715,12 @@ namespace GUIProjekt
         {
             if (_runTimer.IsEnabled)
             {
-               
-                errorCode("Cannot do this while running the application");
+                errorCode("Cannot do this while running the application.");
                 return;
             }
 
             if (_assemblerModel.undoStack().size() == 0) {
-                errorCode("Cannot do this with an empty return stack");
+                errorCode("Cannot do this with an empty return stack.");
                 return;
             }
 
@@ -742,7 +739,7 @@ namespace GUIProjekt
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
 
-            // Uppdatera grafiskt minnet som ändrats
+            // Update graphics of changed memory
             byte index;
             if (_assemblerModel.addrIdxToUpdate(currentAddr, out index))
             {
@@ -927,7 +924,6 @@ namespace GUIProjekt
         *****************************************************/
         private void lightOn()
         {
-
             var uriSource = new Uri(@"/GUIProjekt;component/images/bulbon.png", UriKind.Relative);
 
             bulb.Source = new BitmapImage(uriSource);
@@ -942,7 +938,6 @@ namespace GUIProjekt
         *****************************************************/
         private void lightOff()
         {
-
             var uriSource = new Uri(@"/GUIProjekt;component/images/bulboff.png", UriKind.Relative);
            
             bulb.Source = new BitmapImage(uriSource);
