@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="WindowBackground" TargetType="Window">
+        <Setter Property="Background" Value="#dfe3ee"/>
+    </Style>
+
+    <Brush x:Key="MenuColor">#3b5998</Brush>
+    <!--Row #0-->
+    <Brush x:Key="MenuColor1">#3b5998</Brush>
+    <!--Row #1-->
+    <Brush x:Key="MenuColor2">#3b5998</Brush>
+    <!--Row #2-->
+    <Brush x:Key="fontColor">#FFFFFF</Brush>
+    <Brush x:Key="fontColorFileMenu">#000000</Brush>
+    <Brush x:Key="toggleClicked">#000000</Brush>
+    <Brush x:Key="toggleFont">#f98c13</Brush>
+
+    <Brush x:Key="toggleClicked2">#FFFFFF</Brush>
+    <Brush x:Key="toggleFont2">#000000</Brush>
+
+
+    <!-- IN, OUT, WR, IP Label Font color -->
+    <Brush x:Key="programLabels">#000000</Brush>
+
+    <!-- MEMORY ROW COLORS -->
+    <Brush x:Key="rowNrColor">#000000</Brush>
+    <!-- MEMORY ROW COLORS -->
+    <Brush x:Key="zeroColor">#f7f7f7</Brush>
+    <Brush x:Key="oneColor">#8b9dc3</Brush>
+    <!-- Message Box -->
+    <Brush x:Key="MessageBoxBackground">#FFFFFF</Brush>
+    <Brush x:Key="MessageBoxForeground">#FFFFFF</Brush>
+    
+</ResourceDictionary>
