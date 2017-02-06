@@ -672,7 +672,7 @@ namespace GUIProjekt
         void stopOn()
         {
             var uriSource = new Uri(@"/GUIProjekt;component/images/media-play-8x.png", UriKind.Relative);
-            var uriSource1 = new Uri(@"/GUIProjekt;component/images/media-stop-8x-red.png", UriKind.Relative);
+            var uriSource1 = new Uri(@"/GUIProjekt;component/images/media-stop-8x.png", UriKind.Relative);
             var uriSource2 = new Uri(@"/GUIProjekt;component/images/media-pause-8x.png", UriKind.Relative);
 
             Playicon.Source = new BitmapImage(uriSource);
