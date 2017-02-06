@@ -654,9 +654,43 @@ namespace GUIProjekt
                 return;
             }
             _runTimer.Start();
+            playOn();
+           
 
         }
 
+        void playOn()
+        {
+            var uriSource = new Uri(@"/GUIProjekt;component/images/media-play-8x-green.png", UriKind.Relative);
+            var uriSource1 = new Uri(@"/GUIProjekt;component/images/media-stop-8x.png", UriKind.Relative);
+            var uriSource2 = new Uri(@"/GUIProjekt;component/images/media-pause-8x.png", UriKind.Relative);
+                       
+            Playicon.Source = new BitmapImage(uriSource);
+            Stopicon.Source = new BitmapImage(uriSource1);
+            Pauseicon.Source = new BitmapImage(uriSource2);
+        }
+
+        void stopOn()
+        {
+            var uriSource = new Uri(@"/GUIProjekt;component/images/media-play-8x.png", UriKind.Relative);
+            var uriSource1 = new Uri(@"/GUIProjekt;component/images/media-stop-8x-red.png", UriKind.Relative);
+            var uriSource2 = new Uri(@"/GUIProjekt;component/images/media-pause-8x.png", UriKind.Relative);
+
+            Playicon.Source = new BitmapImage(uriSource);
+            Stopicon.Source = new BitmapImage(uriSource1);
+            Pauseicon.Source = new BitmapImage(uriSource2);
+        }
+
+        void pauseOn()
+        {
+            var uriSource = new Uri(@"/GUIProjekt;component/images/media-play-8x.png", UriKind.Relative);
+            var uriSource1 = new Uri(@"/GUIProjekt;component/images/media-stop-8x.png", UriKind.Relative);
+            var uriSource2 = new Uri(@"/GUIProjekt;component/images/media-pause-8x-blue.png", UriKind.Relative);
+
+            Playicon.Source = new BitmapImage(uriSource);
+            Stopicon.Source = new BitmapImage(uriSource1);
+            Pauseicon.Source = new BitmapImage(uriSource2);
+        }
 
 
 
@@ -670,7 +704,8 @@ namespace GUIProjekt
             if (_assemblerModel.undoStack().size() == 0)
                 return;
 
-            _runTimer.Stop();            
+            _runTimer.Stop();
+            pauseOn();
         }
 
 
@@ -694,7 +729,7 @@ namespace GUIProjekt
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
 
-
+            stopOn();
             lightOff();
             _currentTextBox.Foreground = Brushes.Black;
             clearUserMsg();
