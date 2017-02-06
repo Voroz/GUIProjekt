@@ -630,6 +630,10 @@ namespace GUIProjekt
 
 
 
+        /***********************************************************
+         CALL: When closing the application
+         TASK: Closing all windows opened within the application.
+         ************************************************************/
         private void OnClosing(object sender, CancelEventArgs e) 
         {
             _aboutWin.Close();
