@@ -444,6 +444,7 @@ namespace GUIProjekt
                 return false;
             }
 
+            Keyboard.ClearFocus();
             _currentTextBox.IsReadOnly = true;
             _currentTextBox.Foreground = Brushes.LightGray;            
             userMsg("Running...");
