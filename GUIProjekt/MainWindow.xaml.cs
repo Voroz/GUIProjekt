@@ -27,6 +27,9 @@ namespace GUIProjekt
     /// </summary>
     public partial class MainWindow : Window
     {
+
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -61,6 +64,8 @@ namespace GUIProjekt
         }
 
 
+
+
         /******************************************************
          CALL: createMemoryRowNumbers();
          TASK: Displays row numbers for the memory.
@@ -80,6 +85,8 @@ namespace GUIProjekt
                 stackRow.ShowMemoryRowNumber((byte)(255 - i));
             }
         }
+
+
 
 
         private void updateGUIMemory(byte from, byte to, TextBox textBox)
@@ -122,6 +129,9 @@ namespace GUIProjekt
             }
         }
 
+
+
+
         /******************************************************
          CALL: bool syntaxOK = checkSyntaxActiveTextbox();
          TASK: Checks if the inputted text in the currently
@@ -141,6 +151,8 @@ namespace GUIProjekt
             Debug.Assert(true);
             return false;
         }
+
+
 
 
         /******************************************************
@@ -167,6 +179,8 @@ namespace GUIProjekt
         }
 
 
+
+
         /******************************************************
          CALL: bool ok = checkSyntaxAssemblyTextBox(TextBox);
          TASK: Checks if any line entered in the assembler
@@ -190,6 +204,9 @@ namespace GUIProjekt
             return ok;
         }
 
+
+
+
         /******************************************************
         CALL: When writing in the machine code section.
         TASK: Updates the assembler section.
@@ -206,6 +223,9 @@ namespace GUIProjekt
             _inputTimerMK.Stop();
             _inputTimerMK.Start();
         }
+
+
+
 
         private void OnInputTimerMKElapsed(object source, EventArgs e)
         {
@@ -230,6 +250,9 @@ namespace GUIProjekt
             _previousLineCount = (byte)TextBox_MK.LineCount;
         }
 
+
+
+
         /******************************************************
          CALL: When writing in the assembler section.
          TASK: Updates the machine code section and the memory.
@@ -246,6 +269,9 @@ namespace GUIProjekt
             _inputTimerAssembly.Stop();
             _inputTimerAssembly.Start();
         }
+
+
+
 
         private void OnInputTimerAssemblyElapsed(object source, EventArgs e)
         {
@@ -271,6 +297,9 @@ namespace GUIProjekt
             _previousLineCount = (byte)TextBox_Assembler.LineCount;
         }
 
+
+
+
         /******************************************************
          CALL: storeLabels();
          TASK: Stores every label added in the assembly textbox.
@@ -287,6 +316,8 @@ namespace GUIProjekt
                 }
             }
         }
+
+
 
 
         /******************************************************
@@ -307,6 +338,9 @@ namespace GUIProjekt
 
             _previousInstructionPtr = _assemblerModel.instructionPtr();
         }
+
+
+
 
         private void programTick()
         {
@@ -359,6 +393,9 @@ namespace GUIProjekt
             lightIfOutputIsOn();                        
         }
 
+
+
+
         private bool textToModel(TextBox textBox)
         {
            
@@ -383,6 +420,9 @@ namespace GUIProjekt
             return true;
         }
 
+
+
+
         private bool InitProgramStart()
         {
             if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled)
@@ -402,10 +442,16 @@ namespace GUIProjekt
             return true;
         }
 
+
+
+
         private void OnInputTimerRunElapsed(object source, EventArgs e)
         {
             programTick();
         }
+
+
+
 
         /******************************************************
          CALL: When clicking the Open button in the Menu
@@ -431,6 +477,9 @@ namespace GUIProjekt
             }
         }
 
+
+
+
         /******************************************************
          CALL: When clicking the Save button in the menu.
          TASK: Saves the inputted assembler code as a .txt file.
@@ -449,6 +498,9 @@ namespace GUIProjekt
             }
         }
 
+
+
+
         /******************************************************
          CALL: When clicking the Exit button in the Menu
          TASK: Gives the user a messageBox Yes/No to Exit.
@@ -461,7 +513,10 @@ namespace GUIProjekt
                 Application.Current.Shutdown();
             }
         }
-               
+             
+  
+
+
         /******************************************************
         CALL: Clicking Assembly in the Mode header.
         TASK: Changes the program to assembly mode.
@@ -480,6 +535,9 @@ namespace GUIProjekt
             TextBox_MK.Visibility = Visibility.Collapsed;
         }
 
+
+
+
         /******************************************************
         CALL: Clicking Machine Code in the Mode header.
         TASK: Changes the program to machine code mode.
@@ -497,6 +555,9 @@ namespace GUIProjekt
             TextBox_MK.Visibility = Visibility.Visible;
             TextBox_Assembler.Visibility = Visibility.Collapsed;
         }
+
+
+
 
         /******************************************************
        CALL: Clicking one of the options in the Skins header.
@@ -533,6 +594,9 @@ namespace GUIProjekt
             ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
         }
 
+
+
+
         /******************************************************
          CALL: When clicking the About button in the menu.
          TASK: Displays info about the devolopment.
@@ -546,6 +610,8 @@ namespace GUIProjekt
 
             _aboutWin.Show();
         }
+
+
 
 
         /***********************************************************
@@ -566,6 +632,9 @@ namespace GUIProjekt
             _commandWindow.Close();
         }
        
+
+
+
         /******************************************************
          CALL: When clicking the run button.
          TASK: Runs through the entered instructions. 
@@ -580,6 +649,9 @@ namespace GUIProjekt
 
         }
 
+
+
+
         /******************************************************
          CALL: When clicking the pause button in the menu.
          TASK: Pauses the run through of the program and enables 
@@ -592,6 +664,9 @@ namespace GUIProjekt
 
             _runTimer.Stop();            
         }
+
+
+
 
         /******************************************************
         CALL: When clicking the stop button.
@@ -621,6 +696,9 @@ namespace GUIProjekt
             // Mark current row
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
         }
+
+
+
 
         /******************************************************
          CALL: Clicking the step back button.
@@ -683,6 +761,9 @@ namespace GUIProjekt
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));           
         }
 
+
+
+
         /******************************************************
          CALL: Clicking the step forward button.
          TASK: Progresses the execution of the program one step.
@@ -697,6 +778,9 @@ namespace GUIProjekt
             programTick();
         }
 
+
+
+
         /******************************************************
         CALL: Changing the slider.
         TASK: Updates the input depending on how the user
@@ -708,6 +792,9 @@ namespace GUIProjekt
             _assemblerModel.setInput(new Bit12((short)slider.Value));
             ValueRow_Input.ShowMemoryAdress(_assemblerModel.input());
         }
+
+
+
 
         /******************************************************
        CALL: Toggling the fast forward button on.
@@ -736,6 +823,8 @@ namespace GUIProjekt
         /*
 
 
+          
+         
         /******************************************************
          CALL: MemoryRow mr = getMMRowOfPosition(int);
          TASK: Returns the MemoryRow of the position of the paramater.
@@ -745,10 +834,20 @@ namespace GUIProjekt
             return theMemory.Children[(theMemory.Children.Count - 1) - pos] as MemoryRow;
         }
 
+
+
+
+        /******************************************************
+         CALL: MemoryRow mr = getStackRowOfPosition(int);
+         TASK: Returns the StackRow of the position of the paramater.
+         *****************************************************/
         private MemoryRow getStackRowOfPosition(int pos)
         {
             return theStack.Children[(theStack.Children.Count - 1) - pos] as MemoryRow;
         }
+
+
+
 
         /******************************************************
          CALL: errorCode("I want to display this to the user");
@@ -760,6 +859,9 @@ namespace GUIProjekt
             ScrollViewer_MessageBox.ScrollToEnd();
         }
 
+
+
+
         /******************************************************
          CALL: userMsg("I want to display this to the user");
          TASK: Displays msg on screen in TextBoxMsg.
@@ -770,6 +872,9 @@ namespace GUIProjekt
             ScrollViewer_MessageBox.ScrollToEnd();
         }
 
+
+
+
         /******************************************************
          CALL: clearUserMsg();
          TASK: Empty user message screen.
@@ -778,6 +883,9 @@ namespace GUIProjekt
         {
             TextBlock_MessageBox.Text = "";
         }
+
+
+
 
         /******************************************************
          CALL: lightIfOutputIsRight();
@@ -792,6 +900,9 @@ namespace GUIProjekt
                 lightOff();
         }
 
+
+
+
         /******************************************************
          CALL: lightOn();
          TASK: Makes the light bulb light up.
@@ -804,6 +915,9 @@ namespace GUIProjekt
             bulb.Source = new BitmapImage(uriSource);
         }
 
+
+
+
         /******************************************************
          CALL: lightOff();
          TASK: Turns the light bulb off.
@@ -815,7 +929,10 @@ namespace GUIProjekt
            
             bulb.Source = new BitmapImage(uriSource);
         }
-                
+         
+       
+
+
         /******************************************************
          CALL: Clicking the drop down list to change skin.
          TASK: Changes the skin color (theme).
