@@ -528,7 +528,7 @@
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
             <Viewbox Grid.Column="0">
-                <Image x:Name="bulb" Source="images/bulboff.png" ToolTip="The light bulb is connected to first bit of the Output."></Image>
+                <Image x:Name="bulb" Source="images/bulboff.png" ToolTip="The light bulb is connected to the first bit of the Output."></Image>
             </Viewbox>
             
             <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1" >
