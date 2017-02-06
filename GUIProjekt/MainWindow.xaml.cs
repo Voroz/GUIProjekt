@@ -709,8 +709,9 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e)
         {
-            if (_assemblerModel.undoStack().size() == 0)
+            if (!_runTimer.IsEnabled) {
                 return;
+            }
 
             _runTimer.Stop();            
             pauseOn();
@@ -739,6 +740,7 @@ namespace GUIProjekt
 
             stopOn();
             lightOff();
+            Keyboard.ClearFocus();
             _currentTextBox.Foreground = Brushes.Black;
             clearUserMsg();
 
@@ -771,9 +773,11 @@ namespace GUIProjekt
 
             if (_assemblerModel.undoStack().size() == 1)
             {
+                Keyboard.ClearFocus();
                 _currentTextBox.Foreground = Brushes.Black;
-                clearUserMsg();
+                clearUserMsg();                
                 _currentTextBox.IsReadOnly = false;
+                stopOn();                
             }
 
             UndoStorage undoValues = _assemblerModel.undo();
