@@ -84,13 +84,13 @@ namespace GUIProjekt
 
         private void updateGUIMemory(byte from, byte to, TextBox textBox)
         {
-
+            string[] strArr = textBox.Text.Split('\n');
             for (int i = from; i <= to; i++)
             {
                 string str = "";
                 if (i < textBox.LineCount)
                 {
-                    str = textBox.GetLineText(i);
+                    str = strArr[i];
                 }
 
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
@@ -150,11 +150,13 @@ namespace GUIProjekt
         *****************************************************/
         private bool checkSyntaxMKTextBox(TextBox textBox)
         {
-            bool ok = true;            
+            bool ok = true;
+            string[] strArr = textBox.Text.Split('\n');
+
             for (int i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
-                string str = textBox.GetLineText(i).TrimEnd(trimChars);
+                string str = strArr[i].TrimEnd(trimChars);
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.binaryStringToMachine(str, out val)) {
@@ -174,11 +176,13 @@ namespace GUIProjekt
          *****************************************************/
         private bool checkSyntaxAssemblyTextBox(TextBox textBox)
         {
-            bool ok = true;  
+            bool ok = true;
+            string[] strArr = textBox.Text.Split('\n');
+
             for (int i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
-                string str = textBox.GetLineText(i).TrimEnd(trimChars);
+                string str = strArr[i].TrimEnd(trimChars);
 
                 Bit12 val = new Bit12(0);
                 if (!_assemblerModel.assemblyToMachine(str, out val)) {
@@ -278,10 +282,12 @@ namespace GUIProjekt
         private void storeLabels()
         {
             _assemblerModel.clearLabels();
+            string[] strArr = TextBox_Assembler.Text.Split('\n');
+
             for (int i = 0; i < TextBox_Assembler.LineCount; i++)
             {
                 string label;
-                if (_assemblerModel.containsLabel(TextBox_Assembler.GetLineText(i), out label) == LabelStatus.Success)
+                if (_assemblerModel.containsLabel(strArr[i], out label) == LabelStatus.Success)
                 {
                     _assemblerModel.addLabel(label, (byte)i);
                 }
@@ -368,11 +374,13 @@ namespace GUIProjekt
             {
                 return false;
             }
+
+            string[] strArr = TextBox_Assembler.Text.Split('\n');
             
             for (int i = 0; i < textBox.LineCount; i++)
             {
                 char[] trimChars = new char[3] { '\r', '\n', ' ' };
-                string str = textBox.GetLineText(i).TrimEnd(trimChars);
+                string str = strArr[i].TrimEnd(trimChars);
                 Bit12 bits = new Bit12(0);
 
                 bool success = _assemblerModel.stringToMachine(str, out bits);
@@ -630,8 +638,7 @@ namespace GUIProjekt
         private void Button_StepBack_Click(object sender, RoutedEventArgs e)
         {
             if (_runTimer.IsEnabled)
-            {
-               
+            {               
                 errorCode("Cannot do this while running the application");
                 return;
             }
