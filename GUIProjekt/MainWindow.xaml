@@ -225,7 +225,7 @@
                     <Label Grid.Row="6" Foreground="{DynamicResource programLabels}">Output</Label>
                 </Viewbox>
                 <Viewbox Grid.Row="7">
-                    <local:MemoryRow x:Name="ValueRow_Output" ToolTip="The first bit of the Output is connected to the lamp."></local:MemoryRow>
+                    <local:MemoryRow x:Name="ValueRow_Output" ToolTip="The first bit of the Output is connected to the light bulb."></local:MemoryRow>
                 </Viewbox>
                 <!-- Output END -->
             </Grid>
@@ -528,7 +528,7 @@
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
             <Viewbox Grid.Column="0">
-                <Image x:Name="bulb" Source="images/bulboff.png" ToolTip="Lamp is connected to first bit of the output"></Image>
+                <Image x:Name="bulb" Source="images/bulboff.png" ToolTip="The light bulb is connected to the first bit of the Output."></Image>
             </Viewbox>
             
             <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1" >
