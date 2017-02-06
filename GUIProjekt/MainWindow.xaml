@@ -21,7 +21,6 @@
             <RowDefinition Height="50*" />  <!-- Content -->
             <RowDefinition Height="20*" />  <!--Stack-->
         </Grid.RowDefinitions>
-
         
         <!-- Top menu     START -->
         <Menu Grid.Row="0" Style="{StaticResource Menu}">
@@ -46,7 +45,6 @@
             </MenuItem>
         </Menu>
         <!-- Top menu    END -->
-        
         
         <!-- Program menu     START -->
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Stretch" Background="{DynamicResource MenuColor1}">
@@ -106,15 +104,11 @@
                                 TickPlacement="None"
                                 TickFrequency="1"
                                 IsSnapToTickEnabled="True"
-                                ValueChanged="Slider_FastForward_ValueChanged"
-                                />
-
+                                ValueChanged="Slider_FastForward_ValueChanged" />
                 </DockPanel>
             </Viewbox>            
         </StackPanel>
-        
-        <!-- Program menu     END -->
-        
+        <!-- Program menu END -->
         
         
         <!-- LABEL ROW START -->
@@ -141,7 +135,6 @@
             </Viewbox>
         </Grid>
         <!-- LABEL ROW END -->
-        
         
         <!-- CONTENT / MINNE / EDITORS etc. START -->
         <Grid Grid.Row="3" Margin="10,2,10,10">
@@ -181,7 +174,7 @@
                 </Viewbox>
                 <!-- Working Register END -->
 
-                
+                <!-- Input START -->
                 <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -222,11 +215,10 @@
 
                     </DockPanel>
                 </Grid>
-                
                 <Viewbox Grid.Row="5">
                     <local:MemoryRow x:Name="ValueRow_Input"></local:MemoryRow>
                 </Viewbox>
-
+                <!-- INPUT END -->
 
                 <!-- Output START -->
                 <Viewbox HorizontalAlignment="Left" Grid.Row="6">
@@ -236,13 +228,11 @@
                     <local:MemoryRow x:Name="ValueRow_Output"></local:MemoryRow>
                 </Viewbox>
                 <!-- Output END -->
-
-
             </Grid>
-            <!-- IP, IN, OUT, WR    END -->
+            <!-- IP, IN, OUT, WR END -->
 
             
-            <!-- Memory, Editors    START -->
+            <!-- Memory, Editors START -->
             <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1">
                 <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid>
@@ -529,21 +519,18 @@
             </ScrollViewer> <!-- Memory, Editors    END -->
         </Grid>
         <!-- CONTENT / MINNE / EDITORS etc. END -->
-
         
 
-
-        <!-- Stacken-->
+        <!-- Stacken START-->
         <Grid Grid.Row="4" Margin="10,2,10,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
             <Viewbox Grid.Column="0">
-                
                 <Image x:Name="bulb" Source="images/bulboff.png" ToolTip="Lamp is connected to first bit of the output"></Image>
             </Viewbox>
-
+            
             <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1" >
                 <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid>
@@ -562,42 +549,23 @@
                             </UniformGrid>
 
                         </Viewbox>
-                        <!--<Grid Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="200" MaxHeight="130">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="65" />
-                                    <RowDefinition Height="65" />
-                                </Grid.RowDefinitions>
-                            <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                <Viewbox >
-                                    <TextBlock Grid.Row="0" Name="textBoxError" Padding="10" ></TextBlock>
-                                </Viewbox>
-                            </ScrollViewer>
-                            <ScrollViewer Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                <Viewbox >
-                                    <TextBlock Grid.Row="1" Name="textBoxMsg" Padding="10" ></TextBlock>
-                                </Viewbox>
-                            </ScrollViewer>
-                                
-                            </Grid>-->
                         <Grid Grid.Column="1" HorizontalAlignment="Stretch" MinWidth="200" MaxHeight="130">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <ScrollViewer Name="ScrollViewer_MessageBox" Grid.Column="0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                <TextBlock Name="TextBlock_MessageBox" TextWrapping="Wrap" VerticalAlignment="Stretch" Padding="10" Margin="6,0,0,0"
-                                           Background="{DynamicResource MessageBoxBackground}"
-                                           />
+                                <TextBlock Name="TextBlock_MessageBox" 
+                                           TextWrapping="Wrap" 
+                                           VerticalAlignment="Stretch" 
+                                           Padding="10" 
+                                           Margin="6,0,0,0"
+                                           Background="{DynamicResource MessageBoxBackground}"  />
                             </ScrollViewer>
-
                         </Grid>
-
-
-
-
                     </Grid>
                 </Viewbox>
             </ScrollViewer>
         </Grid>
-        <!-- Stacken-->
+        <!-- Stacken END -->
     </Grid>
 </Window>
