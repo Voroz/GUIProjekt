@@ -709,6 +709,7 @@ namespace GUIProjekt
                     + ", expected " + _size + "\n");
             }
 
+
             ok = ok && 255 == createMask(0, 7)
                  && 63 == createMask(0, 5)
                  && 2032 == createMask(4, 10)
@@ -717,6 +718,7 @@ namespace GUIProjekt
                  && 1020 == createMask(2, 9);
             System.Diagnostics.Debug.WriteLine("createMask: " + ok);
 
+
             Operations opr;
             ok = ok && extractOperation(2800, out opr)
                  && extractOperation(256, out opr)
@@ -724,6 +726,7 @@ namespace GUIProjekt
                  && extractOperation(1, out opr)
                  && extractOperation(1337, out opr);
             System.Diagnostics.Debug.WriteLine("extractOperation: " + ok);
+
 
             short bits1 = 400;
             short bits2 = 255;
@@ -739,6 +742,7 @@ namespace GUIProjekt
                  && 11 == (byte)extractValFromBits(Constants.StartOprBit, Constants.EndOprBit, bits6);
             System.Diagnostics.Debug.WriteLine("extractValFromBits: " + ok);
 
+
             string labelStr = "";
             ok = ok && LabelStatus.NoLabel == containsLabel("", out labelStr)
                  && LabelStatus.NoLabel == containsLabel("MUL 420", out labelStr)
@@ -750,12 +754,14 @@ namespace GUIProjekt
                  && LabelStatus.Success == containsLabel(":VARMT 255", out labelStr);
             System.Diagnostics.Debug.WriteLine("containsLabel: " + ok);
 
+
             ok = ok && isBinary("00000000")
                  && isBinary("11111111")
                  && isBinary("01010110")
                  && isBinary("0")
                  && isBinary("1");
             System.Diagnostics.Debug.WriteLine("isBinary: " + ok);
+
 
             Bit12 machineCode = new Bit12(0);
             ok = ok && stringToMachine("000100010001", out machineCode)
@@ -764,10 +770,12 @@ namespace GUIProjekt
                  && stringToMachine(" ", out machineCode);
             System.Diagnostics.Debug.WriteLine("stringToMachine: " + ok);
 
+
             ok = ok && binaryStringToMachine(" ", out machineCode)
                  && binaryStringToMachine("011111111110", out machineCode)
                  && binaryStringToMachine("100000000001", out machineCode);
             System.Diagnostics.Debug.WriteLine("binaryStringToMachine: " + ok);
+
 
             string assemCode = "";
             Bit12 val1 = new Bit12(1024);
@@ -784,6 +792,7 @@ namespace GUIProjekt
                  && machineToAssembly(val6, out assemCode);
             System.Diagnostics.Debug.WriteLine("machineToAssembly: " + ok);
 
+
             Bit12 bit = new Bit12(0);
             ok = ok && assemblyToMachine(" ", out bit)
                  && assemblyToMachine("\n", out bit)
@@ -792,6 +801,7 @@ namespace GUIProjekt
                  && assemblyToMachine("OUT", out bit)
                  && assemblyToMachine("PJUMP 200", out bit);
             System.Diagnostics.Debug.WriteLine("assemblyToMachine: " + ok);
+
 
             ok = ok && checkSyntaxMachine("000011111111")
                  && checkSyntaxMachine("001101011111")

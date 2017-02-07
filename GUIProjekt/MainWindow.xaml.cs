@@ -54,7 +54,7 @@ namespace GUIProjekt
             _runTimer.Tick += OnInputTimerRunElapsed;
 
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr())); // Mark current row
-            Slider_FastForward.Value = 200; // Måste sättas här. Sätts den i XAML så uppstår en bug
+            Slider_FastForward.Value = 200; // Can't be specified in the XAML file, bug
 
             ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
             ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
@@ -91,7 +91,11 @@ namespace GUIProjekt
 
 
 
-
+        /******************************************************
+         CALL: updateGUIMemory(byte, byte, TextBox);
+         TASK: Updates the graphics of the different parts
+               of the memory.
+         *****************************************************/
         private void updateGUIMemory(byte from, byte to, TextBox textBox)
         {
             for (int i = from; i <= to; i++)
@@ -585,6 +589,7 @@ namespace GUIProjekt
             MachineCode.IsChecked = false;
             TextBox_Assembler.Visibility = Visibility.Visible;
             TextBox_MK.Visibility = Visibility.Collapsed;
+            userMsg("Mode was changed from Machine to Assembly.");
         }
 
 
@@ -606,6 +611,7 @@ namespace GUIProjekt
             Assembler.IsChecked = false;
             TextBox_MK.Visibility = Visibility.Visible;
             TextBox_Assembler.Visibility = Visibility.Collapsed;
+            userMsg("Mode was changed from Assembly to Machine.");
         }
 
 
@@ -710,7 +716,13 @@ namespace GUIProjekt
 
         }
 
-        void playOn()
+
+        /******************************************************
+         CALL: playOn();
+         TASK: Changes the images of the buttons making it 
+               look like the run button was clicked.
+         *****************************************************/
+        private void playOn()
         {
             var uriSource = new Uri(@"/GUIProjekt;component/images/media-play-8x-green.png", UriKind.Relative);
             var uriSource1 = new Uri(@"/GUIProjekt;component/images/media-stop-8x.png", UriKind.Relative);
@@ -721,7 +733,11 @@ namespace GUIProjekt
             Pauseicon.Source = new BitmapImage(uriSource2);
         }
 
-        void stopOn()
+        /******************************************************
+         CALL: stopOn();
+         TASK: "Resets" the images to their original sources.
+         *****************************************************/
+        private void stopOn()
         {
             var uriSource = new Uri(@"/GUIProjekt;component/images/media-play-8x.png", UriKind.Relative);
             var uriSource1 = new Uri(@"/GUIProjekt;component/images/media-stop-8x.png", UriKind.Relative);
@@ -732,7 +748,12 @@ namespace GUIProjekt
             Pauseicon.Source = new BitmapImage(uriSource2);
         }
 
-        void pauseOn()
+        /******************************************************
+         CALL: pauseOn();
+         TASK: Changes the images of the buttons making it 
+               look like the pause button was clicked.
+         *****************************************************/
+        private void pauseOn()
         {
             var uriSource = new Uri(@"/GUIProjekt;component/images/media-play-8x.png", UriKind.Relative);
             var uriSource1 = new Uri(@"/GUIProjekt;component/images/media-stop-8x.png", UriKind.Relative);
@@ -758,6 +779,7 @@ namespace GUIProjekt
 
             _runTimer.Stop();            
             pauseOn();
+            userMsg("Execution was paused.");
         }
 
 
@@ -786,6 +808,7 @@ namespace GUIProjekt
             Keyboard.ClearFocus();
             _currentTextBox.Foreground = Brushes.Black;
             clearUserMsg();
+            userMsg("Execution was stopped.");
 
             _currentTextBox.IsReadOnly = false;
 
