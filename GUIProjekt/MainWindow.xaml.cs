@@ -234,14 +234,18 @@ namespace GUIProjekt
 
 
 
-
+        /******************************************************
+         CALL: When the dispatch timer interval controlling 
+               input in the machine code textbox has elapsed.
+         TASK: Processes the input in the machine textbox.
+         *****************************************************/
         private void OnInputTimerMKElapsed(object source, EventArgs e)
         {
             _inputTimerMK.Stop();
 
             if (TextBox_MK.LineCount > 256)
             {
-                errorCode("Exceeded maximum lines in assembler editor.");
+                errorCode("Exceeded maximum lines in machine code editor.");
                 return;
             }
 
@@ -280,7 +284,11 @@ namespace GUIProjekt
 
 
 
-
+        /******************************************************
+         CALL: When the dispatch timer interval controlling 
+               input in the assembly box has elapsed.
+         TASK: Processes the input in the assembly textbox.
+         *****************************************************/
         private void OnInputTimerAssemblyElapsed(object source, EventArgs e)
         {
             _inputTimerAssembly.Stop();            
@@ -396,7 +404,11 @@ namespace GUIProjekt
 
 
 
-
+        /******************************************************
+         CALL: programTick();
+         TASK: Progresses the execution of the program 
+               one instruction.
+         *****************************************************/
         private void programTick()
         {
 
@@ -450,7 +462,10 @@ namespace GUIProjekt
 
 
 
-
+        /******************************************************
+         CALL: bool ok = textToModel(TextBox);
+         TASK: Inserts the input in the textbox to the memory.
+         *****************************************************/
         private bool textToModel(TextBox textBox)
         {
            
@@ -477,7 +492,11 @@ namespace GUIProjekt
 
 
 
-
+        /******************************************************
+         CALL: bool starting = InitProgramStart();
+         TASK: Returns true if successfully converting the
+               state of the application to running.
+         *****************************************************/
         private bool InitProgramStart()
         {
             if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled)
@@ -500,7 +519,10 @@ namespace GUIProjekt
 
 
 
-
+        /******************************************************
+         CALL: When the _runTimer interval has elapsed.
+         TASK: Calls programTick().
+         *****************************************************/
         private void OnInputTimerRunElapsed(object source, EventArgs e)
         {
             programTick();
@@ -510,7 +532,7 @@ namespace GUIProjekt
 
 
         /******************************************************
-         CALL: When clicking the Open button in the Menu
+         CALL: When clicking the Open button in the Menu.
          TASK: Open a txt file from the directory.
          *****************************************************/
         private void Open_Click(object sender, RoutedEventArgs e)
