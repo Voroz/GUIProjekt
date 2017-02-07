@@ -25,25 +25,25 @@
         <!-- Top menu     START -->
         <Menu Grid.Row="0" Style="{StaticResource Menu}">
             <MenuItem Header="_File">
-                <MenuItem Name="Open" Header="Open" Click="Open_Click" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Name="Save" Header="Save" Click="Save_Click" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Name="Exit" Header="Exit" Click="Exit_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Open" Header="Open" Click="MenuItem_Open_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Save" Header="Save" Click="MenuItem_Save_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Exit" Header="Exit" Click="MenuItem_Exit_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Mode">
-                <MenuItem Name="Assembler" Header="Assembly" Click="Assembler_Click" IsChecked="True" Style="{StaticResource MenuItem}"> </MenuItem>
-                <MenuItem Name="MachineCode" Header="Machine Code" Click="MachineCode_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Assembler" Header="Assembly" Click="MenuItem_Assembler_Click" IsChecked="True" Style="{StaticResource MenuItem}"> </MenuItem>
+                <MenuItem Name="MachineCode" Header="Machine Code" Click="MenuItem_MachineCode_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Skins">
-                <MenuItem Name="Default" Header="Default" Click="MenuItem_Click" IsChecked="True" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Name="Orange" Header="Orange" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}" ></MenuItem>
-                <MenuItem Name="Visual" Header="Visual" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Name="DefaultAlt" Header="DefaultAlt" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Name="Red" Header="Red" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Name="Blue" Header="Blue" Click="MenuItem_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Default" Header="Default" Click="MenuItem_Skins_Click" IsChecked="True" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Orange" Header="Orange" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}" ></MenuItem>
+                <MenuItem Name="Visual" Header="Visual" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="DefaultAlt" Header="DefaultAlt" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Red" Header="Red" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Name="Blue" Header="Blue" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About" Click="About_Click" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Header="Commands" Click="Commands_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Header="About" Click="MenuItem_About_Click" Style="{StaticResource MenuItem}"></MenuItem>
+                <MenuItem Header="Commands" Click="MenuItem_Commands_Click" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
         </Menu>
         <!-- Top menu    END -->
