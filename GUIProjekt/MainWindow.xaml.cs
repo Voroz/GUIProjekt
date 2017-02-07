@@ -925,6 +925,9 @@ namespace GUIProjekt
                 return;
             }
 
+            if (_assemblerModel.undoStack().size() == 0) {
+                pauseProgram();
+            }
             programTick();
         }
 
