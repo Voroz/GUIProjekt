@@ -438,14 +438,15 @@ namespace GUIProjekt
 
             if (opr == Operations.RETURN && _assemblerModel.stack().size() == 0)
             {
-                _runTimer.Stop();
                 errorCode("Attempted Return on an empty stack.");
+                pauseProgram();
                 return;
             }
 
             if (!_assemblerModel.processCurrentAddr())
             {
                 errorCode("Invalid operation.");
+                return;
             }
 
             // Mark current row
@@ -515,7 +516,7 @@ namespace GUIProjekt
          TASK: Returns true if successfully converting the
                state of the application to running.
          *****************************************************/
-        private bool InitProgramStart()
+        private bool initProgramStart()
         {
             if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled)
             {
@@ -533,6 +534,36 @@ namespace GUIProjekt
             _currentTextBox.Foreground = Brushes.LightGray;
             userMsg("Running...");
             return true;
+        }
+
+        private void stopProgram()
+        {
+            _runTimer.Stop();
+            _assemblerModel.reset();
+            updateGUIMemory(0, 255, _currentTextBox);
+
+            ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
+            ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
+            ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
+
+            showButtonAsEnabled(ButtonType.Stop);
+            lightOff();
+            Keyboard.ClearFocus();
+            _currentTextBox.Foreground = Brushes.Black;
+            clearUserMsg();
+            userMsg("Execution was stopped.");
+
+            _currentTextBox.IsReadOnly = false;
+
+            // Mark current row
+            markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
+        }
+
+        private void pauseProgram()
+        {
+            _runTimer.Stop();
+            showButtonAsEnabled(ButtonType.Pause);
+            userMsg("Execution was paused.");
         }
 
 
@@ -777,7 +808,7 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Run_Click(object sender, RoutedEventArgs e)
         {
-            if (!InitProgramStart())
+            if (!initProgramStart())
             {
                 return;
             }
@@ -799,9 +830,7 @@ namespace GUIProjekt
                 return;
             }
 
-            _runTimer.Stop();
-            showButtonAsEnabled(ButtonType.Pause);
-            userMsg("Execution was paused.");
+            pauseProgram();
         }
 
 
@@ -813,29 +842,7 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_Stop_Click(object sender, RoutedEventArgs e)
         {
-
-            if (_assemblerModel.undoStack().size() == 0)
-                return;
-
-            _runTimer.Stop();
-            _assemblerModel.reset();
-            updateGUIMemory(0, 255, _currentTextBox);
-
-            ValueRow_WorkingRegister.ShowMemoryAdress(_assemblerModel.workingRegister());
-            ValueRow_Output.ShowMemoryAdress(_assemblerModel.output());
-            ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
-
-            showButtonAsEnabled(ButtonType.Stop);
-            lightOff();
-            Keyboard.ClearFocus();
-            _currentTextBox.Foreground = Brushes.Black;
-            clearUserMsg();
-            userMsg("Execution was stopped.");
-
-            _currentTextBox.IsReadOnly = false;
-
-            // Mark current row
-            markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
+            stopProgram();
         }
 
 
@@ -850,13 +857,13 @@ namespace GUIProjekt
         {
             if (_runTimer.IsEnabled)
             {
-                errorCode("Cannot do this while running the application.");
+                errorCode("Cannot undo while running the application.");
                 return;
             }
 
             if (_assemblerModel.undoStack().size() == 0)
             {
-                errorCode("Cannot do this with an empty return stack.");
+                errorCode("Nothing to undo.");
                 return;
             }
 
@@ -913,7 +920,7 @@ namespace GUIProjekt
         *****************************************************/
         private void Button_StepForward_Click(object sender, RoutedEventArgs e)
         {
-            if (_assemblerModel.undoStack().size() == 0 && !InitProgramStart())
+            if (_assemblerModel.undoStack().size() == 0 && !initProgramStart())
             {
                 return;
             }
