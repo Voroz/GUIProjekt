@@ -13,11 +13,11 @@
     <!--Row #2-->
     <Brush x:Key="fontColor">#ffffff</Brush>
     <Brush x:Key="fontColorFileMenu">#000000</Brush>
-    <Brush x:Key="toggleClicked">#000000</Brush>
-    <Brush x:Key="toggleFont">#f98c13</Brush>
+   
     <!-- IN, OUT, WR, IP Label Font color -->
     <Brush x:Key="programLabels">#000000</Brush>
 
+    <!-- sliderFontColor-->
     <Brush x:Key="sliderFontColor">#FFFFFF</Brush>
 
     <!-- MEMORY ROW COLORS -->
