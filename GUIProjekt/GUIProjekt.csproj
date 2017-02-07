@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>micro-sd-48.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -84,7 +87,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AssemblerModel.cs" />
-    <Compile Include="FontSizeConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -149,7 +151,6 @@
     <Resource Include="images\media-play-8x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\media-stop-8x-red.png" />
     <Resource Include="images\media-stop-8x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +169,7 @@
     <Resource Include="images\bulbon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\fast-forward-button.png" />
+    <Resource Include="micro-sd-48.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

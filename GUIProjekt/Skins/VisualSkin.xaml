@@ -5,18 +5,18 @@
         <Setter Property="Background" Value="#c6cbcc"/>
     </Style>
    
+    <!-- Menu -->
     <Brush x:Key="MenuColor">#33484c</Brush> 
     <Brush x:Key="MenuColor1">#33484c</Brush>  
     <Brush x:Key="MenuColor2">#3a4866</Brush>
     <Brush x:Key="fontColor">#FFFF</Brush>
     <Brush x:Key="fontColorFileMenu">#000000</Brush>
-    <Brush x:Key="toggleClicked">#FFFFFF</Brush>
-    <Brush x:Key="toggleFont">#000000</Brush>
-    <Brush x:Key="toggleClicked2">#7f7062</Brush>
-    <Brush x:Key="toggleFont2">#FFFFFF</Brush>
-
+    
     <!-- IN, OUT, WR, IP Label Font color -->
     <Brush x:Key="programLabels">#000000</Brush>
+
+    <!-- sliderFontColor-->
+    <Brush x:Key="sliderFontColor">#FFFFFF</Brush>
 
     <!-- MEMORY ROW COLORS -->
     <Brush x:Key="rowNrColor">#000000</Brush>
