@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>micro-sd-48.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -165,6 +168,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\bulbon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="micro-sd-32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="micro-sd-multi-size.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="micro-sd-48.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="micro-sd-256.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
