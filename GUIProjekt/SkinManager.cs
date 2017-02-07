@@ -16,6 +16,7 @@ namespace GUIProjekt
 
     class SkinManager
     {
+
         /******************************************************
          CALL: ResourceDictionary selectedDictionary = GetSkin(Skins);
          TASK: Loads the XAML file for the wanted skin.
@@ -24,6 +25,7 @@ namespace GUIProjekt
         {
             return Application.LoadComponent(new Uri(getPath(skin), UriKind.Relative)) as ResourceDictionary;
         }
+
 
         /******************************************************
          CALL: string path = getPath(Skins);

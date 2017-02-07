@@ -68,6 +68,8 @@ namespace GUIProjekt
             string[] splitStr = splitString(testStr, '\n', 5);
         }
 
+        
+
 
         enum ButtonType : byte
         {
@@ -75,6 +77,8 @@ namespace GUIProjekt
             Stop,
             Pause,
         }
+
+
 
 
         /******************************************************
@@ -96,6 +100,7 @@ namespace GUIProjekt
                 stackRow.ShowMemoryRowNumber((byte)(255 - i));
             }
         }
+
 
 
 
@@ -244,6 +249,7 @@ namespace GUIProjekt
 
 
 
+
         /******************************************************
          CALL: When the dispatch timer interval controlling 
                input in the machine code textbox has elapsed.
@@ -291,6 +297,7 @@ namespace GUIProjekt
             _inputTimerAssembly.Stop();
             _inputTimerAssembly.Start();
         }
+
 
 
 
@@ -343,6 +350,8 @@ namespace GUIProjekt
                 }
             }
         }
+
+
 
 
         /******************************************************
@@ -401,6 +410,8 @@ namespace GUIProjekt
         }
 
 
+
+
         /******************************************************
          CALL: markRow(MemoryRow row);
          TASK: Marks which row to be executed in runtime.
@@ -419,6 +430,7 @@ namespace GUIProjekt
 
             _previousInstructionPtr = _assemblerModel.instructionPtr();
         }
+
 
 
 
@@ -481,6 +493,7 @@ namespace GUIProjekt
 
 
 
+
         /******************************************************
          CALL: bool ok = textToModel(TextBox);
          TASK: Inserts the input in the textbox to the memory.
@@ -511,6 +524,7 @@ namespace GUIProjekt
 
 
 
+
         /******************************************************
          CALL: bool starting = InitProgramStart();
          TASK: Returns true if successfully converting the
@@ -535,6 +549,8 @@ namespace GUIProjekt
             userMsg("Running...");
             return true;
         }
+
+
 
 
         /******************************************************
@@ -566,6 +582,8 @@ namespace GUIProjekt
         }
 
 
+
+
         /******************************************************
          CALL: pauseProgram();
          TASK: Pauses execution of the program.
@@ -576,6 +594,7 @@ namespace GUIProjekt
             showButtonAsEnabled(ButtonType.Pause);
             userMsg("Execution was paused.");
         }
+
 
 
 
@@ -827,6 +846,8 @@ namespace GUIProjekt
             showButtonAsEnabled(ButtonType.Play);
 
         }
+
+
 
 
         /******************************************************

@@ -16,7 +16,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="30px" /> <!-- Meny -->
+            <RowDefinition Height="30px" /> <!-- Menu -->
             <RowDefinition Height="3*" />   <!-- Labels -->
             <RowDefinition Height="50*" />  <!-- Content -->
             <RowDefinition Height="20*" />  <!--Stack-->
@@ -123,7 +123,7 @@
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="1"></Label>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="2"></Label>
             <Label Background="{DynamicResource MenuColor2}" Grid.Column="3"></Label>
-            <!-- Visar vad som är Operationer / Värde i minnet -->
+            <!-- Labels for Operation / Value in memory -->
             <Viewbox Grid.Column="1" Stretch="Uniform" HorizontalAlignment="Left">
                 <Label Style="{StaticResource Labels}" FontSize="25">Operation</Label>
             </Viewbox>
@@ -136,7 +136,7 @@
         </Grid>
         <!-- LABEL ROW END -->
         
-        <!-- CONTENT / MINNE / EDITORS etc. START -->
+        <!-- CONTENT / Memory / EDITORS etc. START -->
         <Grid Grid.Row="3" Margin="10,2,10,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" /> 
@@ -518,10 +518,10 @@
                 </Viewbox>
             </ScrollViewer> <!-- Memory, Editors    END -->
         </Grid>
-        <!-- CONTENT / MINNE / EDITORS etc. END -->
+        <!-- CONTENT / Memory / EDITORS etc. END -->
         
 
-        <!-- Stacken START-->
+        <!-- Stack START-->
         <Grid Grid.Row="4" Margin="10,2,10,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
@@ -566,6 +566,6 @@
                 </Viewbox>
             </ScrollViewer>
         </Grid>
-        <!-- Stacken END -->
+        <!-- Stack END -->
     </Grid>
 </Window>
