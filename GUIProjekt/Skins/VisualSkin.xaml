@@ -18,6 +18,8 @@
     <!-- IN, OUT, WR, IP Label Font color -->
     <Brush x:Key="programLabels">#000000</Brush>
 
+    <Brush x:Key="sliderFontColor">#FFFFFF</Brush>
+
     <!-- MEMORY ROW COLORS -->
     <Brush x:Key="rowNrColor">#000000</Brush>
     <Brush x:Key="zeroColor">#3A4866</Brush>

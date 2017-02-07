@@ -83,7 +83,7 @@
                             LastChildFill="True"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch" Width="140">
-                    <Label>Delay</Label>
+                    <Label Style="{StaticResource SliderLabelColor}">Delay</Label>
                     <TextBox Text="{Binding ElementName=Slider_FastForward, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                                 DockPanel.Dock="Right"
                                 TextAlignment="Right"

@@ -149,7 +149,6 @@
     <Resource Include="images\media-play-8x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\media-stop-8x-red.png" />
     <Resource Include="images\media-stop-8x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +165,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\bulbon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\fast-forward-button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
