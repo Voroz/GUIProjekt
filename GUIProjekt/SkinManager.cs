@@ -11,7 +11,9 @@ namespace GUIProjekt
         Default,
         Orange,
         Visual,
-        DefaultAlt
+        DefaultAlt,
+        Red,
+        Blue
     }
 
     class SkinManager
@@ -41,6 +43,10 @@ namespace GUIProjekt
                      return "Skins/BlueSkin.xaml";
                 case Skins.DefaultAlt:
                      return "Skins/DefaultAlt.xaml";
+                case Skins.Red:
+                     return "Skins/RedSkin.xaml";
+                case Skins.Blue:
+                     return "Skins/FBSkin.xaml";
             }
         }
     }

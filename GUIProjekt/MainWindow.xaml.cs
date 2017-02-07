@@ -652,6 +652,8 @@ namespace GUIProjekt
             Orange.IsChecked = false;
             Visual.IsChecked = false;
             DefaultAlt.IsChecked = false;
+            Red.IsChecked = false;
+            Blue.IsChecked = false;
             item.IsChecked = true;
 
             Skins selected;
