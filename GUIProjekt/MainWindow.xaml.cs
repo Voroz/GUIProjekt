@@ -671,11 +671,9 @@ namespace GUIProjekt
             MenuItem item = sender as MenuItem;
 
             Default.IsChecked = false;
-            Orange.IsChecked = false;
             Visual.IsChecked = false;
-            DefaultAlt.IsChecked = false;
+            Dark.IsChecked = false;
             Red.IsChecked = false;
-            Blue.IsChecked = false;
             item.IsChecked = true;
 
             Skins selected;

@@ -35,11 +35,9 @@
             </MenuItem>
             <MenuItem Header="Skins">
                 <MenuItem Name="Default" Header="Default" Click="MenuItem_Skins_Click" IsChecked="True" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Name="Orange" Header="Orange" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}" ></MenuItem>
+                <MenuItem Name="Dark" Header="Dark" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
                 <MenuItem Name="Visual" Header="Visual" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Name="DefaultAlt" Header="DefaultAlt" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
                 <MenuItem Name="Red" Header="Red" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
-                <MenuItem Name="Blue" Header="Blue" Click="MenuItem_Skins_Click" IsCheckable="True" IsChecked="False" Style="{StaticResource MenuItem}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" Click="MenuItem_About_Click" Style="{StaticResource MenuItem}"></MenuItem>
