@@ -623,14 +623,21 @@ namespace GUIProjekt
         *****************************************************/
         private void MenuItem_Assembler_Click(object sender, RoutedEventArgs e)
         {
-            if (Assembler.IsChecked)
+            if (MenuItem_Assembly.IsChecked)
+            {
                 return;
+            }
+            if (_assemblerModel.undoStack().size() != 0)
+            {
+                errorCode("Cannot change mode while program is running.");
+                return;
+            }
             _currentTextBox = TextBox_Assembler;
             updateGUIMemory(0, 255, _currentTextBox);
             _assemblerModel.reset();
             label_txtBox_header.Content = "Assembly";
-            Assembler.IsChecked = true;
-            MachineCode.IsChecked = false;
+            MenuItem_Assembly.IsChecked = true;
+            MenuItem_MachineCode.IsChecked = false;
             TextBox_Assembler.Visibility = Visibility.Visible;
             TextBox_MK.Visibility = Visibility.Collapsed;
             userMsg("Mode was changed from Machine to Assembly.");
@@ -645,14 +652,22 @@ namespace GUIProjekt
         *****************************************************/
         private void MenuItem_MachineCode_Click(object sender, RoutedEventArgs e)
         {
-            if (MachineCode.IsChecked)
+            if (MenuItem_MachineCode.IsChecked)
+            {
                 return;
+            }
+            if (_assemblerModel.undoStack().size() != 0)
+            {
+                errorCode("Cannot change mode while program is running.");
+                return;
+            }
+
             _currentTextBox = TextBox_MK;
             updateGUIMemory(0, 255, _currentTextBox);
             _assemblerModel.reset();
             label_txtBox_header.Content = "Machine Code";
-            MachineCode.IsChecked = true;
-            Assembler.IsChecked = false;
+            MenuItem_MachineCode.IsChecked = true;
+            MenuItem_Assembly.IsChecked = false;
             TextBox_MK.Visibility = Visibility.Visible;
             TextBox_Assembler.Visibility = Visibility.Collapsed;
             userMsg("Mode was changed from Assembly to Machine.");
@@ -670,12 +685,12 @@ namespace GUIProjekt
         {
             MenuItem item = sender as MenuItem;
 
-            Default.IsChecked = false;
-            Orange.IsChecked = false;
-            Visual.IsChecked = false;
-            DefaultAlt.IsChecked = false;
-            Red.IsChecked = false;
-            Blue.IsChecked = false;
+            MenuItem_Default.IsChecked = false;
+            MenuItem_Orange.IsChecked = false;
+            MenuItem_Visual.IsChecked = false;
+            MenuItem_DefaultAlt.IsChecked = false;
+            MenuItem_Red.IsChecked = false;
+            MenuItem_Blue.IsChecked = false;
             item.IsChecked = true;
 
             Skins selected;
