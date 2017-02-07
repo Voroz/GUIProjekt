@@ -159,18 +159,6 @@
     <Resource Include="images\action-undo-8x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\play-button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\pause.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\Stopbtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\backg.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\memIcon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -181,10 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\fast-forward-button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="images\light-off.png" />
-    <Resource Include="images\light-on.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
