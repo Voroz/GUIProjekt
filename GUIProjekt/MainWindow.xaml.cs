@@ -44,6 +44,8 @@ namespace GUIProjekt
             _commandWindow = new Commands();
             _aboutWin = new About();
             Closing += OnClosing;
+            _assemblySaved = true;
+            _mkSaved = true;
 
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -229,9 +231,9 @@ namespace GUIProjekt
        *****************************************************/
         private void TextBox_MK_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox mkBox = sender as TextBox;
+            _mkSaved = false;
 
-            if (!mkBox.IsFocused || mkBox.IsReadOnly)
+            if (!TextBox_MK.IsFocused || TextBox_MK.IsReadOnly)
             {
                 return;
             }
@@ -279,9 +281,9 @@ namespace GUIProjekt
         *****************************************************/
         private void TextBox_Assembler_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox assemblerBox = sender as TextBox;
+            _assemblySaved = false;
 
-            if (!assemblerBox.IsFocused || assemblerBox.IsReadOnly)
+            if (!TextBox_Assembler.IsFocused || TextBox_Assembler.IsReadOnly)
             {
                 return;
             }
@@ -557,7 +559,7 @@ namespace GUIProjekt
             ofd.DefaultExt = ".txt";
             ofd.Filter = "Text Document (.txt)|*.txt";
 
-            if (_runTimer.IsEnabled || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled)
+            if (_assemblerModel.undoStack().size() != 0 || _inputTimerAssembly.IsEnabled || _inputTimerMK.IsEnabled)
             {
                 errorCode("Cannot open file right now.");
                 return;
@@ -586,6 +588,14 @@ namespace GUIProjekt
 
             if (sfd.ShowDialog() == true)
             {
+                if (_currentTextBox == TextBox_MK)
+                {
+                    _mkSaved = true;
+                }
+                else if (_currentTextBox == TextBox_Assembler)
+                {
+                    _assemblySaved = true;
+                }
                 File.WriteAllText(sfd.FileName, _currentTextBox.Text);
                 String time = DateTime.Now.ToString();
                 userMsg("Saved successfully " + time);
@@ -601,11 +611,7 @@ namespace GUIProjekt
          *****************************************************/
         private void MenuItem_Exit_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Exit the application without saving?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
-            {
-                Application.Current.Shutdown();
-            }
+            Application.Current.Shutdown();
         }
 
 
@@ -736,6 +742,15 @@ namespace GUIProjekt
          ************************************************************/
         private void OnClosing(object sender, CancelEventArgs e)
         {
+            if (!_assemblySaved || !_mkSaved)
+            {
+                MessageBoxResult result = MessageBox.Show("Exit the application without saving?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result != MessageBoxResult.Yes)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
             _aboutWin.Close();
             _commandWindow.Close();
         }
@@ -766,7 +781,7 @@ namespace GUIProjekt
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e)
         {
-            if (!_runTimer.IsEnabled)
+            if (_assemblerModel.undoStack().size() == 0)
             {
                 return;
             }
@@ -1117,6 +1132,8 @@ namespace GUIProjekt
         private System.Windows.Threading.DispatcherTimer _inputTimerMK;
         private Commands _commandWindow;
         private About _aboutWin;
+        private bool _assemblySaved;
+        private bool _mkSaved;
 
     }
 }
