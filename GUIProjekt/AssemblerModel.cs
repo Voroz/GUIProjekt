@@ -495,7 +495,7 @@ namespace GUIProjekt
         }
 
         /******************************************************
-         CALL: setInput(ushort);
+         CALL: setInput(Bit12);
          TASK: Sets input.
          *****************************************************/
         public void setInput(Bit12 input) {
@@ -547,8 +547,8 @@ namespace GUIProjekt
 
 
         /******************************************************
-         CALL: setAddr(byte, ushort);
-         TASK: Sets position "byte" in memory to value "ushort".
+         CALL: setAddr(byte, Bit12);
+         TASK: Sets position "byte" in memory to value "Bit12".
         *****************************************************/ 
         public void setAddr(byte idx, Bit12 val) {
             Debug.Assert(idx >= 0 && idx < _size);

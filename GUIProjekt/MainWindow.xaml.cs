@@ -170,7 +170,7 @@ namespace GUIProjekt
 
 
         /******************************************************
-         CALL: bool ok = checkSyntaxMachineTextBox(TextBox);
+         CALL: bool ok = checkSyntaxMKTextBox(TextBox);
          TASK: Checks if any line entered in the machine code 
                section contains unapproved characters.
         *****************************************************/
@@ -351,7 +351,7 @@ namespace GUIProjekt
                and if no ch is found before Count
                reaches maxSplit, split anyway.
         *****************************************************/
-        string[] splitString(string str, char ch, int maxSplit)
+        private string[] splitString(string str, char ch, int maxSplit)
         {
             List<string> strList = new List<string>();
             bool addedEndOfStr = false;
@@ -536,6 +536,12 @@ namespace GUIProjekt
             return true;
         }
 
+
+        /******************************************************
+         CALL: stopProgram();
+         TASK: Stops the execution of the program and resets
+               various elements.
+        *****************************************************/
         private void stopProgram()
         {
             _runTimer.Stop();
@@ -559,6 +565,11 @@ namespace GUIProjekt
             markRow(getMMRowOfPosition(255 - _assemblerModel.instructionPtr()));
         }
 
+
+        /******************************************************
+         CALL: pauseProgram();
+         TASK: Pauses execution of the program.
+        *****************************************************/
         private void pauseProgram()
         {
             _runTimer.Stop();
@@ -638,7 +649,7 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: When clicking the Exit button in the Menu
-         TASK: Gives the user a messageBox Yes/No to Exit.
+         TASK: Closes the application.
          *****************************************************/
         private void MenuItem_Exit_Click(object sender, RoutedEventArgs e)
         {
@@ -749,7 +760,7 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: When clicking the About button in the menu.
-         TASK: Displays info about the devolopment.
+         TASK: Displays info about the development.
          *****************************************************/
         private void MenuItem_About_Click(object sender, RoutedEventArgs e)
         {
@@ -766,7 +777,7 @@ namespace GUIProjekt
 
         /***********************************************************
          CALL: When clicking the Commands button in the menu.
-         TASK: Displays leagal Commands supported by the application.
+         TASK: Displays legal Commands supported by the application.
          ************************************************************/
         private void MenuItem_Commands_Click(object sender, RoutedEventArgs e)
         {
@@ -820,8 +831,7 @@ namespace GUIProjekt
 
         /******************************************************
          CALL: When clicking the pause button in the menu.
-         TASK: Pauses the run through of the program and enables 
-               input in the textboxes again.
+         TASK: Pauses the run through of the program.
          *****************************************************/
         private void Button_Pause_Click(object sender, RoutedEventArgs e)
         {
@@ -838,7 +848,7 @@ namespace GUIProjekt
 
         /******************************************************
         CALL: When clicking the stop button.
-        TASK: Stops execution and makes the input fields changeable again.
+        TASK: Calls stopProgram();
         *****************************************************/
         private void Button_Stop_Click(object sender, RoutedEventArgs e)
         {
