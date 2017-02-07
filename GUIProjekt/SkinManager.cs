@@ -17,7 +17,7 @@ namespace GUIProjekt
     class SkinManager
     {
         /******************************************************
-         CALL: When choosing a skin.
+         CALL: ResourceDictionary selectedDictionary = GetSkin(Skins);
          TASK: Loads the XAML file for the wanted skin.
          *****************************************************/
         public static ResourceDictionary GetSkin(Skins skin) 
