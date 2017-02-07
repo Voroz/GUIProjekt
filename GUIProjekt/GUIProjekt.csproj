@@ -87,7 +87,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AssemblerModel.cs" />
-    <Compile Include="FontSizeConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -170,16 +169,7 @@
     <Resource Include="images\bulbon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="micro-sd-32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="micro-sd-multi-size.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="micro-sd-48.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="micro-sd-256.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
