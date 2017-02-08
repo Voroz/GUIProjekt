@@ -458,6 +458,7 @@ namespace GUIProjekt
             if (!_assemblerModel.processCurrentAddr())
             {
                 errorCode("Invalid operation.");
+                pauseProgram();
                 return;
             }
 
