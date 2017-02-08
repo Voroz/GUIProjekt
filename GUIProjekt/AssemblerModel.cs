@@ -161,7 +161,7 @@ namespace GUIProjekt
             label = "";
             for (int i = 1; i < str.Length; i++)
             {
-                if (str[i] == ' ')
+                if (str[i] == ' ' || str[i] == '\n' || str[i] == '\r')
                 {
                     break;
                 }
