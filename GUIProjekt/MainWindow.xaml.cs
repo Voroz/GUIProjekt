@@ -1209,6 +1209,13 @@ namespace GUIProjekt
             ResourceDictionary selectedDictionary = SkinManager.GetSkin(skin);
             App.Current.MainWindow.Resources.MergedDictionaries.Add(selectedDictionary);
 
+            if (_assemblerModel.undoStack().size() == 0) {
+                _currentTextBox.Foreground = (Brush)FindResource("TextBoxForegroundOff");
+            }
+            else {
+                _currentTextBox.Foreground = (Brush)FindResource("TextBoxForegroundOn");
+            }
+
             for (int i = 0; i <= 255; i++) {
                 getMMRowOfPosition(255 - i).ChangeSkin(selectedDictionary);
             }
