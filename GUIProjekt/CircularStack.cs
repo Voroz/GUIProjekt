@@ -72,6 +72,16 @@ namespace GUIProjekt
             return _usedSize;
         }
 
+        public CircularStack<T> Copy() {
+            CircularStack<T> copy = new CircularStack<T>(_capacity);
+            copy._usedSize = _usedSize;
+            copy._front = _front;
+            for (int i = 0; i < _capacity; i++) {
+                copy._arr[i] = _arr[i];
+            }
+            return copy;
+        }
+
 
         private T[] _arr;
         private uint _usedSize;

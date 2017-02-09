@@ -6,25 +6,31 @@
     </Style>
 
     <!-- Menu -->
-    <Brush x:Key="MenuColor">#3b5998</Brush> <!--Row #0-->
-    <Brush x:Key="MenuColor1">#3b5998</Brush> <!--Row #1-->
-    <Brush x:Key="MenuColor2">#3b5998</Brush> <!--Row #2-->
+    <Brush x:Key="MenuColor">#3b5998</Brush>
+    <Brush x:Key="MenuColor1">#3b5998</Brush>
+    <Brush x:Key="MenuColor2">#3b5998</Brush>
     <Brush x:Key="fontColor">#FFFFFF</Brush>
     <Brush x:Key="fontColorFileMenu">#000000</Brush>
-
-    <!-- sliderFontColor-->
-    <Brush x:Key="sliderFontColor">#FFFFFF</Brush>
 
     <!-- IN, OUT, WR, IP Label Font color -->
     <Brush x:Key="programLabels">#000000</Brush>
 
+    <!-- sliderFontColor-->
+    <Brush x:Key="sliderFontColor">#FFFFFF</Brush>
+
     <!-- MEMORY ROW COLORS -->
-    <Brush x:Key="rowNrColor">#000000</Brush>   
-    <Brush x:Key="zeroColor">#f7f7f7</Brush>
-    <Brush x:Key="oneColor">#8b9dc3</Brush>
-    
+    <Brush x:Key="rowNrColor">#000000</Brush>
+    <Brush x:Key="BackgroundZeroColor">#f7f7f7</Brush>
+    <Brush x:Key="BackgroundOneColor">#8b9dc3</Brush>
+    <Brush x:Key="ForegroundZeroColor">#000000</Brush>
+    <Brush x:Key="ForegroundOneColor">#000000</Brush>
+
     <!-- Message Box -->
     <Brush x:Key="MessageBoxBackground">#FFFFFF</Brush>
-    <Brush x:Key="MessageBoxForeground">#FFFFFF</Brush>
+
+    <!-- Text Box -->
+    <Brush x:Key="TextBoxBackground">#FFFFFF</Brush>
+    <Brush x:Key="TextBoxForegroundOff">#000000</Brush>
+    <Brush x:Key="TextBoxForegroundOn">LightGray</Brush>
 
 </ResourceDictionary>

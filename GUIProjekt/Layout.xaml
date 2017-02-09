@@ -43,13 +43,10 @@
         <Setter Property="Foreground" Value="{DynamicResource sliderFontColor}"/>
     </Style>
     
-    <!-- Textbox color -->
-    <Style x:Key="TextBoxBackground" TargetType="TextBox">
-        <Setter Property="Background" Value="White"/>
-    </Style>
-    
     <!-- Textbox Assembler -->
     <Style x:Key="TextBoxAssembler" TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource TextBoxBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBoxForegroundOff}"/>
         <Setter Property="Padding" Value="5, 0, 0, 0"/>
         <Setter Property="Margin" Value="5, 0, 0, 0" />
         <Setter Property="Height" Value="Auto"/>
@@ -63,8 +60,11 @@
         <Setter Property="BorderThickness" Value="0.5"/>
         <Setter Property="MinWidth" Value="300"/>
     </Style>
+    
     <!-- TextBox Maskinkod -->
     <Style x:Key="TextBoxMK" TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource TextBoxBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBoxForegroundOff}"/>
         <Setter Property="Padding" Value="5, 0, 0, 0"/>
         <Setter Property="Margin" Value="5, 0, 0, 0" />
         <Setter Property="Height" Value="Auto"/>
@@ -98,10 +98,12 @@
         <Setter Property="BorderBrush" Value="Gray" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Value="0">
-                <Setter Property="Background" Value="{DynamicResource zeroColor}"></Setter>
+                <Setter Property="Background" Value="{DynamicResource BackgroundZeroColor}"></Setter>
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundZeroColor}"></Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding Path=Content, RelativeSource={RelativeSource Self}}" Value="1">
-                <Setter Property="Background" Value="{DynamicResource oneColor}"></Setter>
+                <Setter Property="Background" Value="{DynamicResource BackgroundOneColor}"></Setter>
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundOneColor}"></Setter>
             </DataTrigger>
         </Style.Triggers>
     </Style>

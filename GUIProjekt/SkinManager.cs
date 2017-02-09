@@ -11,7 +11,7 @@ namespace GUIProjekt
         Default,
         Visual,
         Dark,
-        Red
+        Secret
     }
 
     class SkinManager
@@ -41,9 +41,9 @@ namespace GUIProjekt
                      return "Skins/VisualSkin.xaml";
                 case Skins.Dark:
                      return "Skins/DarkSkin.xaml";
-                case Skins.Red:
-                     return "Skins/RedSkin.xaml";
+                case Skins.Secret:
+                     return "Skins/SecretSkin.xaml";
             }
-        }
+        }        
     }
 }

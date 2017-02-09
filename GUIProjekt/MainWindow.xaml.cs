@@ -19,6 +19,8 @@ using System.IO;
 using System.Timers;
 using System.Windows.Controls.Primitives;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
+
 
 namespace GUIProjekt
 {
@@ -47,6 +49,8 @@ namespace GUIProjekt
             _assemblySaved = true;
             _mkSaved = true;
 
+            _keyPressStack = new CircularStack<Key>(20);
+            _password = "12321";
 
             _inputTimerAssembly.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _inputTimerAssembly.Tick += OnInputTimerAssemblyElapsed;
@@ -64,8 +68,7 @@ namespace GUIProjekt
             ValueRow_InstructionPointer.ShowMemoryAdress(new Bit12(_assemblerModel.instructionPtr()));
             ValueRow_InstructionPointer.HideChildElements();
 
-            string testStr = "hej\n\n";
-            string[] splitStr = splitString(testStr, '\n', 5);
+            EventManager.RegisterClassHandler(typeof(Window), Keyboard.KeyDownEvent,new KeyEventHandler(keyDown), true);
         }
 
         
@@ -76,6 +79,84 @@ namespace GUIProjekt
             Play,
             Stop,
             Pause,
+        }
+
+
+
+
+        public enum MapType : uint {
+            MAPVK_VK_TO_VSC = 0x0,
+            MAPVK_VSC_TO_VK = 0x1,
+            MAPVK_VK_TO_CHAR = 0x2,
+            MAPVK_VSC_TO_VK_EX = 0x3,
+        }
+
+        [DllImport("user32.dll")]
+        public static extern int ToUnicode(
+            uint wVirtKey,
+            uint wScanCode,
+            byte[] lpKeyState,
+            [Out, MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 4)] 
+            StringBuilder pwszBuff,
+            int cchBuff,
+            uint wFlags);
+
+        [DllImport("user32.dll")]
+        public static extern bool GetKeyboardState(byte[] lpKeyState);
+
+        [DllImport("user32.dll")]
+        public static extern uint MapVirtualKey(uint uCode, MapType uMapType);
+
+        public static char GetCharFromKey(Key key) {
+            char ch = ' ';
+
+            int virtualKey = KeyInterop.VirtualKeyFromKey(key);
+            byte[] keyboardState = new byte[256];
+            GetKeyboardState(keyboardState);
+
+            uint scanCode = MapVirtualKey((uint)virtualKey, MapType.MAPVK_VK_TO_VSC);
+            StringBuilder stringBuilder = new StringBuilder(2);
+
+            int result = ToUnicode((uint)virtualKey, scanCode, keyboardState, stringBuilder, stringBuilder.Capacity, 0);
+            switch (result) {
+                case -1:
+                    break;
+                case 0:
+                    break;
+                case 1: {
+                        ch = stringBuilder[0];
+                        break;
+                    }
+                default: {
+                        ch = stringBuilder[0];
+                        break;
+                    }
+            }
+            return ch;
+        }
+
+
+
+
+        private void keyDown(object sender, KeyEventArgs e) {
+            _keyPressStack.push(e.Key);
+            CircularStack<Key> stackCopy = _keyPressStack.Copy();
+            string str = "";
+
+            for (int i = 0; i < _password.Length && stackCopy.size() > 0; i++) {
+                str += GetCharFromKey(stackCopy.top());
+                stackCopy.pop();
+            }
+            str = new string(str.Reverse().ToArray());
+            if (str == _password) {
+                MenuItem_Secret.Visibility = Visibility.Visible;
+                MenuItem_Default.IsChecked = false;
+                MenuItem_Visual.IsChecked = false;
+                MenuItem_Dark.IsChecked = false;
+                MenuItem_Secret.IsChecked = true;
+                changeSkin(Skins.Secret);
+                userMsg("Secret skin unlocked!");
+            }
         }
 
 
@@ -546,7 +627,7 @@ namespace GUIProjekt
 
             Keyboard.ClearFocus();
             _currentTextBox.IsReadOnly = true;
-            _currentTextBox.Foreground = Brushes.LightGray;
+            _currentTextBox.Foreground = (Brush)FindResource("TextBoxForegroundOn");
             userMsg("Running...");
             return true;
         }
@@ -572,7 +653,7 @@ namespace GUIProjekt
             showButtonAsEnabled(ButtonType.Stop);
             lightOff();
             Keyboard.ClearFocus();
-            _currentTextBox.Foreground = Brushes.Black;
+            _currentTextBox.Foreground = (Brush)FindResource("TextBoxForegroundOff");
             clearUserMsg();
             userMsg("Execution was stopped.");
 
@@ -750,29 +831,13 @@ namespace GUIProjekt
             MenuItem_Default.IsChecked = false;
             MenuItem_Visual.IsChecked = false;
             MenuItem_Dark.IsChecked = false;
-            MenuItem_Red.IsChecked = false;
+            MenuItem_Secret.IsChecked = false;
             item.IsChecked = true;
 
             Skins selected;
             Enum.TryParse(item.Header.ToString(), out selected);
 
-            ResourceDictionary selectedDictionary = SkinManager.GetSkin(selected);
-            this.Resources.MergedDictionaries.Add(selectedDictionary);
-
-            for (int i = 0; i <= 255; i++)
-            {
-                getMMRowOfPosition(255 - i).ChangeSkin(selectedDictionary);
-            }
-
-            for (int i = 0; i < 5; i++)
-            {
-                getStackRowOfPosition(i).ChangeSkin(selectedDictionary);
-            }
-
-            ValueRow_InstructionPointer.ChangeSkin(selectedDictionary);
-            ValueRow_Input.ChangeSkin(selectedDictionary);
-            ValueRow_Output.ChangeSkin(selectedDictionary);
-            ValueRow_WorkingRegister.ChangeSkin(selectedDictionary);
+            changeSkin(selected);
         }
 
 
@@ -902,7 +967,7 @@ namespace GUIProjekt
             if (_assemblerModel.undoStack().size() == 1)
             {
                 Keyboard.ClearFocus();
-                _currentTextBox.Foreground = Brushes.Black;
+                _currentTextBox.Foreground = (Brush)FindResource("TextBoxForegroundOff");
                 clearUserMsg();
                 _currentTextBox.IsReadOnly = false;
                 showButtonAsEnabled(ButtonType.Stop);
@@ -1139,30 +1204,16 @@ namespace GUIProjekt
 
 
 
-        /******************************************************
-         CALL: Clicking the drop down list to change skin.
-         TASK: Changes the skin color (theme).
-        *****************************************************/
-        private void changeSkinEvent(object sender, RoutedEventArgs e)
-        {
-            ComboBoxItem item = sender as ComboBoxItem;
+        // Should be in SkinManager, but how to access getMMRowOfPosition from there?
+        public void changeSkin(Skins skin) {
+            ResourceDictionary selectedDictionary = SkinManager.GetSkin(skin);
+            App.Current.MainWindow.Resources.MergedDictionaries.Add(selectedDictionary);
 
-            if (!item.IsFocused)
-                return;
-
-            Skins selected;
-            Enum.TryParse(item.Content.ToString(), out selected);
-            ResourceDictionary selectedDictionary = SkinManager.GetSkin(selected);
-            this.Resources.MergedDictionaries.Add(selectedDictionary);
-
-
-            for (int i = 0; i <= 255; i++)
-            {
+            for (int i = 0; i <= 255; i++) {
                 getMMRowOfPosition(255 - i).ChangeSkin(selectedDictionary);
             }
 
-            for (int i = 0; i < 5; i++)
-            {
+            for (int i = 0; i < 5; i++) {
                 getStackRowOfPosition(i).ChangeSkin(selectedDictionary);
             }
 
@@ -1189,6 +1240,8 @@ namespace GUIProjekt
         private About _aboutWin;
         private bool _assemblySaved;
         private bool _mkSaved;
+        private CircularStack<Key> _keyPressStack;
+        private string _password;
 
     }
 }
