@@ -25,7 +25,7 @@
             <Label Grid.Row="1" Foreground="BurlyWood">Gustav Halje</Label>
             <Label Grid.Row="2" Foreground="BurlyWood">Marcus Jakobsson</Label>
             <Label Grid.Row="3" Foreground="BurlyWood">Pontus Mansfeld</Label>
-            <Label Grid.Row="4" Foreground="BurlyWood" FontStyle="Italic">DMP 2015 JTH</Label>
+            <Label Grid.Row="4" Foreground="BurlyWood" FontStyle="Italic">DMP15 2017 JTH</Label>
         </Grid>
     </Viewbox>
 </Window>
